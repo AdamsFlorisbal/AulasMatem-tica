@@ -9,6 +9,7 @@ import {
   X,
   Minus,
   Plus,
+  Calculator,
 } from "lucide-react"
 
 /* ================================================================
@@ -246,6 +247,10 @@ export function PropMultiplicacao() {
             />
           </div>
         </AnimateOnScroll>
+
+        <AnimateOnScroll delay={700}>
+          <CalcMultiplicacao />
+        </AnimateOnScroll>
       </div>
     </section>
   )
@@ -342,6 +347,10 @@ export function PropDivisao() {
             </div>
           </div>
         </AnimateOnScroll>
+
+        <AnimateOnScroll delay={600}>
+          <CalcDivisao />
+        </AnimateOnScroll>
       </div>
     </section>
   )
@@ -435,6 +444,10 @@ export function PropPotenciaPotencia() {
               />
             </div>
           </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={600}>
+          <CalcPotenciaPotencia />
         </AnimateOnScroll>
       </div>
     </section>
@@ -541,6 +554,10 @@ export function PropPotenciaProduto() {
             </div>
           </div>
         </AnimateOnScroll>
+
+        <AnimateOnScroll delay={600}>
+          <CalcPotenciaProduto />
+        </AnimateOnScroll>
       </div>
     </section>
   )
@@ -645,6 +662,10 @@ export function PropPotenciaQuociente() {
             </div>
           </div>
         </AnimateOnScroll>
+
+        <AnimateOnScroll delay={600}>
+          <CalcPotenciaQuociente />
+        </AnimateOnScroll>
       </div>
     </section>
   )
@@ -741,6 +762,10 @@ export function PropExpoenteZero() {
               {" 0\u2070 \u00E9 uma indetermina\u00E7\u00E3o! A regra do expoente zero s\u00F3 vale quando a base \u00E9 diferente de zero."}
             </p>
           </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={700}>
+          <CalcExpoenteZero />
         </AnimateOnScroll>
       </div>
     </section>
@@ -858,8 +883,364 @@ export function PropExpoenteNegativo() {
             </div>
           </div>
         </AnimateOnScroll>
+
+        <AnimateOnScroll delay={700}>
+          <CalcExpoenteNegativo />
+        </AnimateOnScroll>
       </div>
     </section>
+  )
+}
+
+/* ================================================================
+   Dynamic Calculators — Shared UI
+   ================================================================ */
+
+function CalcWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
+      <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-5 flex items-center gap-2">
+        <Calculator className="w-4 h-4 text-primary" />
+        Calcule você mesmo!
+      </h3>
+      {children}
+    </div>
+  )
+}
+
+function CalcInput({
+  label,
+  value,
+  onChange,
+  min = 1,
+  max = 20,
+}: {
+  label: string
+  value: string
+  onChange: (v: string) => void
+  min?: number
+  max?: number
+}) {
+  return (
+    <div className="flex flex-col items-center gap-1.5">
+      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide whitespace-nowrap">
+        {label}
+      </label>
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        min={min}
+        max={max}
+        className="w-20 rounded-lg border border-border bg-background px-2 py-2 text-center font-mono text-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+      />
+    </div>
+  )
+}
+
+function fmtResult(n: number): string {
+  if (!isFinite(n)) return "∞"
+  if (Math.abs(n) > 1e12) return n.toExponential(2)
+  return n.toLocaleString("pt-BR")
+}
+
+/* --- Calculadora: Multiplicação --- */
+function CalcMultiplicacao() {
+  const [base, setBase] = useState("3")
+  const [exp1, setExp1] = useState("2")
+  const [exp2, setExp2] = useState("4")
+
+  const b = parseInt(base)
+  const m = parseInt(exp1)
+  const n = parseInt(exp2)
+  const valid = !isNaN(b) && !isNaN(m) && !isNaN(n) && b > 0
+
+  const newExp = m + n
+  const result = valid ? Math.pow(b, newExp) : null
+
+  return (
+    <CalcWrapper>
+      <div className="flex flex-wrap items-end gap-4 mb-5">
+        <CalcInput label="Base (a)" value={base} onChange={setBase} min={1} max={20} />
+        <CalcInput label="Expoente m" value={exp1} onChange={setExp1} min={0} max={10} />
+        <CalcInput label="Expoente n" value={exp2} onChange={setExp2} min={0} max={10} />
+      </div>
+      {valid && (
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up space-y-2">
+          <div className="font-mono text-base text-center text-foreground">
+            {b}<sup>{m}</sup>
+            <span className="mx-2 text-muted-foreground">·</span>
+            {b}<sup>{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            {b}<sup className="text-primary">{m} + {n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            <strong className="text-accent">{b}<sup>{newExp}</sup></strong>
+          </div>
+          {result !== null && result <= 1e12 && (
+            <div className="text-center text-2xl font-bold text-accent font-mono">
+              = {fmtResult(result)}
+            </div>
+          )}
+          {result !== null && result > 1e12 && (
+            <div className="text-center text-sm text-muted-foreground italic">resultado muito grande — {b}<sup>{newExp}</sup></div>
+          )}
+        </div>
+      )}
+    </CalcWrapper>
+  )
+}
+
+/* --- Calculadora: Divisão --- */
+function CalcDivisao() {
+  const [base, setBase] = useState("5")
+  const [exp1, setExp1] = useState("6")
+  const [exp2, setExp2] = useState("2")
+
+  const b = parseInt(base)
+  const m = parseInt(exp1)
+  const n = parseInt(exp2)
+  const valid = !isNaN(b) && !isNaN(m) && !isNaN(n) && b > 0 && m > n
+
+  const newExp = m - n
+  const result = valid ? Math.pow(b, newExp) : null
+
+  return (
+    <CalcWrapper>
+      <div className="flex flex-wrap items-end gap-4 mb-5">
+        <CalcInput label="Base (a)" value={base} onChange={setBase} min={1} max={20} />
+        <CalcInput label="Expoente m" value={exp1} onChange={setExp1} min={1} max={10} />
+        <CalcInput label="Expoente n" value={exp2} onChange={setExp2} min={0} max={10} />
+      </div>
+      {!valid && (
+        <p className="text-xs text-amber-500 mb-3">⚠ O expoente m deve ser maior que n para resultado positivo.</p>
+      )}
+      {valid && (
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up space-y-2">
+          <div className="font-mono text-base text-center text-foreground">
+            {b}<sup>{m}</sup>
+            <span className="mx-2 text-muted-foreground">:</span>
+            {b}<sup>{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            {b}<sup className="text-primary">{m} − {n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            <strong className="text-accent">{b}<sup>{newExp}</sup></strong>
+          </div>
+          {result !== null && result <= 1e12 && (
+            <div className="text-center text-2xl font-bold text-accent font-mono">= {fmtResult(result)}</div>
+          )}
+        </div>
+      )}
+    </CalcWrapper>
+  )
+}
+
+/* --- Calculadora: Potência de Potência --- */
+function CalcPotenciaPotencia() {
+  const [base, setBase] = useState("3")
+  const [exp1, setExp1] = useState("2")
+  const [exp2, setExp2] = useState("4")
+
+  const b = parseInt(base)
+  const m = parseInt(exp1)
+  const n = parseInt(exp2)
+  const valid = !isNaN(b) && !isNaN(m) && !isNaN(n) && b > 0
+
+  const newExp = m * n
+  const result = valid ? Math.pow(b, newExp) : null
+
+  return (
+    <CalcWrapper>
+      <div className="flex flex-wrap items-end gap-4 mb-5">
+        <CalcInput label="Base (a)" value={base} onChange={setBase} min={1} max={20} />
+        <CalcInput label="Exp. interno (m)" value={exp1} onChange={setExp1} min={1} max={10} />
+        <CalcInput label="Exp. externo (n)" value={exp2} onChange={setExp2} min={1} max={10} />
+      </div>
+      {valid && (
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up space-y-2">
+          <div className="font-mono text-base text-center text-foreground">
+            <span className="text-muted-foreground">(</span>
+            {b}<sup>{m}</sup>
+            <span className="text-muted-foreground">)</span>
+            <sup>{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            {b}<sup className="text-primary">{m} × {n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            <strong className="text-accent">{b}<sup>{newExp}</sup></strong>
+          </div>
+          {result !== null && result <= 1e12 && (
+            <div className="text-center text-2xl font-bold text-accent font-mono">= {fmtResult(result)}</div>
+          )}
+          {result !== null && result > 1e12 && (
+            <div className="text-center text-sm text-muted-foreground italic">resultado muito grande — {b}<sup>{newExp}</sup></div>
+          )}
+        </div>
+      )}
+    </CalcWrapper>
+  )
+}
+
+/* --- Calculadora: Potência de Produto --- */
+function CalcPotenciaProduto() {
+  const [valA, setValA] = useState("2")
+  const [valB, setValB] = useState("5")
+  const [expN, setExpN] = useState("3")
+
+  const a = parseInt(valA)
+  const b = parseInt(valB)
+  const n = parseInt(expN)
+  const valid = !isNaN(a) && !isNaN(b) && !isNaN(n) && n > 0
+
+  const an = valid ? Math.pow(a, n) : null
+  const bn = valid ? Math.pow(b, n) : null
+  const result = an !== null && bn !== null ? an * bn : null
+
+  return (
+    <CalcWrapper>
+      <div className="flex flex-wrap items-end gap-4 mb-5">
+        <CalcInput label="Fator a" value={valA} onChange={setValA} min={1} max={20} />
+        <CalcInput label="Fator b" value={valB} onChange={setValB} min={1} max={20} />
+        <CalcInput label="Expoente n" value={expN} onChange={setExpN} min={1} max={8} />
+      </div>
+      {valid && an !== null && bn !== null && result !== null && (
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up space-y-2">
+          <div className="font-mono text-base text-center text-foreground">
+            <span className="text-muted-foreground">(</span>
+            {a} · {b}
+            <span className="text-muted-foreground">)</span>
+            <sup>{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            {a}<sup className="text-primary">{n}</sup>
+            <span className="mx-1 text-muted-foreground">·</span>
+            {b}<sup className="text-primary">{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            {an <= 1e9 ? fmtResult(an) : `${a}^${n}`}
+            <span className="mx-1 text-muted-foreground">·</span>
+            {bn <= 1e9 ? fmtResult(bn) : `${b}^${n}`}
+          </div>
+          {result <= 1e12 && (
+            <div className="text-center text-2xl font-bold text-accent font-mono">= {fmtResult(result)}</div>
+          )}
+          {result > 1e12 && (
+            <div className="text-center text-sm text-muted-foreground italic">resultado muito grande</div>
+          )}
+        </div>
+      )}
+    </CalcWrapper>
+  )
+}
+
+/* --- Calculadora: Potência de Quociente --- */
+function CalcPotenciaQuociente() {
+  const [valA, setValA] = useState("6")
+  const [valB, setValB] = useState("3")
+  const [expN, setExpN] = useState("3")
+
+  const a = parseInt(valA)
+  const b = parseInt(valB)
+  const n = parseInt(expN)
+  const valid = !isNaN(a) && !isNaN(b) && !isNaN(n) && b !== 0 && n > 0
+
+  const an = valid ? Math.pow(a, n) : null
+  const bn = valid ? Math.pow(b, n) : null
+  const result = an !== null && bn !== null ? an / bn : null
+
+  return (
+    <CalcWrapper>
+      <div className="flex flex-wrap items-end gap-4 mb-5">
+        <CalcInput label="Numerador a" value={valA} onChange={setValA} min={1} max={30} />
+        <CalcInput label="Denominador b" value={valB} onChange={setValB} min={1} max={30} />
+        <CalcInput label="Expoente n" value={expN} onChange={setExpN} min={1} max={8} />
+      </div>
+      {valid && an !== null && bn !== null && result !== null && (
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up space-y-2">
+          <div className="font-mono text-base text-center text-foreground">
+            <span className="text-muted-foreground">(</span>
+            {a} / {b}
+            <span className="text-muted-foreground">)</span>
+            <sup>{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            {a}<sup className="text-primary">{n}</sup>
+            <span className="mx-1 text-muted-foreground">/</span>
+            {b}<sup className="text-primary">{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            {an <= 1e9 ? fmtResult(an) : `${a}^${n}`}
+            <span className="mx-1 text-muted-foreground">/</span>
+            {bn <= 1e9 ? fmtResult(bn) : `${b}^${n}`}
+          </div>
+          <div className="text-center text-2xl font-bold text-accent font-mono">
+            = {result % 1 === 0 ? fmtResult(result) : result.toFixed(4).replace(".", ",")}
+          </div>
+        </div>
+      )}
+    </CalcWrapper>
+  )
+}
+
+/* --- Calculadora: Expoente Zero --- */
+function CalcExpoenteZero() {
+  const [base, setBase] = useState("7")
+
+  const b = parseInt(base)
+  const valid = !isNaN(b) && b !== 0
+
+  return (
+    <CalcWrapper>
+      <div className="flex flex-wrap items-end gap-4 mb-5">
+        <CalcInput label="Base (a ≠ 0)" value={base} onChange={setBase} min={-999} max={999} />
+      </div>
+      {!valid && (
+        <p className="text-xs text-destructive mb-3">⚠ 0⁰ é uma indeterminação matemática!</p>
+      )}
+      {valid && (
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up space-y-2">
+          <div className="font-mono text-base text-center text-foreground">
+            {b}<sup className="text-primary">0</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            <strong className="text-accent">1</strong>
+          </div>
+          <div className="text-center text-2xl font-bold text-accent font-mono">= 1</div>
+          <div className="text-center text-xs text-muted-foreground">
+            sempre 1, independente da base (desde que base ≠ 0)
+          </div>
+        </div>
+      )}
+    </CalcWrapper>
+  )
+}
+
+/* --- Calculadora: Expoente Negativo --- */
+function CalcExpoenteNegativo() {
+  const [base, setBase] = useState("2")
+  const [exp, setExp] = useState("3")
+
+  const b = parseInt(base)
+  const n = parseInt(exp)
+  const valid = !isNaN(b) && !isNaN(n) && b !== 0 && n > 0
+
+  const posResult = valid ? Math.pow(b, n) : null
+  const result = posResult !== null ? 1 / posResult : null
+
+  return (
+    <CalcWrapper>
+      <div className="flex flex-wrap items-end gap-4 mb-5">
+        <CalcInput label="Base (a ≠ 0)" value={base} onChange={setBase} min={1} max={20} />
+        <CalcInput label="Expoente n" value={exp} onChange={setExp} min={1} max={8} />
+      </div>
+      {valid && posResult !== null && result !== null && (
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up space-y-2">
+          <div className="font-mono text-base text-center text-foreground">
+            {b}<sup className="text-primary">-{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            1 / {b}<sup className="text-primary">{n}</sup>
+            <span className="mx-2 text-muted-foreground">=</span>
+            <strong className="text-accent">1 / {fmtResult(posResult)}</strong>
+          </div>
+          <div className="text-center text-2xl font-bold text-accent font-mono">
+            ≈ {result.toFixed(6).replace(".", ",")}
+          </div>
+        </div>
+      )}
+    </CalcWrapper>
   )
 }
 
