@@ -78,14 +78,19 @@ export default function Page() {
             <SummarySection />
 
             <footer className="text-center pb-8">
-              <p className="text-sm text-muted-foreground">
-                {"Aula 5 \u2014 Propriedades das Pot\u00EAncias"}
-              </p>
-              <p className="text-xs text-muted-foreground/50 mt-1">
-                Material informativo para alunos de 13 a 14 anos
-              </p>
               <p className="text-xs text-muted-foreground/40 mt-1">
-                Professora Vanessa Florrisbal
+                Professora Vanessa Florisbal
+              </p>
+              <p className="text-xs text-muted-foreground/40 mt-2">
+                Desenvolvido por{" "}
+                <a
+                  href="https://www.linkedin.com/in/adams-florisbal/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary/60 hover:text-primary transition-colors underline underline-offset-2"
+                >
+                  Adams Florisbal
+                </a>
               </p>
             </footer>
           </div>
