@@ -24,18 +24,6 @@ function toSci(n: number): string {
   return `${parseFloat(coef.toPrecision(4))} × 10^${exp}`
 }
 
-function simplifyRadical(n: number): { outside: number; inside: number } {
-  let outside = 1
-  let inside = n
-  for (let i = 2; i * i <= n; i++) {
-    while (inside % (i * i) === 0) {
-      outside *= i
-      inside = inside / (i * i)
-    }
-  }
-  return { outside, inside }
-}
-
 function NumInput({ label, value, onChange, placeholder, step }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; step?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -127,8 +115,6 @@ export function RadiciacaoRaizQuadrada() {
   const n = parseFloat(val)
   const root = isNaN(n) || n < 0 ? null : Math.sqrt(n)
   const isExact = root !== null && Number.isInteger(root)
-  const nr = !isNaN(n) && n > 0 ? Math.round(n) : 0
-  const { outside, inside } = nr > 0 ? simplifyRadical(nr) : { outside: 1, inside: 0 }
 
   return (
     <AnimateOnScroll>
@@ -140,25 +126,15 @@ export function RadiciacaoRaizQuadrada() {
             √a = b  ↔  b² = a &nbsp;&nbsp; (a ≥ 0)
           </FormulaBox>
 
-          <div>
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Como calcular √72</h3>
-            <StepByStep steps={[
-              { text: "72 = 4 × 18 = 36 × 2" },
-              { text: "√72 = √(36 × 2) = √36 × √2" },
-              { text: "= 6√2 ≈ 8,485", highlight: true },
-            ]} />
+          <div className="flex flex-col items-center justify-center">
+            <img src="https://i.imgur.com/MjE3ZWR.png" alt="Exemplos de quadrados perfeitos: 1x1=1, 2x2=4, 3x3=9" className="w-48 h-48 mb-4" />
           </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
+          
+          <div className="grid md:grid-cols-1 gap-6">
             <DetailedExampleCard
               title="√100 — quadrado perfeito"
               steps={["√100 = 10", "Verificação: 10² = 100 ✓"]}
               conclusion="Resultado exato"
-            />
-            <DetailedExampleCard
-              title="√50 — simplificação"
-              steps={["50 = 25 × 2", "√50 = √25 × √2 = 5√2"]}
-              conclusion="≈ 7,071"
             />
           </div>
 
@@ -173,13 +149,8 @@ export function RadiciacaoRaizQuadrada() {
                       <p className="font-mono text-sm">√{n} = <strong className="text-accent text-base">{root}</strong></p>
                       <p className="text-sm text-muted-foreground">Verificação: {root}² = {root * root} ✓</p>
                     </>
-                  ) : outside > 1 && inside > 1 ? (
-                    <>
-                      <p className="font-mono text-sm">{nr} = {outside * outside} × {inside}</p>
-                      <p className="font-mono text-sm">√{n} = <strong className="text-accent text-base">{outside}√{inside}</strong> ≈ {parseFloat(root.toFixed(4))}</p>
-                    </>
                   ) : (
-                    <p className="font-mono text-sm">√{n} ≈ <strong className="text-accent text-base">{parseFloat(root.toFixed(4))}</strong> (irracional)</p>
+                    <p className="text-sm text-destructive">O número {n} não é um quadrado perfeito. Tente outro número.</p>
                   )}
                 </CalcResult>
               )}
@@ -212,25 +183,15 @@ export function RadiciacaoRaizCubica() {
             ∛a = b  ↔  b³ = a &nbsp;&nbsp; (existe para negativos!)
           </FormulaBox>
 
-          <div>
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Como calcular ∛(−8)</h3>
-            <StepByStep steps={[
-              { text: "Procuro b tal que b³ = -8" },
-              { text: "(-2)³ = (-2) × (-2) × (-2) = -8 ✓" },
-              { text: "∛(-8) = -2", highlight: true },
-            ]} />
+          <div className="flex flex-col items-center justify-center">
+            <img src="https://i.imgur.com/jQY5Xm3.png" alt="Exemplos de cubos perfeitos: 1x1x1=1, 2x2x2=8, 3x3x3=27" className="w-48 h-48 mb-4" />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-1 gap-6">
             <DetailedExampleCard
               title="∛64 — cubo perfeito"
               steps={["∛64 = 4", "Verificação: 4³ = 64 ✓"]}
               conclusion="Resultado exato"
-            />
-            <DetailedExampleCard
-              title="∛(−125)"
-              steps={["∛(−125) = -5", "Verificação: (-5)³ = -125 ✓"]}
-              conclusion="Base negativa → raiz negativa"
             />
           </div>
 
@@ -245,75 +206,7 @@ export function RadiciacaoRaizCubica() {
                       <p className="text-sm text-muted-foreground">Verificação: {rounded}³ = {Math.pow(rounded, 3)} ✓</p>
                     </>
                   ) : (
-                    <p className="font-mono text-sm">∛{n} ≈ <strong className="text-accent text-base">{parseFloat(root.toFixed(4))}</strong> (irracional)</p>
-                  )}
-                </CalcResult>
-              )}
-            </div>
-          </CalcWrapper>
-        </div>
-      </section>
-    </AnimateOnScroll>
-  )
-}
-
-/* ================================================================
-   4. Propriedades da Raiz
-   ================================================================ */
-export function PropriedadesRaiz() {
-  const [val, setVal] = useState("48")
-
-  const n = parseInt(val)
-  const { outside, inside } = !isNaN(n) && n > 0 ? simplifyRadical(n) : { outside: 1, inside: n }
-  const isAlreadySimple = outside === 1
-
-  return (
-    <AnimateOnScroll>
-      <section id="propriedadesraiz">
-        <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={4} badgeColor={B2} title="Propriedades da Raiz" subtitle="√(a·b) = √a·√b e simplificação" />
-
-          <FormulaBox>
-            <div className="text-left text-base space-y-1">
-              <p>√(a × b) = √a × √b &nbsp;&nbsp; (a, b ≥ 0)</p>
-              <p className="text-sm text-muted-foreground">√(a ÷ b) = √a ÷ √b &nbsp;&nbsp; (√a)² = a</p>
-            </div>
-          </FormulaBox>
-
-          <div>
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Simplificar √48</h3>
-            <StepByStep steps={[
-              { text: "48 = 16 × 3" },
-              { text: "√48 = √(16 × 3) = √16 × √3" },
-              { text: "= 4√3 ≈ 6,928", highlight: true },
-            ]} />
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <DetailedExampleCard
-              title="√(9/4)"
-              steps={["√(9/4) = √9 ÷ √4", "= 3 ÷ 2 = 3/2"]}
-              conclusion="= 1,5"
-            />
-            <DetailedExampleCard
-              title="(√5)²"
-              steps={["(√5)² = 5"]}
-              conclusion="A raiz e o quadrado se cancelam"
-            />
-          </div>
-
-          <CalcWrapper title="Simplificador de raiz">
-            <NumInput label="Radicando" value={val} onChange={setVal} placeholder="48" />
-            <div className="mt-3">
-              {!isNaN(n) && n > 0 && (
-                <CalcResult>
-                  {isAlreadySimple ? (
-                    <p className="font-mono text-sm">√{n} já está na forma mais simples</p>
-                  ) : (
-                    <>
-                      <p className="font-mono text-sm">{n} = {outside * outside} × {inside}</p>
-                      <p className="font-mono text-sm">√{n} = <strong className="text-accent text-base">{outside}√{inside}</strong></p>
-                    </>
+                    <p className="text-sm text-destructive">O número {n} não é um cubo perfeito. Tente outro número.</p>
                   )}
                 </CalcResult>
               )}
@@ -507,7 +400,7 @@ export function OperacoesNC() {
                 <p className="font-mono text-sm">
                   {op === "mult"
                     ? `Coef: ${coef1} × ${coef2} = ${coef1 * coef2} | Exp: ${exp1} + ${exp2} = ${exp1 + exp2}`
-                    : `Coef: ${coef1} ÷ ${coef2} = ${parseFloat((coef1 / coef2).toPrecision(4))} | Exp: ${exp1} − ${exp2} = ${exp1 - exp2}`}
+                    : `Coef: ${coef1} ÷ ${coef2} = ${parseFloat((coef1 / coef2).toPrecision(4))} | Exp: ${exp1} − ${exp2} = ${exp1 - exp2}`}\
                 </p>
                 <p className="font-mono text-sm">Resultado: <strong className="text-accent text-base">{result}</strong></p>
               </CalcResult>
