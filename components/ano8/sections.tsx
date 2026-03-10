@@ -125,10 +125,6 @@ export function RadiciacaoRaizQuadrada() {
           <FormulaBox highlight>
             √a = b  ↔  b² = a &nbsp;&nbsp; (a ≥ 0)
           </FormulaBox>
-
-          <div className="flex flex-col items-center justify-center">
-            <img src="https://i.imgur.com/MjE3ZWR.png" alt="Exemplos de quadrados perfeitos: 1x1=1, 2x2=4, 3x3=9" className="w-48 h-48 mb-4" />
-          </div>
           
           <div className="grid md:grid-cols-1 gap-6">
             <DetailedExampleCard
@@ -182,10 +178,6 @@ export function RadiciacaoRaizCubica() {
           <FormulaBox>
             ∛a = b  ↔  b³ = a &nbsp;&nbsp; (existe para negativos!)
           </FormulaBox>
-
-          <div className="flex flex-col items-center justify-center">
-            <img src="https://i.imgur.com/jQY5Xm3.png" alt="Exemplos de cubos perfeitos: 1x1x1=1, 2x2x2=8, 3x3x3=27" className="w-48 h-48 mb-4" />
-          </div>
 
           <div className="grid md:grid-cols-1 gap-6">
             <DetailedExampleCard
