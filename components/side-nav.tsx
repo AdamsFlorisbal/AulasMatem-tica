@@ -3,17 +3,13 @@
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
-const SECTIONS = [
-  { id: "multiplicacao", label: "Mesma Base", number: 1 },
-  { id: "divisao", label: "Divis\u00E3o", number: 2 },
-  { id: "potencia-potencia", label: "Pot. de Pot.", number: 3 },
-  { id: "potencia-produto", label: "Pot. de Produto", number: 4 },
-  { id: "potencia-quociente", label: "Pot. de Quociente", number: 5 },
-  { id: "expoente-zero", label: "Expoente Zero", number: 6 },
-  { id: "expoente-negativo", label: "Exp. Negativo", number: 7 },
-]
+export interface NavSection {
+  id: string
+  label: string
+  number: number
+}
 
-export function SideNav() {
+export function SideNav({ sections }: { sections: NavSection[] }) {
   const [activeSection, setActiveSection] = useState("")
 
   useEffect(() => {
@@ -28,13 +24,13 @@ export function SideNav() {
       { rootMargin: "-40% 0px -40% 0px" }
     )
 
-    SECTIONS.forEach(({ id }) => {
+    sections.forEach(({ id }) => {
       const el = document.getElementById(id)
       if (el) observer.observe(el)
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [sections])
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
@@ -42,7 +38,7 @@ export function SideNav() {
 
   return (
     <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-3">
-      {SECTIONS.map(({ id, label, number }) => (
+      {sections.map(({ id, label, number }) => (
         <button
           key={id}
           onClick={() => scrollTo(id)}

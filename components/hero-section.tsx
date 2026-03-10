@@ -3,7 +3,23 @@
 import { Zap } from "lucide-react"
 import { AnimateOnScroll } from "@/components/animate-on-scroll"
 
-export function HeroSection() {
+export interface HeroSectionProps {
+  badge: string
+  titleLine1: string
+  titleLine2: string
+  titleLine2Color?: string
+  description: string
+  previews: Array<{ label: string; formulaNode: React.ReactNode }>
+}
+
+export function HeroSection({
+  badge,
+  titleLine1,
+  titleLine2,
+  titleLine2Color = "text-primary",
+  description,
+  previews,
+}: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4">
       {/* Background decoration */}
@@ -17,50 +33,29 @@ export function HeroSection() {
         <AnimateOnScroll animation="animate-scale-in">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 mb-8">
             <Zap className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">{"Aula 5 \u2013 Matem\u00E1tica"}</span>
+            <span className="text-sm font-medium text-primary">{badge}</span>
           </div>
         </AnimateOnScroll>
 
         <AnimateOnScroll animation="animate-fade-in-up" delay={200}>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-balance leading-tight">
-            <span className="text-foreground">Propriedades das</span>
+            <span className="text-foreground">{titleLine1}</span>
             <br />
-            <span className="text-primary">{"Pot\u00EAncias"}</span>
+            <span className={titleLine2Color}>{titleLine2}</span>
           </h1>
         </AnimateOnScroll>
 
         <AnimateOnScroll animation="animate-fade-in-up" delay={400}>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-pretty">
-            {"Descubra como as propriedades das pot\u00EAncias podem simplificar c\u00E1lculos complexos. Role para baixo e explore cada propriedade com exemplos visuais!"}
+            {description}
           </p>
         </AnimateOnScroll>
 
         <AnimateOnScroll animation="animate-fade-in-up" delay={600}>
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <FormulaPreview
-              label="Mesma base"
-              formulaNode={
-                <span>
-                  a<sup>m</sup> &middot; a<sup>n</sup> = a<sup>m+n</sup>
-                </span>
-              }
-            />
-            <FormulaPreview
-              label={"Pot\u00EAncia de pot\u00EAncia"}
-              formulaNode={
-                <span>
-                  (a<sup>m</sup>)<sup>n</sup> = a<sup>m&middot;n</sup>
-                </span>
-              }
-            />
-            <FormulaPreview
-              label="Expoente zero"
-              formulaNode={
-                <span>
-                  a<sup>0</sup> = 1
-                </span>
-              }
-            />
+            {previews.map((p, i) => (
+              <FormulaPreview key={i} label={p.label} formulaNode={p.formulaNode} />
+            ))}
           </div>
         </AnimateOnScroll>
 
@@ -68,8 +63,8 @@ export function HeroSection() {
           <div className="mt-16 flex items-center justify-center">
             <div className="animate-float">
               <svg width="24" height="40" viewBox="0 0 24 40" fill="none" className="text-muted-foreground">
-                <rect x="1" y="1" width="22" height="38" rx="11" stroke="currentColor" strokeWidth="2"/>
-                <circle cx="12" cy="12" r="3" fill="currentColor" className="animate-bounce"/>
+                <rect x="1" y="1" width="22" height="38" rx="11" stroke="currentColor" strokeWidth="2" />
+                <circle cx="12" cy="12" r="3" fill="currentColor" className="animate-bounce" />
               </svg>
             </div>
           </div>
