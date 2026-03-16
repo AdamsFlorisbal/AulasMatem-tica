@@ -41,6 +41,9 @@ function rng(min: number, max: number) {
 /* ================================================================
    Types
    ================================================================ */
+type SucessorAntecessorEx = { kind: "sucessor_antecessor"; n: number; type: "sucessor" | "antecessor" }
+type ComparacaoEx = { kind: "comparacao"; a: number; b: number }
+type OperacoesEx = { kind: "operacoes"; a: number; b: number; op: "+" | "-" | "×" | "÷" }
 type DivisibilidadeEx = { kind: "divisibilidade"; n: number; divisor: number }
 type PrimoEx = { kind: "primo"; n: number }
 type FatoracaoEx = { kind: "fatoracao"; n: number }
@@ -48,6 +51,9 @@ type MdcEx = { kind: "mdc"; a: number; b: number }
 type MmcEx = { kind: "mmc"; a: number; b: number }
 
 type Ano6Exercise =
+  | SucessorAntecessorEx
+  | ComparacaoEx
+  | OperacoesEx
   | DivisibilidadeEx
   | PrimoEx
   | FatoracaoEx
@@ -76,6 +82,19 @@ function isDivisible(n: number, d: number): boolean {
 
 function generate(): Ano6Exercise[] {
   const exercises: Ano6Exercise[] = []
+
+  // 2 sucessor/antecessor
+  exercises.push({ kind: "sucessor_antecessor", n: rng(100, 999), type: "sucessor" })
+  exercises.push({ kind: "sucessor_antecessor", n: rng(100, 999), type: "antecessor" })
+
+  // 2 comparacao
+  exercises.push({ kind: "comparacao", a: rng(10, 100), b: rng(10, 100) })
+  exercises.push({ kind: "comparacao", a: rng(100, 200), b: rng(100, 200) })
+  
+  // 2 operacoes
+  exercises.push({ kind: "operacoes", a: rng(10, 50), b: rng(10, 50), op: "+" })
+  exercises.push({ kind: "operacoes", a: rng(50, 100), b: rng(10, 50), op: "-" })
+
 
   // 2 divisibilidade
   for (let i = 0; i < 2; i++) {
@@ -117,6 +136,27 @@ function generate(): Ano6Exercise[] {
    ================================================================ */
 function renderQuestion(ex: Ano6Exercise): React.ReactNode {
   switch (ex.kind) {
+    case "sucessor_antecessor":
+      return (
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-1">Qual é o <strong>{ex.type}</strong> de</p>
+          <p className="text-4xl font-black text-foreground">{ex.n}</p>
+        </div>
+      )
+    case "comparacao":
+      return (
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-1">Compare os números usando {`">" ou "<"`}</p>
+          <p className="text-4xl font-black text-foreground">{ex.a} ___ {ex.b}</p>
+        </div>
+      )
+    case "operacoes":
+      return (
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-1">Calcule a {ex.op === "+" ? "soma" : "diferença"}</p>
+          <p className="text-4xl font-black text-foreground">{ex.a} {ex.op} {ex.b}</p>
+        </div>
+      )
     case "divisibilidade":
       return (
         <div className="text-center">
@@ -163,6 +203,26 @@ function renderQuestion(ex: Ano6Exercise): React.ReactNode {
 
 function renderAnswer(ex: Ano6Exercise): React.ReactNode {
   switch (ex.kind) {
+    case "sucessor_antecessor": {
+      const res = ex.type === "sucessor" ? ex.n + 1 : ex.n - 1
+      return (
+        <p className="text-base text-foreground">O {ex.type} de {ex.n} é <strong className="text-accent">{res}</strong>.</p>
+      )
+    }
+    case "comparacao": {
+      const symbol = ex.a > ex.b ? ">" : ex.a < ex.b ? "<" : "="
+      return (
+        <p className="text-base text-foreground">
+          {ex.a} <strong className="text-accent">{symbol}</strong> {ex.b}
+        </p>
+      )
+    }
+    case "operacoes": {
+      const res = ex.op === "+" ? ex.a + ex.b : ex.a - ex.b
+      return (
+         <p className="text-base text-foreground">{ex.a} {ex.op} {ex.b} = <strong className="text-accent">{res}</strong></p>
+      )
+    }
     case "divisibilidade": {
       const res = isDivisible(ex.n, ex.divisor)
       const rule: Record<number, string> = {
@@ -253,6 +313,12 @@ function renderAnswer(ex: Ano6Exercise): React.ReactNode {
 
 function getHint(ex: Ano6Exercise): string {
   switch (ex.kind) {
+    case "sucessor_antecessor":
+      return `Sucessor é o número que vem depois (+1), antecessor é o que vem antes (-1).`
+    case "comparacao":
+      return `O número com mais dígitos é maior. Se tiverem a mesma quantidade, compare da esquerda para a direita.`
+    case "operacoes":
+      return `Alinhe os números e realize a operação coluna por coluna.`
     case "divisibilidade":
       return `Aplique a regra de divisibilidade por ${ex.divisor} ao número ${ex.n}.`
     case "primo":
@@ -267,6 +333,9 @@ function getHint(ex: Ano6Exercise): string {
 }
 
 const META_MAP = {
+  sucessor_antecessor: { label: "Sucessor/Antecessor", color: "text-sky-500", bg: "bg-sky-500/10", border: "border-sky-500/20" },
+  comparacao:       { label: "Comparação", color: "text-lime-500", bg: "bg-lime-500/10", border: "border-lime-500/20" },
+  operacoes:        { label: "Operações", color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20" },
   divisibilidade: { label: "Divisibilidade", color: "text-chart-3", bg: "bg-chart-3/10", border: "border-chart-3/20" },
   primo:          { label: "Nº Primo",       color: "text-primary",  bg: "bg-primary/10",  border: "border-primary/20" },
   fatoracao:      { label: "Fatoração",       color: "text-accent",   bg: "bg-accent/10",   border: "border-accent/20" },
@@ -280,5 +349,6 @@ export const Ano6ExercisesSection = createExerciseSection<Ano6Exercise>({
   renderAnswer,
   getHint,
   getMeta: (ex) => META_MAP[ex.kind],
-  headerDescription: "Divisibilidade, números primos, fatoração, MDC e MMC",
+  headerDescription: "Exercícios de matemática para o 6º ano",
 })
+
