@@ -62,9 +62,9 @@ export function ConjuntoNaturais() {
           <div className="mt-8 rounded-xl bg-secondary/50 p-6">
             <h3 className="text-lg font-bold text-primary mb-3">1. Representação do Conjunto</h3>
             <p className="text-foreground leading-relaxed mb-4">Usamos a letra maiúscula $\mathbb{N}$ para representar esse conjunto. Ele começa pelo zero e não tem fim (é infinito).</p>
-            <FormulaBox>$\mathbb{N} = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, \dots\}$</FormulaBox>
+            <FormulaBox>$\mathbb{N} = \\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, \\dots\\}$</FormulaBox>
             <p className="text-sm text-muted-foreground mt-4">O símbolo $(\dots)$: As reticências indicam que o conjunto é infinito.</p>
-            <p className="text-sm text-muted-foreground mt-2">$\mathbb{N}^*$: Quando vemos o símbolo do asterisco, significa que o zero foi excluído do conjunto: $\mathbb{N}^* = \{1, 2, 3, 4, \dots\}$.</p>
+            <p className="text-sm text-muted-foreground mt-2">$\mathbb{N}^*$: Quando vemos o símbolo do asterisco, significa que o zero foi excluído do conjunto: $\mathbb{N}^* = \\{1, 2, 3, 4, \\dots\\}$.</p>
           </div>
         </AnimateOnScroll>
 
