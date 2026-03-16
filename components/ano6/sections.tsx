@@ -52,6 +52,111 @@ function factorString(n: number): string {
   f.forEach(p => map[p] = (map[p] ?? 0) + 1)
   return Object.entries(map).map(([p, e]) => e === 1 ? p : `${p}²`.replace("2", e > 2 ? String(e) : "²")).join(" × ")
 }
+export function ConjuntoNaturais() {
+  return (
+    <section id="conjunto" className="scroll-mt-20">
+      <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
+        <SectionHeader number={1} badgeColor={B1} title="O Conjunto dos Números Naturais ($\mathbb{N}$)" subtitle="Os Números Naturais são aqueles que utilizamos para contar coisas inteiras no nosso dia a dia. Esse conjunto surgiu da necessidade humana de contar objetos, animais e alimentos." />
+
+        <AnimateOnScroll delay={200}>
+          <div className="mt-8 rounded-xl bg-secondary/50 p-6">
+            <h3 className="text-lg font-bold text-primary mb-3">1. Representação do Conjunto</h3>
+            <p className="text-foreground leading-relaxed mb-4">Usamos a letra maiúscula $\mathbb{N}$ para representar esse conjunto. Ele começa pelo zero e não tem fim (é infinito).</p>
+            <FormulaBox>$\mathbb{N} = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, \dots\}$</FormulaBox>
+            <p className="text-sm text-muted-foreground mt-4">O símbolo $(\dots)$: As reticências indicam que o conjunto é infinito.</p>
+            <p className="text-sm text-muted-foreground mt-2">$\mathbb{N}^*$: Quando vemos o símbolo do asterisco, significa que o zero foi excluído do conjunto: $\mathbb{N}^* = \{1, 2, 3, 4, \dots\}$.</p>
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={300}>
+          <div className="mt-6 rounded-xl bg-secondary/30 p-6">
+            <h3 className="text-lg font-bold text-primary mb-3">2. Sucessor e Antecessor</h3>
+            <p className="text-foreground leading-relaxed mb-4">Para entender a ordem dos números, usamos dois conceitos simples:</p>
+            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Sucessor:</strong> É o número que vem imediatamente depois. Para achar o sucessor, somamos 1 ao número.</p>
+            <FormulaBox>Exemplo: O sucessor de 15 é $15 + 1 = 16$.</FormulaBox>
+            <p className="text-foreground leading-relaxed my-2"><strong className="text-chart-3">Antecessor:</strong> É o número que vem imediatamente antes. Para achar o antecessor, subtraímos 1 do número.</p>
+            <FormulaBox>Exemplo: O antecessor de 20 é $20 - 1 = 19$.</FormulaBox>
+            <p className="text-sm text-amber-500 mt-4">⚠ Importante: No conjunto dos Números Naturais, o número 0 não possui antecessor.</p>
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={400}>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <DetailedExampleCard title="3. Números Consecutivos" steps={["Números consecutivos são aqueles que seguem uma sequência sem saltos.", "Exemplo: 7, 8 e 9 são números consecutivos.", "Exemplo: 100 e 101 são números consecutivos."]} />
+            <DetailedExampleCard title="4. A Reta Numérica" steps={["Podemos organizar os números naturais em uma reta para visualizar sua ordem. A distância entre cada número deve ser sempre a mesma.", "Os números crescem da esquerda para a direita.", "Quanto mais à direita um número estiver, maior ele é."]} />
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={500}>
+          <div className="mt-6 rounded-xl bg-secondary/50 p-6">
+            <h3 className="text-lg font-bold text-primary mb-3">5. Comparação de Números</h3>
+            <p className="text-foreground leading-relaxed mb-4">Para comparar dois números naturais, utilizamos os seguintes símbolos:</p>
+            <div className="flex justify-center gap-4">
+                <span className="font-mono text-2xl text-chart-3">&gt; (Maior que)</span>
+                <span className="font-mono text-2xl text-chart-3">&lt; (Menor que)</span>
+                <span className="font-mono text-2xl text-chart-3">= (Igual a)</span>
+            </div>
+            <p className="text-sm text-muted-foreground mt-4 text-center">Dica para os alunos: A "boca" do sinal sempre fica aberta para o lado do número maior.</p>
+            <div className="mt-4 flex justify-center gap-4">
+                <FormulaBox>$15 > 10$ (15 é maior que 10)</FormulaBox>
+                <FormulaBox>$8 < 20$ (8 é menor que 20)</FormulaBox>
+            </div>
+          </div>
+        </AnimateOnScroll>
+      </div>
+    </section>
+  )
+}
+export function OperacoesNaturais() {
+  return (
+    <section id="operacoes" className="scroll-mt-20">
+      <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
+        <SectionHeader number={2} badgeColor={B2} title="Operações com Números Naturais" subtitle="As operações fundamentais nos permitem resolver problemas de contagem, partilha, comparação e acúmulo." />
+
+        <AnimateOnScroll delay={200}>
+          <div className="mt-8 rounded-xl bg-secondary/50 p-6">
+            <h3 className="text-lg font-bold text-primary mb-3">1. Adição (+)</h3>
+            <p className="text-foreground leading-relaxed mb-4">A adição é utilizada quando precisamos juntar quantidades ou acrescentar uma quantidade a outra.</p>
+            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Termos da Adição:</strong> As quantidades que somamos são chamadas de parcelas. O resultado é chamado de soma ou total.</p>
+            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Propriedade Importante (Comutativa):</strong> A ordem das parcelas não altera a soma.</p>
+            <FormulaBox>Exemplo: $15 + 10 = 25$ e $10 + 15 = 25$.</FormulaBox>
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={300}>
+          <div className="mt-6 rounded-xl bg-secondary/30 p-6">
+            <h3 className="text-lg font-bold text-primary mb-3">2. Subtração (−)</h3>
+            <p className="text-foreground leading-relaxed mb-4">A subtração é usada para retirar uma quantidade de outra, comparar valores ou descobrir quanto falta para completar uma quantidade.</p>
+            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Termos da Subtração:</strong> Minuendo: A quantidade de onde vamos tirar. Subtraendo: A quantidade a ser retirada. Resto ou Diferença: O resultado da operação.</p>
+            <p className="text-sm text-amber-500">⚠ Atenção: No conjunto dos Números Naturais ($\mathbb{N}$), a subtração $a - b$ só é possível se o primeiro número ($a$) for maior ou igual ao segundo ($b$).</p>
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={400}>
+          <div className="mt-6 rounded-xl bg-secondary/50 p-6">
+            <h3 className="text-lg font-bold text-primary mb-3">3. Multiplicação ($\times$ ou $\cdot$)</h3>
+            <p className="text-foreground leading-relaxed mb-4">A multiplicação é a forma resumida de escrever uma adição de parcelas iguais.</p>
+            <FormulaBox>Exemplo: $5 + 5 + 5$ é o mesmo que $3 \times 5 = 15$.</FormulaBox>
+            <p className="text-foreground leading-relaxed my-2"><strong className="text-chart-3">Termos da Multiplicação:</strong> Os números multiplicados são os fatores. O resultado é o produto.</p>
+            <p className="text-foreground leading-relaxed my-2"><strong className="text-chart-3">Elemento Neutro:</strong> O número 1 é o elemento neutro da multiplicação. Qualquer número multiplicado por 1 é ele mesmo ($15 \cdot 1 = 15$).</p>
+            <p className="text-foreground leading-relaxed"><strong className="text-chart-3">Zero na Multiplicação:</strong> Qualquer número multiplicado por 0 é igual a 0.</p>
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll delay={500}>
+          <div className="mt-6 rounded-xl bg-secondary/30 p-6">
+            <h3 className="text-lg font-bold text-primary mb-3">4. Divisão ($\div$ ou $ : $ )</h3>
+            <p className="text-foreground leading-relaxed mb-4">A divisão é utilizada para repartir uma quantidade em partes iguais ou para saber quantas vezes uma quantidade cabe em outra.</p>
+            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Termos da Divisão:</strong> Dividendo: O número que será dividido. Divisor: Em quantas partes vamos dividir. Quociente: O resultado da divisão. Resto: O que sobra da divisão.</p>
+            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Divisão Exata:</strong> Quando o resto é igual a zero.</p>
+            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Divisão Não Exata:</strong> Quando o resto é diferente de zero (mas sempre menor que o divisor).</p>
+            <p className="text-sm text-red-500 font-bold">🚨 Regra de Ouro: Nunca existe divisão por zero!</p>
+          </div>
+        </AnimateOnScroll>
+      </div>
+    </section>
+  )
+}
 
 /* ================================================================
    SEÇÃO 1 — Divisibilidade
@@ -81,7 +186,7 @@ export function NaturaisDivisibilidade() {
   return (
     <section id="divisibilidade" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={1} badgeColor={B1} title="Critérios de Divisibilidade" subtitle="Descubra os divisores sem fazer a divisão" />
+        <SectionHeader number={3} badgeColor={B1} title="Critérios de Divisibilidade" subtitle="Descubra os divisores sem fazer a divisão" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>n é divisível por d ↔ n ÷ d tem resto 0</FormulaBox>
@@ -163,7 +268,7 @@ export function NaturaisFatoracao() {
   return (
     <section id="fatoracao" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={2} badgeColor={B2} title="Fatoração em Primos" subtitle="Todo número natural é produto de fatores primos" />
+        <SectionHeader number={4} badgeColor={B2} title="Fatoração em Primos" subtitle="Todo número natural é produto de fatores primos" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>60 = 2 × 2 × 3 × 5 = 2² × 3 × 5</FormulaBox>
@@ -227,10 +332,10 @@ export function NaturaisPrimos() {
   return (
     <section id="primos" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={3} badgeColor={B1} title="Números Primos" subtitle="Divisíveis apenas por 1 e por si mesmos" />
+        <SectionHeader number={5} badgeColor={B1} title="Números Primos" subtitle="Divisíveis apenas por 1 e por si mesmos" />
 
         <AnimateOnScroll delay={200}>
-          <FormulaBox highlight>p é primo ↔ p &gt; 1 e seus únicos divisores são 1 e p</FormulaBox>
+          <FormulaBox highlight>p é primo ↔ p > 1 e seus únicos divisores são 1 e p</FormulaBox>
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={300}>
@@ -295,7 +400,7 @@ export function NaturaisMDC() {
   return (
     <section id="mdc" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={4} badgeColor={B2} title="MDC — Máximo Divisor Comum" subtitle="O maior número que divide dois números ao mesmo tempo" />
+        <SectionHeader number={6} badgeColor={B2} title="MDC — Máximo Divisor Comum" subtitle="O maior número que divide dois números ao mesmo tempo" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>MDC(12, 8) = 4</FormulaBox>
@@ -362,7 +467,7 @@ export function NaturaisMMC() {
   return (
     <section id="mmc" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={5} badgeColor={B1} title="MMC — Mínimo Múltiplo Comum" subtitle="O menor número que é múltiplo dos dois ao mesmo tempo" />
+        <SectionHeader number={7} badgeColor={B1} title="MMC — Mínimo Múltiplo Comum" subtitle="O menor número que é múltiplo dos dois ao mesmo tempo" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>MMC(4, 6) = 12</FormulaBox>
@@ -427,7 +532,7 @@ export function NaturaisAplicacoes() {
   return (
     <section id="aplicacoes" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={6} badgeColor={B2} title="Aplicações" subtitle="MDC e MMC em problemas do dia a dia" />
+        <SectionHeader number={8} badgeColor={B2} title="Aplicações" subtitle="MDC e MMC em problemas do dia a dia" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>MDC → maior divisor comum · MMC → menor múltiplo comum</FormulaBox>
