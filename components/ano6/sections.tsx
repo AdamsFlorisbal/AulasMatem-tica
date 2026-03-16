@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react"
 import { AnimateOnScroll } from "@/components/animate-on-scroll"
 import {
@@ -352,6 +354,17 @@ export function OperacoesNaturais() {
   )
 }
 
+// LaTeX formulas with proper escaping
+const formulaPotenciacao = `$a^n = \\underbrace{a \\times a \\times \\dots \\times a}_{\\text{n vezes}}$`
+const formulaPotenciacao2 = `$2^4 = 2 \\times 2 \\times 2 \\times 2 = 16$`
+const formulaSqrt = `$\\sqrt{25} = 5$`
+const formulasQuadradosPerfeitos = [
+  `$1^2=1 \\rightarrow \\sqrt{1}=1$`,
+  `$2^2=4 \\rightarrow \\sqrt{4}=2$`,
+  `$3^2=9 \\rightarrow \\sqrt{9}=3$`,
+  `$10^2=100 \\rightarrow \\sqrt{100}=10$`
+]
+
 export function NaturaisPotenciacaoRaiz() {
   return (
     <section id="potenciacao" className="scroll-mt-20">
@@ -362,14 +375,14 @@ export function NaturaisPotenciacaoRaiz() {
           <div className="mt-8 rounded-xl bg-secondary/50 p-6">
             <h3 className="text-lg font-bold text-primary mb-3">1. Potenciação de Números Naturais</h3>
             <p className="text-foreground leading-relaxed mb-4">A potenciação é uma forma de escrever uma multiplicação de fatores iguais. Em vez de escrever $5 \times 5 \times 5$, podemos simplificar para $5^3$.</p>
-            <FormulaBox>$a^n = \underbrace{a \times a \times \dots \times a}_{\text{n vezes}}$</FormulaBox>
+            <FormulaBox>{formulaPotenciacao}</FormulaBox>
             <div className="mt-4 grid gap-4 md:grid-cols-3">
               <p className="text-center"><strong className="text-chart-3">a</strong>: Base (o número que se repete)</p>
               <p className="text-center"><strong className="text-chart-3">n</strong>: Expoente (quantas vezes a base se repete)</p>
               <p className="text-center"><strong className="text-chart-3">aⁿ</strong>: Potência (o resultado)</p>
             </div>
             <div className="mt-4 flex justify-center">
-              <DetailedExampleCard title="Exemplo: 2⁴" steps={["Base: 2, Expoente: 4", "$2^4 = 2 \times 2 \times 2 \times 2 = 16$"]} conclusion="Leitura: dois elevado à quarta potência" />
+              <DetailedExampleCard title="Exemplo: 2⁴" steps={["Base: 2, Expoente: 4", formulaPotenciacao2]} conclusion="Leitura: dois elevado à quarta potência" />
             </div>
           </div>
         </AnimateOnScroll>
@@ -401,12 +414,12 @@ export function NaturaisPotenciacaoRaiz() {
             <h3 className="text-lg font-bold text-primary mb-3">3. Raiz Quadrada Exata</h3>
             <p className="text-foreground leading-relaxed mb-4">A raiz quadrada é a operação inversa da potenciação com expoente 2. Perguntar "Qual a raiz quadrada de 25?" é o mesmo que perguntar "Que número elevado ao quadrado dá 25?".</p>
             <div className="flex justify-center gap-4">
-              <FormulaBox>$\sqrt{25} = 5$</FormulaBox>
+              <FormulaBox>{formulaSqrt}</FormulaBox>
               <FormulaBox>porque $5^2 = 25$</FormulaBox>
             </div>
             <p className="text-sm text-muted-foreground mt-4 text-center">Apenas números que são "quadrados perfeitos" (resultado de um número multiplicado por ele mesmo) têm raiz quadrada exata.</p>
             <div className="mt-4 flex justify-center">
-              <DetailedExampleCard title="Quadrados Perfeitos" steps={["$1^2=1 \rightarrow \sqrt{1}=1$", "$2^2=4 \rightarrow \sqrt{4}=2$", "$3^2=9 \rightarrow \sqrt{9}=3$", "$10^2=100 \rightarrow \sqrt{100}=10$"]} />
+              <DetailedExampleCard title="Quadrados Perfeitos" steps={formulasQuadradosPerfeitos} />
             </div>
           </div>
         </AnimateOnScroll>
