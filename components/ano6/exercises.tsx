@@ -44,6 +44,8 @@ function rng(min: number, max: number) {
 type SucessorAntecessorEx = { kind: "sucessor_antecessor"; n: number; type: "sucessor" | "antecessor" }
 type ComparacaoEx = { kind: "comparacao"; a: number; b: number }
 type OperacoesEx = { kind: "operacoes"; a: number; b: number; op: "+" | "-" | "×" | "÷" }
+type PotenciacaoEx = { kind: "potenciacao"; base: number; expoente: number }
+type RaizQuadradaEx = { kind: "raiz_quadrada"; n: number }
 type DivisibilidadeEx = { kind: "divisibilidade"; n: number; divisor: number }
 type PrimoEx = { kind: "primo"; n: number }
 type FatoracaoEx = { kind: "fatoracao"; n: number }
@@ -54,6 +56,8 @@ type Ano6Exercise =
   | SucessorAntecessorEx
   | ComparacaoEx
   | OperacoesEx
+  | PotenciacaoEx
+  | RaizQuadradaEx
   | DivisibilidadeEx
   | PrimoEx
   | FatoracaoEx
@@ -95,6 +99,16 @@ function generate(): Ano6Exercise[] {
   exercises.push({ kind: "operacoes", a: rng(10, 50), b: rng(10, 50), op: "+" })
   exercises.push({ kind: "operacoes", a: rng(50, 100), b: rng(10, 50), op: "-" })
 
+  // 2 potenciacao
+  exercises.push({ kind: "potenciacao", base: rng(2, 10), expoente: rng(2, 5) })
+  exercises.push({ kind: "potenciacao", base: rng(2, 10), expoente: rng(2, 5) })
+
+  // 2 raiz quadrada (apenas quadrados perfeitos)
+  const perfectSquares = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+  for (let i = 0; i < 2; i++) {
+    const n = perfectSquares[rng(0, perfectSquares.length - 1)]
+    exercises.push({ kind: "raiz_quadrada", n })
+  }
 
   // 2 divisibilidade
   for (let i = 0; i < 2; i++) {
@@ -155,6 +169,24 @@ function renderQuestion(ex: Ano6Exercise): React.ReactNode {
         <div className="text-center">
           <p className="text-sm text-muted-foreground mb-1">Calcule a {ex.op === "+" ? "soma" : "diferença"}</p>
           <p className="text-4xl font-black text-foreground">{ex.a} {ex.op} {ex.b}</p>
+        </div>
+      )
+    case "potenciacao":
+      return (
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-1">Calcule a potência</p>
+          <p className="text-4xl font-black text-foreground">
+            {ex.base}<sup className="text-2xl">{ex.expoente}</sup>
+          </p>
+        </div>
+      )
+    case "raiz_quadrada":
+      return (
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-1">Calcule a raiz quadrada</p>
+          <p className="text-4xl font-black text-foreground">
+            √{ex.n}
+          </p>
         </div>
       )
     case "divisibilidade":
@@ -221,6 +253,39 @@ function renderAnswer(ex: Ano6Exercise): React.ReactNode {
       const res = ex.op === "+" ? ex.a + ex.b : ex.a - ex.b
       return (
          <p className="text-base text-foreground">{ex.a} {ex.op} {ex.b} = <strong className="text-accent">{res}</strong></p>
+      )
+    }
+    case "potenciacao": {
+      const res = Math.pow(ex.base, ex.expoente)
+      const expansion = Array(ex.expoente).fill(ex.base).join(" × ")
+      return (
+        <div className="space-y-2 text-sm text-foreground">
+          <p><strong>Expansão:</strong> {expansion}</p>
+          <p className="text-base">
+            {ex.base}<sup>{ex.expoente}</sup> = <strong className="text-accent">{res}</strong>
+          </p>
+        </div>
+      )
+    }
+    case "raiz_quadrada": {
+      const res = Math.sqrt(ex.n)
+      const isPerfeito = res === Math.floor(res)
+      return (
+        <div className="space-y-2 text-sm text-foreground">
+          {isPerfeito && (
+            <>
+              <p><strong>Verificação:</strong> {Math.floor(res)}² = {ex.n}</p>
+              <p className="text-base">
+                √{ex.n} = <strong className="text-accent">{Math.floor(res)}</strong>
+              </p>
+            </>
+          )}
+          {!isPerfeito && (
+            <p className="text-base">
+              √{ex.n} ≈ <strong className="text-accent">{res.toFixed(2)}</strong>
+            </p>
+          )}
+        </div>
       )
     }
     case "divisibilidade": {
@@ -319,6 +384,10 @@ function getHint(ex: Ano6Exercise): string {
       return `O número com mais dígitos é maior. Se tiverem a mesma quantidade, compare da esquerda para a direita.`
     case "operacoes":
       return `Alinhe os números e realize a operação coluna por coluna.`
+    case "potenciacao":
+      return `Potenciação é multiplicar a base por si mesma quantas vezes o expoente indicar. ${ex.base}^${ex.expoente} = ${ex.base} × ${ex.base}... (${ex.expoente} vezes)`
+    case "raiz_quadrada":
+      return `Raiz quadrada é o número que elevado ao quadrado dá o radicando. Procure por um número que multiplicado por ele mesmo resulte em ${ex.n}.`
     case "divisibilidade":
       return `Aplique a regra de divisibilidade por ${ex.divisor} ao número ${ex.n}.`
     case "primo":
@@ -336,6 +405,8 @@ const META_MAP = {
   sucessor_antecessor: { label: "Sucessor/Antecessor", color: "text-sky-500", bg: "bg-sky-500/10", border: "border-sky-500/20" },
   comparacao:       { label: "Comparação", color: "text-lime-500", bg: "bg-lime-500/10", border: "border-lime-500/20" },
   operacoes:        { label: "Operações", color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20" },
+  potenciacao:      { label: "Potenciação", color: "text-chart-3", bg: "bg-chart-3/10", border: "border-chart-3/20" },
+  raiz_quadrada:    { label: "Raiz Quadrada", color: "text-primary", bg: "bg-primary/10", border: "border-primary/20" },
   divisibilidade: { label: "Divisibilidade", color: "text-chart-3", bg: "bg-chart-3/10", border: "border-chart-3/20" },
   primo:          { label: "Nº Primo",       color: "text-primary",  bg: "bg-primary/10",  border: "border-primary/20" },
   fatoracao:      { label: "Fatoração",       color: "text-accent",   bg: "bg-accent/10",   border: "border-accent/20" },

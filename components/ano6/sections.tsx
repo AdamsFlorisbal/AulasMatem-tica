@@ -357,6 +357,7 @@ export function OperacoesNaturais() {
 // LaTeX formulas with proper escaping
 const formulaPotenciacao = `$a^n = \\underbrace{a \\times a \\times \\dots \\times a}_{\\text{n vezes}}$`
 const formulaPotenciacao2 = `$2^4 = 2 \\times 2 \\times 2 \\times 2 = 16$`
+const formulaPotenciacao3Exemplo = `$5 \\times 5 \\times 5 = 5^3$`
 const formulaSqrt = `$\\sqrt{25} = 5$`
 const formulasQuadradosPerfeitos = [
   `$1^2=1 \\rightarrow \\sqrt{1}=1$`,
@@ -374,7 +375,10 @@ export function NaturaisPotenciacaoRaiz() {
         <AnimateOnScroll delay={200}>
           <div className="mt-8 rounded-xl bg-secondary/50 p-6">
             <h3 className="text-lg font-bold text-primary mb-3">1. Potenciação de Números Naturais</h3>
-            <p className="text-foreground leading-relaxed mb-4">A potenciação é uma forma de escrever uma multiplicação de fatores iguais. Em vez de escrever $5 \times 5 \times 5$, podemos simplificar para $5^3$.</p>
+            <p className="text-foreground leading-relaxed mb-4">A potenciação é uma forma de escrever uma multiplicação de fatores iguais. Veja o exemplo:</p>
+            <div className="mb-4">
+              <FormulaBox>{formulaPotenciacao3Exemplo}</FormulaBox>
+            </div>
             <FormulaBox>{formulaPotenciacao}</FormulaBox>
             <div className="mt-4 grid gap-4 md:grid-cols-3">
               <p className="text-center"><strong className="text-chart-3">a</strong>: Base (o número que se repete)</p>
@@ -388,10 +392,16 @@ export function NaturaisPotenciacaoRaiz() {
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={300}>
-          <div className="mt-6 rounded-xl bg-secondary/30 p-6">
+          <div className="mt-6 rounded-xl bg-secondary/30 p-6 space-y-4">
             <h3 className="text-lg font-bold text-primary mb-3">Casos Especiais</h3>
-            <p><strong className="text-chart-3">Expoente 1:</strong> Todo número elevado a 1 é ele mesmo. <FormulaBox>$7^1 = 7$</FormulaBox></p>
-            <p className="mt-2"><strong className="text-chart-3">Expoente 0:</strong> Todo número (diferente de zero) elevado a 0 é igual a 1. <FormulaBox>$9^0 = 1$</FormulaBox></p>
+            <div className="space-y-2">
+              <p><strong className="text-chart-3">Expoente 1:</strong> Todo número elevado a 1 é ele mesmo.</p>
+              <FormulaBox>$7^1 = 7$</FormulaBox>
+            </div>
+            <div className="space-y-2">
+              <p><strong className="text-chart-3">Expoente 0:</strong> Todo número (diferente de zero) elevado a 0 é igual a 1.</p>
+              <FormulaBox>$9^0 = 1$</FormulaBox>
+            </div>
           </div>
         </AnimateOnScroll>
 
@@ -404,8 +414,9 @@ export function NaturaisPotenciacaoRaiz() {
               { text: "$10^1 = 10$" },
               { text: "$10^2 = 100$" },
               { text: "$10^3 = 1000$" },
-              { text: "$10^6 = 1.000.000$ (um milhão)", highlight: true },
+              { text: "$10^6 = 1000000$", highlight: true },
             ]} />
+            <p className="text-sm text-muted-foreground mt-4 text-center">Lembre-se: O expoente 6 significa que temos 6 zeros após o 1, formando 1 milhão. Muito útil para representar números grandes de forma simples!</p>
           </div>
         </AnimateOnScroll>
 
@@ -413,9 +424,12 @@ export function NaturaisPotenciacaoRaiz() {
           <div className="mt-6 rounded-xl bg-secondary/30 p-6">
             <h3 className="text-lg font-bold text-primary mb-3">3. Raiz Quadrada Exata</h3>
             <p className="text-foreground leading-relaxed mb-4">A raiz quadrada é a operação inversa da potenciação com expoente 2. Perguntar "Qual a raiz quadrada de 25?" é o mesmo que perguntar "Que número elevado ao quadrado dá 25?".</p>
-            <div className="flex justify-center gap-4">
+            <div className="space-y-3">
               <FormulaBox>{formulaSqrt}</FormulaBox>
-              <FormulaBox>porque $5^2 = 25$</FormulaBox>
+              <div className="text-center">
+                <p className="text-foreground mb-2">porque</p>
+                <FormulaBox>$5^2 = 25$</FormulaBox>
+              </div>
             </div>
             <p className="text-sm text-muted-foreground mt-4 text-center">Apenas números que são "quadrados perfeitos" (resultado de um número multiplicado por ele mesmo) têm raiz quadrada exata.</p>
             <div className="mt-4 flex justify-center">
@@ -423,8 +437,108 @@ export function NaturaisPotenciacaoRaiz() {
             </div>
           </div>
         </AnimateOnScroll>
+
+        <PotenciacaoRaizCalculator />
       </div>
     </section>
+  )
+}
+
+/* ================================================================
+   Calculadora interativa de Potenciação e Raiz Quadrada
+   ================================================================ */
+function PotenciacaoRaizCalculator() {
+  const [base, setBase] = useState("2")
+  const [expoente, setExpoente] = useState("4")
+  const [radicando, setRadicando] = useState("25")
+
+  const baseNum = parseInt(base) || 0
+  const exponenteNum = parseInt(expoente) || 0
+  const radicandoNum = parseInt(radicando) || 0
+
+  const potencia = Math.pow(baseNum, exponenteNum)
+  const raizQuadrada = Math.sqrt(radicandoNum)
+  const ehQuadradoPerfeito = raizQuadrada === Math.floor(raizQuadrada)
+
+  return (
+    <AnimateOnScroll delay={600}>
+      <div className="mt-8 rounded-xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
+        <h3 className="text-lg font-bold text-primary mb-6">Calculadora: Potenciação e Raiz Quadrada</h3>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Calculadora de Potenciação */}
+          <div className="space-y-4">
+            <h4 className="font-bold text-chart-3">Calcular Potenciação</h4>
+            <div className="space-y-3">
+              <div>
+                <label className="text-sm font-semibold text-foreground block mb-2">
+                  Base:
+                </label>
+                <input
+                  type="number"
+                  value={base}
+                  onChange={(e) => setBase(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-card text-foreground"
+                  min="1"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-semibold text-foreground block mb-2">
+                  Expoente:
+                </label>
+                <input
+                  type="number"
+                  value={expoente}
+                  onChange={(e) => setExpoente(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-card text-foreground"
+                  min="1"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 p-4 rounded-lg bg-secondary/50 border border-border">
+              <p className="text-sm text-muted-foreground mb-2">Resultado:</p>
+              <FormulaBox>{`$${baseNum}^${exponenteNum} = ${potencia}$`}</FormulaBox>
+            </div>
+          </div>
+
+          {/* Calculadora de Raiz Quadrada */}
+          <div className="space-y-4">
+            <h4 className="font-bold text-accent">Calcular Raiz Quadrada</h4>
+            <div className="space-y-3">
+              <div>
+                <label className="text-sm font-semibold text-foreground block mb-2">
+                  Número (radicando):
+                </label>
+                <input
+                  type="number"
+                  value={radicando}
+                  onChange={(e) => setRadicando(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-card text-foreground"
+                  min="1"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 p-4 rounded-lg bg-secondary/50 border border-border">
+              <p className="text-sm text-muted-foreground mb-2">Resultado:</p>
+              <FormulaBox>{`$\\sqrt{${radicandoNum}} = ${raizQuadrada.toFixed(2)}$`}</FormulaBox>
+              {ehQuadradoPerfeito && (
+                <p className="text-sm text-accent font-semibold mt-3">
+                  ✓ {radicandoNum} é um quadrado perfeito!
+                </p>
+              )}
+              {!ehQuadradoPerfeito && radicandoNum > 0 && (
+                <p className="text-sm text-muted-foreground mt-3">
+                  {radicandoNum} não é um quadrado perfeito (raiz não é inteira)
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </AnimateOnScroll>
   )
 }
 

@@ -3,6 +3,7 @@ import { SummarySection, type SummaryItem } from "@/components/summary-section"
 import {
   ConjuntoNaturais,
   OperacoesNaturais,
+  NaturaisPotenciacaoRaiz,
   NaturaisDivisibilidade,
   NaturaisFatoracao,
   NaturaisPrimos,
@@ -21,21 +22,22 @@ export const metadata: Metadata = {
 const NAV_SECTIONS = [
   { id: "conjunto",       label: "Conjunto ℕ",      number: 1 },
   { id: "operacoes",      label: "Operações",        number: 2 },
-  { id: "divisibilidade", label: "Divisibilidade",   number: 3 },
-  { id: "fatoracao",      label: "Fatoração",        number: 4 },
-  { id: "primos",         label: "Nº Primos",        number: 5 },
-  { id: "mdc",            label: "MDC",              number: 6 },
-  { id: "mmc",            label: "MMC",              number: 7 },
-  { id: "aplicacoes",     label: "Aplicações",       number: 8 },
+  { id: "potenciacao",    label: "Potenciação",      number: 3 },
+  { id: "divisibilidade", label: "Divisibilidade",   number: 4 },
+  { id: "fatoracao",      label: "Fatoração",        number: 5 },
+  { id: "primos",         label: "Nº Primos",        number: 6 },
+  { id: "mdc",            label: "MDC",              number: 7 },
+  { id: "mmc",            label: "MMC",              number: 8 },
+  { id: "aplicacoes",     label: "Aplicações",       number: 9 },
 ]
 
 const SUMMARY_ITEMS: SummaryItem[] = [
-  { name: "Divisibilidade", formula: "12 ÷ 3 = 4 (inteiro)", rule: "Regras para ÷2, 3, 4, 5, 6, 9, 10", color: "bg-chart-3/10 border-chart-3/30 text-chart-3" },
-  { name: "Fatoração",      formula: "12 = 2² × 3",          rule: "Divida pelos menores primos até 1",    color: "bg-primary/10 border-primary/30 text-primary" },
-  { name: "Números Primos", formula: "2, 3, 5, 7, 11...",    rule: "Somente divisíveis por 1 e por si",    color: "bg-accent/10 border-accent/30 text-accent" },
-  { name: "MDC",            formula: "mdc(12,8) = 4",        rule: "Fatores comuns com menor expoente",    color: "bg-chart-4/10 border-chart-4/30 text-chart-4" },
-  { name: "MMC",            formula: "mmc(4,6) = 12",        rule: "Todos os fatores com maior expoente",  color: "bg-chart-5/10 border-chart-5/30 text-chart-5" },
-  { name: "Aplicações",     formula: "MDC → ladrilhos; MMC → encontros", rule: "Problemas práticos com MDC e MMC", color: "bg-chart-3/10 border-chart-3/30 text-chart-3" },
+  { name: "Potenciação",     formula: "2⁴ = 16",                      rule: "Multiplicação de fatores iguais",      color: "bg-chart-3/10 border-chart-3/30 text-chart-3" },
+  { name: "Potências de 10", formula: "10³ = 1.000",                rule: "Expoente = número de zeros",          color: "bg-primary/10 border-primary/30 text-primary" },
+  { name: "Raiz Quadrada",   formula: "√25 = 5",                    rule: "Inverso da potenciação (expoente 2)", color: "bg-accent/10 border-accent/30 text-accent" },
+  { name: "Divisibilidade", formula: "12 ÷ 3 = 4 (inteiro)", rule: "Regras para ÷2, 3, 4, 5, 6, 9, 10", color: "bg-chart-4/10 border-chart-4/30 text-chart-4" },
+  { name: "Fatoração",      formula: "12 = 2² × 3",          rule: "Divida pelos menores primos até 1",    color: "bg-chart-5/10 border-chart-5/30 text-chart-5" },
+  { name: "MDC e MMC",      formula: "mdc(12,8)=4; mmc(4,6)=12", rule: "Máximo divisor e mínimo múltiplo comuns", color: "bg-chart-3/10 border-chart-3/30 text-chart-3" },
 ]
 
 const HERO = {
@@ -43,11 +45,11 @@ const HERO = {
   titleLine1: "Números",
   titleLine2: "Naturais",
   titleLine2Color: "text-chart-3",
-  description: "Explore a divisibilidade, decomponha números em fatores primos e aprenda a calcular MDC e MMC com facilidade!",
+  description: "Aprenda potenciação, potências de base 10 e raiz quadrada. Depois, explore divisibilidade, primos, MDC e MMC com facilidade!",
   previews: [
+    { label: "Potenciação",   formulaNode: <span>2⁴ = 16</span> },
+    { label: "Raiz Quadrada", formulaNode: <span>√25 = 5</span> },
     { label: "Fatoração",     formulaNode: <span>12 = 2² × 3</span> },
-    { label: "MDC",           formulaNode: <span>mdc(12, 8) = 4</span> },
-    { label: "MMC",           formulaNode: <span>mmc(4, 6) = 12</span> },
   ],
 }
 
@@ -60,6 +62,7 @@ export default function Ano6Page() {
         <>
           <ConjuntoNaturais />
           <OperacoesNaturais />
+          <NaturaisPotenciacaoRaiz />
           <NaturaisDivisibilidade />
           <NaturaisFatoracao />
           <NaturaisPrimos />

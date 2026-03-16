@@ -4,6 +4,8 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { AnimateOnScroll } from "@/components/animate-on-scroll"
 import { Calculator } from "lucide-react"
+import { BlockMath, InlineMath } from "react-katex"
+import "katex/dist/katex.min.css"
 
 /* ================================================================
    SectionBadge
@@ -33,17 +35,25 @@ export function FormulaBox({
   highlight?: boolean
   className?: string
 }) {
+  // Check if children is a string formula (LaTeX)
+  const isLatex = typeof children === "string" && children.startsWith("$") && children.endsWith("$")
+  const formula = isLatex ? children.slice(1, -1) : null
+
   return (
     <div
       className={cn(
-        "rounded-xl border px-6 py-4 font-mono text-center text-lg md:text-xl transition-all duration-500",
+        "rounded-xl border px-6 py-4 text-center text-lg md:text-xl transition-all duration-500",
         highlight
           ? "border-primary bg-primary/10 text-primary animate-pulse-glow"
           : "border-border bg-card text-foreground",
         className
       )}
     >
-      {children}
+      {formula ? (
+        <BlockMath math={formula} />
+      ) : (
+        <span className="font-mono">{children}</span>
+      )}
     </div>
   )
 }
@@ -54,30 +64,41 @@ export function FormulaBox({
 export function StepByStep({ steps }: { steps: { text: string; highlight?: boolean }[] }) {
   return (
     <div className="flex flex-col gap-3">
-      {steps.map((step, i) => (
-        <AnimateOnScroll key={i} animation="animate-slide-in-left" delay={i * 150}>
-          <div className="flex items-center gap-3">
-            <div
-              className={cn(
-                "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0",
-                step.highlight
-                  ? "bg-accent text-accent-foreground"
-                  : "bg-secondary text-muted-foreground"
+      {steps.map((step, i) => {
+        const isLatex = step.text.startsWith("$") && step.text.endsWith("$")
+        const formula = isLatex ? step.text.slice(1, -1) : null
+
+        return (
+          <AnimateOnScroll key={i} animation="animate-slide-in-left" delay={i * 150}>
+            <div className="flex items-center gap-3">
+              <div
+                className={cn(
+                  "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0",
+                  step.highlight
+                    ? "bg-accent text-accent-foreground"
+                    : "bg-secondary text-muted-foreground"
+                )}
+              >
+                {i + 1}
+              </div>
+              {formula ? (
+                <div className="text-foreground">
+                  <InlineMath math={formula} />
+                </div>
+              ) : (
+                <code
+                  className={cn(
+                    "font-mono text-sm md:text-base",
+                    step.highlight ? "text-accent font-bold" : "text-foreground"
+                  )}
+                >
+                  {step.text}
+                </code>
               )}
-            >
-              {i + 1}
             </div>
-            <code
-              className={cn(
-                "font-mono text-sm md:text-base",
-                step.highlight ? "text-accent font-bold" : "text-foreground"
-              )}
-            >
-              {step.text}
-            </code>
-          </div>
-        </AnimateOnScroll>
-      ))}
+          </AnimateOnScroll>
+        )
+      })}
     </div>
   )
 }
@@ -97,17 +118,30 @@ export function DetailedExampleCard({
   return (
     <div className="group rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/40 hover:bg-card/80">
       <div className="font-mono text-lg font-bold text-primary mb-3">{title}</div>
-      <div className="flex flex-col gap-1.5 mb-3">
-        {steps.map((step, i) => (
-          <div key={i} className="flex items-start gap-2">
-            <span className="text-xs text-muted-foreground mt-0.5 shrink-0">{i + 1}.</span>
-            <code className="font-mono text-sm text-foreground">{step}</code>
-          </div>
-        ))}
+      <div className="flex flex-col gap-2 mb-3">
+        {steps.map((step, i) => {
+          const isLatex = step.startsWith("$") && step.endsWith("$")
+          const formula = isLatex ? step.slice(1, -1) : null
+
+          return (
+            <div key={i} className="flex items-start gap-2">
+              <span className="text-xs text-muted-foreground mt-0.5 shrink-0">{i + 1}.</span>
+              {formula ? (
+                <div className="text-foreground">
+                  <InlineMath math={formula} />
+                </div>
+              ) : (
+                <code className="font-mono text-sm text-foreground">{step}</code>
+              )}
+            </div>
+          )
+        })}
       </div>
-      <div className="pt-3 border-t border-border">
-        <code className="font-mono text-sm font-bold text-accent">{conclusion}</code>
-      </div>
+      {conclusion && (
+        <div className="pt-3 border-t border-border">
+          <code className="font-mono text-sm font-bold text-accent">{conclusion}</code>
+        </div>
+      )}
     </div>
   )
 }
