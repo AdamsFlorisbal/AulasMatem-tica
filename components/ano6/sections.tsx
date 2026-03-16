@@ -241,7 +241,7 @@ export function NaturaisDivisibilidade() {
               <CalcResult>
                 <p className="text-sm text-muted-foreground mb-3 text-center">Soma dos dígitos: <strong className="text-primary">{c.sumD}</strong></p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {(["÷ 2", c.por2], ["÷ 3", c.por3], ["÷ 4", c.por4], ["÷ 5", c.por5], ["÷ 6", c.por6], ["÷ 9", c.por9], ["÷ 10", c.por10] as [string, boolean][]).map(([d, ok]) => (
+                  {([["÷ 2", c.por2], ["÷ 3", c.por3], ["÷ 4", c.por4], ["÷ 5", c.por5], ["÷ 6", c.por6], ["÷ 9", c.por9], ["÷ 10", c.por10]] as [string, boolean][]).map(([d, ok]) => (
                     <div key={d} className={`rounded-lg p-2 text-center text-sm font-bold border ${ok ? "bg-accent/20 text-accent border-accent/30" : "bg-secondary text-muted-foreground border-border"}`}>{d} {ok ? "✔" : "✗"}</div>
                   ))}
                 </div>
