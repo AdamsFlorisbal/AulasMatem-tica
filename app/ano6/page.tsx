@@ -1,6 +1,8 @@
 import { YearPageShell } from "@/components/year-page-shell"
 import { SummarySection, type SummaryItem } from "@/components/summary-section"
 import {
+  ConjuntoNaturais,
+  OperacoesNaturais,
   NaturaisDivisibilidade,
   NaturaisFatoracao,
   NaturaisPrimos,
@@ -17,12 +19,14 @@ export const metadata: Metadata = {
 }
 
 const NAV_SECTIONS = [
-  { id: "divisibilidade", label: "Divisibilidade", number: 1 },
-  { id: "fatoracao",      label: "Fatoração",      number: 2 },
-  { id: "primos",         label: "Nº Primos",      number: 3 },
-  { id: "mdc",            label: "MDC",             number: 4 },
-  { id: "mmc",            label: "MMC",             number: 5 },
-  { id: "aplicacoes",     label: "Aplicações",      number: 6 },
+  { id: "conjunto",       label: "Conjunto ℕ",      number: 1 },
+  { id: "operacoes",      label: "Operações",        number: 2 },
+  { id: "divisibilidade", label: "Divisibilidade",   number: 3 },
+  { id: "fatoracao",      label: "Fatoração",        number: 4 },
+  { id: "primos",         label: "Nº Primos",        number: 5 },
+  { id: "mdc",            label: "MDC",              number: 6 },
+  { id: "mmc",            label: "MMC",              number: 7 },
+  { id: "aplicacoes",     label: "Aplicações",       number: 8 },
 ]
 
 const SUMMARY_ITEMS: SummaryItem[] = [
@@ -54,6 +58,8 @@ export default function Ano6Page() {
       navSections={NAV_SECTIONS}
       contentSections={
         <>
+          <ConjuntoNaturais />
+          <OperacoesNaturais />
           <NaturaisDivisibilidade />
           <NaturaisFatoracao />
           <NaturaisPrimos />

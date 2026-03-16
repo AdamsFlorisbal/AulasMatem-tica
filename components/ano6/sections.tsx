@@ -53,105 +53,301 @@ function factorString(n: number): string {
   return Object.entries(map).map(([p, e]) => e === 1 ? p : `${p}²`.replace("2", e > 2 ? String(e) : "²")).join(" × ")
 }
 export function ConjuntoNaturais() {
+  const [num, setNum] = useState("15")
+  const n = parseInt(num)
+  const valid = !isNaN(n) && n >= 0
+
   return (
     <section id="conjunto" className="scroll-mt-20">
-      <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={1} badgeColor={B1} title={"O Conjunto dos Números Naturais ($\mathbb{N}$)"} subtitle="Os Números Naturais são aqueles que utilizamos para contar coisas inteiras no nosso dia a dia. Esse conjunto surgiu da necessidade humana de contar objetos, animais e alimentos." />
+      <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
+        <SectionHeader
+          number={1}
+          badgeColor={B1}
+          title="O Conjunto dos Números Naturais (ℕ)"
+          subtitle="Os números que utilizamos para contar coisas inteiras no dia a dia — surgiu da necessidade humana de contar objetos, animais e alimentos."
+        />
 
+        {/* Representação */}
         <AnimateOnScroll delay={200}>
-          <div className="mt-8 rounded-xl bg-secondary/50 p-6">
-            <h3 className="text-lg font-bold text-primary mb-3">1. Representação do Conjunto</h3>
-            <p className="text-foreground leading-relaxed mb-4">Usamos a letra maiúscula {'$\mathbb{N}$'} para representar esse conjunto. Ele começa pelo zero e não tem fim (é infinito).</p>
-            <FormulaBox>{'$\mathbb{N} = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, \dots\}$'}</FormulaBox>
-            <p className="text-sm text-muted-foreground mt-4">O símbolo {'$(\dots)$'}: As reticências indicam que o conjunto é infinito.</p>
-            <p className="text-sm text-muted-foreground mt-2">{'$\mathbb{N}^*$'}: Quando vemos o símbolo do asterisco, significa que o zero foi excluído do conjunto: {'$\mathbb{N}^* = \{1, 2, 3, 4, \dots\}$'}.</p>
+          <div className="rounded-xl bg-secondary/50 p-6 space-y-4">
+            <h3 className="text-base font-bold text-primary uppercase tracking-wide">1. Representação do Conjunto</h3>
+            <p className="text-foreground leading-relaxed text-sm">
+              Usamos a letra <strong className="text-chart-3">ℕ</strong> para representar esse conjunto.
+              Ele começa pelo zero e não tem fim (é infinito).
+            </p>
+            <FormulaBox highlight>ℕ = {"{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, …}"}</FormulaBox>
+            <div className="grid sm:grid-cols-2 gap-3 mt-2">
+              <div className="rounded-lg border border-border bg-card p-4">
+                <p className="text-xs font-bold text-muted-foreground uppercase mb-1">Símbolo (…)</p>
+                <p className="text-sm text-foreground">As reticências indicam que o conjunto é <strong>infinito</strong> — nunca tem fim.</p>
+              </div>
+              <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
+                <p className="text-xs font-bold text-primary uppercase mb-1">ℕ* (com asterisco)</p>
+                <p className="text-sm text-foreground">O zero é excluído: <strong className="text-primary">ℕ* = {"{1, 2, 3, 4, …}"}</strong></p>
+              </div>
+            </div>
           </div>
         </AnimateOnScroll>
 
+        {/* Sucessor e Antecessor */}
         <AnimateOnScroll delay={300}>
-          <div className="mt-6 rounded-xl bg-secondary/30 p-6">
-            <h3 className="text-lg font-bold text-primary mb-3">2. Sucessor e Antecessor</h3>
-            <p className="text-foreground leading-relaxed mb-4">Para entender a ordem dos números, usamos dois conceitos simples:</p>
-            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Sucessor:</strong> É o número que vem imediatamente depois. Para achar o sucessor, somamos 1 ao número.</p>
-            <FormulaBox>{'Exemplo: O sucessor de 15 é $15 + 1 = 16$.'}</FormulaBox>
-            <p className="text-foreground leading-relaxed my-2"><strong className="text-chart-3">Antecessor:</strong> É o número que vem imediatamente antes. Para achar o antecessor, subtraímos 1 do número.</p>
-            <FormulaBox>{'Exemplo: O antecessor de 20 é $20 - 1 = 19$.'}</FormulaBox>
-            <p className="text-sm text-amber-500 mt-4">⚠ Importante: No conjunto dos Números Naturais, o número 0 não possui antecessor.</p>
+          <div className="rounded-xl bg-secondary/30 p-6 space-y-4">
+            <h3 className="text-base font-bold text-primary uppercase tracking-wide">2. Sucessor e Antecessor</h3>
+            <p className="text-sm text-foreground leading-relaxed">Para entender a ordem dos números, usamos dois conceitos simples:</p>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div className="rounded-lg border border-chart-3/30 bg-chart-3/5 p-4 space-y-2">
+                <p className="text-sm font-bold text-chart-3">Sucessor — vem depois</p>
+                <p className="text-sm text-foreground">Soma-se <strong>+1</strong> ao número.</p>
+                <FormulaBox>Sucessor de 15 = 15 + 1 = <strong>16</strong></FormulaBox>
+              </div>
+              <div className="rounded-lg border border-accent/30 bg-accent/5 p-4 space-y-2">
+                <p className="text-sm font-bold text-accent">Antecessor — vem antes</p>
+                <p className="text-sm text-foreground">Subtrai-se <strong>−1</strong> do número.</p>
+                <FormulaBox>Antecessor de 20 = 20 − 1 = <strong>19</strong></FormulaBox>
+              </div>
+            </div>
+            <p className="text-sm text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-2">
+              ⚠ Importante: o número <strong>0</strong> não possui antecessor em ℕ.
+            </p>
           </div>
         </AnimateOnScroll>
 
+        {/* Consecutivos + Reta */}
         <AnimateOnScroll delay={400}>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <DetailedExampleCard title="3. Números Consecutivos" steps={["Números consecutivos são aqueles que seguem uma sequência sem saltos.", "Exemplo: 7, 8 e 9 são números consecutivos.", "Exemplo: 100 e 101 são números consecutivos."]} />
-            <DetailedExampleCard title="4. A Reta Numérica" steps={["Podemos organizar os números naturais em uma reta para visualizar sua ordem. A distância entre cada número deve ser sempre a mesma.", "Os números crescem da esquerda para a direita.", "Quanto mais à direita um número estiver, maior ele é."]} />
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-xl border border-border bg-card p-5 space-y-3">
+              <h3 className="text-base font-bold text-primary uppercase tracking-wide">3. Números Consecutivos</h3>
+              <p className="text-sm text-foreground leading-relaxed">Números que seguem uma sequência <strong>sem saltos</strong>, cada um sendo o sucessor do anterior.</p>
+              <div className="flex gap-2 flex-wrap">
+                {[7, 8, 9].map(v => (
+                  <span key={v} className="rounded-lg bg-chart-3/15 border border-chart-3/30 px-3 py-1.5 font-mono font-bold text-chart-3">{v}</span>
+                ))}
+                <span className="text-muted-foreground self-center text-sm">e também</span>
+                {[100, 101, 102].map(v => (
+                  <span key={v} className="rounded-lg bg-chart-3/15 border border-chart-3/30 px-3 py-1.5 font-mono font-bold text-chart-3">{v}</span>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-xl border border-border bg-card p-5 space-y-3">
+              <h3 className="text-base font-bold text-primary uppercase tracking-wide">4. A Reta Numérica</h3>
+              <p className="text-sm text-foreground leading-relaxed">Os números são organizados em ordem crescente da <strong>esquerda para a direita</strong> com distâncias iguais.</p>
+              <div className="flex items-center gap-1 overflow-x-auto py-2">
+                {[0, 1, 2, 3, 4, 5, 6].map(v => (
+                  <div key={v} className="flex flex-col items-center shrink-0">
+                    <span className="text-xs font-mono font-bold text-foreground">{v}</span>
+                    <span className="w-px h-3 bg-border mt-0.5" />
+                  </div>
+                ))}
+                <span className="text-muted-foreground font-mono ml-1">→</span>
+              </div>
+              <p className="text-xs text-muted-foreground">Quanto mais à direita, <strong>maior</strong> o número.</p>
+            </div>
           </div>
         </AnimateOnScroll>
 
+        {/* Comparação */}
         <AnimateOnScroll delay={500}>
-          <div className="mt-6 rounded-xl bg-secondary/50 p-6">
-            <h3 className="text-lg font-bold text-primary mb-3">5. Comparação de Números</h3>
-            <p className="text-foreground leading-relaxed mb-4">Para comparar dois números naturais, utilizamos os seguintes símbolos:</p>
-            <div className="flex justify-center gap-4">
-                <span className="font-mono text-2xl text-chart-3">&gt; (Maior que)</span>
-                <span className="font-mono text-2xl text-chart-3">&lt; (Menor que)</span>
-                <span className="font-mono text-2xl text-chart-3">= (Igual a)</span>
+          <div className="rounded-xl bg-secondary/50 p-6 space-y-4">
+            <h3 className="text-base font-bold text-primary uppercase tracking-wide">5. Comparação de Números</h3>
+            <p className="text-sm text-foreground">Para comparar dois números naturais, utilizamos os seguintes símbolos:</p>
+            <div className="grid grid-cols-3 gap-3">
+              {([
+                [">", "Maior que", "15 > 10"],
+                ["<", "Menor que", "8 < 20"],
+                ["=", "Igual a", "7 = 7"],
+              ] as [string, string, string][]).map(([sym, label, ex]) => (
+                <div key={sym} className="rounded-lg border border-border bg-card p-3 text-center space-y-1">
+                  <span className="text-3xl font-mono font-bold text-chart-3">{sym}</span>
+                  <p className="text-xs font-semibold text-muted-foreground">{label}</p>
+                  <p className="text-xs font-mono text-foreground">{ex}</p>
+                </div>
+              ))}
             </div>
-            <p className="text-sm text-muted-foreground mt-4 text-center">Dica para os alunos: A "boca" do sinal sempre fica aberta para o lado do número maior.</p>
-            <div className="mt-4 flex justify-center gap-4">
-                <FormulaBox>{'$15 > 10$ (15 é maior que 10)'}</FormulaBox>
-                <FormulaBox>{'$8 < 20$ (8 é menor que 20)'}</FormulaBox>
-            </div>
+            <p className="text-xs text-muted-foreground text-center bg-secondary rounded-lg px-4 py-2">
+              💡 Dica: a <strong>&quot;boca&quot;</strong> do sinal sempre fica aberta para o lado do número <strong>maior</strong>.
+            </p>
           </div>
+        </AnimateOnScroll>
+
+        {/* Calculadora */}
+        <AnimateOnScroll delay={600}>
+          <CalcWrapper title="Calculadora — Sucessor e Antecessor">
+            <div className="flex flex-wrap items-end gap-4 mb-4">
+              <CalcInput label="Número" value={num} onChange={setNum} min={0} max={99999} />
+            </div>
+            {valid && (
+              <CalcResult>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-lg bg-accent/10 border border-accent/20 p-3 text-center">
+                    <p className="text-xs text-muted-foreground mb-1">Antecessor</p>
+                    <p className="font-mono text-xl font-bold text-accent">
+                      {n === 0 ? "não existe em ℕ" : n - 1}
+                    </p>
+                    {n > 0 && <p className="text-xs text-muted-foreground">{n} − 1 = {n - 1}</p>}
+                  </div>
+                  <div className="rounded-lg bg-chart-3/10 border border-chart-3/20 p-3 text-center">
+                    <p className="text-xs text-muted-foreground mb-1">Sucessor</p>
+                    <p className="font-mono text-xl font-bold text-chart-3">{n + 1}</p>
+                    <p className="text-xs text-muted-foreground">{n} + 1 = {n + 1}</p>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  Consecutivos: … {n > 1 ? n - 1 : ""} {n > 0 ? n - 1 === 0 ? "0" : "" : ""}{n === 0 ? "0" : n - 1 > 0 ? `${n - 1},` : "0,"} <strong className="text-foreground">{n}</strong>, {n + 1} …
+                </p>
+              </CalcResult>
+            )}
+          </CalcWrapper>
         </AnimateOnScroll>
       </div>
     </section>
   )
 }
+
 export function OperacoesNaturais() {
+  const [va, setVa] = useState("15")
+  const [vb, setVb] = useState("10")
+  const [op, setOp] = useState<"+" | "-" | "×" | "÷">("+")
+
+  const a = parseInt(va), b = parseInt(vb)
+  const valid = !isNaN(a) && !isNaN(b) && a >= 0 && b >= 0
+
+  let resultado: number | null = null
+  let erro = ""
+  if (valid) {
+    if (op === "+") resultado = a + b
+    else if (op === "-") { if (a >= b) resultado = a - b; else erro = "Em ℕ, só subtraímos se o minuendo ≥ subtraendo." }
+    else if (op === "×") resultado = a * b
+    else if (op === "÷") { if (b === 0) erro = "Divisão por zero não existe!"; else { resultado = Math.floor(a / b) } }
+  }
+  const resto = op === "÷" && valid && b > 0 ? a % b : null
+
+  const TERMOS: Record<string, { cor: string; titulo: string; termos: [string, string][]; alerta?: string }> = {
+    "+": { cor: "text-chart-3", titulo: "Adição (+)", termos: [["Parcelas", "Os números somados (15 e 10)"], ["Soma / Total", "O resultado da operação (25)"]], },
+    "-": { cor: "text-primary", titulo: "Subtração (−)", termos: [["Minuendo", "De onde retiramos (15)"], ["Subtraendo", "O que retiramos (10)"], ["Diferença / Resto", "O resultado (5)"]], alerta: "Em ℕ, só é possível se minuendo ≥ subtraendo." },
+    "×": { cor: "text-accent", titulo: "Multiplicação (×)", termos: [["Fatores", "Os números multiplicados (3 e 5)"], ["Produto", "O resultado (15)"]], },
+    "÷": { cor: "text-chart-5", titulo: "Divisão (÷)", termos: [["Dividendo", "O número a dividir"], ["Divisor", "Pelo que dividimos"], ["Quociente", "O resultado da divisão"], ["Resto", "O que sobra (0 = exata)"]], alerta: "Nunca divida por zero!" },
+  }
+  const info = TERMOS[op]
+
   return (
     <section id="operacoes" className="scroll-mt-20">
-      <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={2} badgeColor={B2} title="Operações com Números Naturais" subtitle="As operações fundamentais nos permitem resolver problemas de contagem, partilha, comparação e acúmulo." />
+      <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
+        <SectionHeader
+          number={2}
+          badgeColor={B2}
+          title="Operações com Números Naturais"
+          subtitle="As quatro operações fundamentais permitem resolver problemas de contagem, partilha, comparação e acúmulo."
+        />
 
+        {/* Cards das 4 operações */}
         <AnimateOnScroll delay={200}>
-          <div className="mt-8 rounded-xl bg-secondary/50 p-6">
-            <h3 className="text-lg font-bold text-primary mb-3">1. Adição (+)</h3>
-            <p className="text-foreground leading-relaxed mb-4">A adição é utilizada quando precisamos juntar quantidades ou acrescentar uma quantidade a outra.</p>
-            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Termos da Adição:</strong> As quantidades que somamos são chamadas de parcelas. O resultado é chamado de soma ou total.</p>
-            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Propriedade Importante (Comutativa):</strong> A ordem das parcelas não altera a soma.</p>
-            <FormulaBox>{'Exemplo: $15 + 10 = 25$ e $10 + 15 = 25$.'}</FormulaBox>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {/* Adição */}
+            <div className="rounded-xl border border-border bg-card p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-chart-3/20 text-chart-3 font-bold text-lg flex items-center justify-center">+</span>
+                <h3 className="font-bold text-foreground">Adição</h3>
+              </div>
+              <p className="text-sm text-foreground">Junta quantidades. A ordem das <strong>parcelas</strong> não altera a <strong>soma</strong> (propriedade comutativa).</p>
+              <FormulaBox>15 + 10 = 25  e  10 + 15 = 25</FormulaBox>
+            </div>
+            {/* Subtração */}
+            <div className="rounded-xl border border-border bg-card p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-primary/20 text-primary font-bold text-lg flex items-center justify-center">−</span>
+                <h3 className="font-bold text-foreground">Subtração</h3>
+              </div>
+              <p className="text-sm text-foreground">Retira uma quantidade de outra. <strong>Minuendo − Subtraendo = Diferença.</strong></p>
+              <FormulaBox>20 − 8 = 12</FormulaBox>
+              <p className="text-xs text-amber-500">⚠ Em ℕ: minuendo ≥ subtraendo</p>
+            </div>
+            {/* Multiplicação */}
+            <div className="rounded-xl border border-border bg-card p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-accent/20 text-accent font-bold text-lg flex items-center justify-center">×</span>
+                <h3 className="font-bold text-foreground">Multiplicação</h3>
+              </div>
+              <p className="text-sm text-foreground">Adição repetida de <strong>fatores</strong> iguais. O resultado é o <strong>produto</strong>.</p>
+              <FormulaBox>5 + 5 + 5 = 3 × 5 = 15</FormulaBox>
+              <div className="text-xs text-muted-foreground space-y-0.5">
+                <p>Elemento neutro: <strong className="text-foreground">n × 1 = n</strong></p>
+                <p>Elemento nulo: <strong className="text-foreground">n × 0 = 0</strong></p>
+              </div>
+            </div>
+            {/* Divisão */}
+            <div className="rounded-xl border border-border bg-card p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-chart-5/20 text-chart-5 font-bold text-lg flex items-center justify-center">÷</span>
+                <h3 className="font-bold text-foreground">Divisão</h3>
+              </div>
+              <p className="text-sm text-foreground">Reparte em partes iguais. <strong>Dividendo ÷ Divisor = Quociente</strong> (com resto).</p>
+              <FormulaBox>17 ÷ 5 = 3  resto 2</FormulaBox>
+              <div className="text-xs space-y-0.5">
+                <p className="text-muted-foreground">Exata: resto = 0 &nbsp;|&nbsp; Não exata: resto ≠ 0</p>
+                <p className="text-red-500 font-semibold">🚨 Nunca divida por zero!</p>
+              </div>
+            </div>
           </div>
         </AnimateOnScroll>
 
+        {/* Termos detalhados */}
         <AnimateOnScroll delay={300}>
-          <div className="mt-6 rounded-xl bg-secondary/30 p-6">
-            <h3 className="text-lg font-bold text-primary mb-3">2. Subtração (−)</h3>
-            <p className="text-foreground leading-relaxed mb-4">A subtração é usada para retirar uma quantidade de outra, comparar valores ou descobrir quanto falta para completar uma quantidade.</p>
-            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Termos da Subtração:</strong> Minuendo: A quantidade de onde vamos tirar. Subtraendo: A quantidade a ser retirada. Resto ou Diferença: O resultado da operação.</p>
-            <p className="text-sm text-amber-500">⚠ Atenção: No conjunto dos Números Naturais ({'$\mathbb{N}$'}), a subtração $a - b$ só é possível se o primeiro número ($a$) for maior ou igual ao segundo ($b$).</p>
-          </div>
+          <StepByStep steps={[
+            { text: "Adição: parcela + parcela = soma (total)" },
+            { text: "Subtração: minuendo − subtraendo = diferença" },
+            { text: "Multiplicação: fator × fator = produto" },
+            { text: "Divisão: dividendo ÷ divisor = quociente (resto)", highlight: true },
+          ]} />
         </AnimateOnScroll>
 
+        {/* Calculadora interativa */}
         <AnimateOnScroll delay={400}>
-          <div className="mt-6 rounded-xl bg-secondary/50 p-6">
-            <h3 className="text-lg font-bold text-primary mb-3">{'3. Multiplicação ($\times$ ou $\cdot$)'}</h3>
-            <p className="text-foreground leading-relaxed mb-4">A multiplicação é a forma resumida de escrever uma adição de parcelas iguais.</p>
-            <FormulaBox>{'Exemplo: $5 + 5 + 5$ é o mesmo que $3 \times 5 = 15$.'}</FormulaBox>
-            <p className="text-foreground leading-relaxed my-2"><strong className="text-chart-3">Termos da Multiplicação:</strong> Os números multiplicados são os fatores. O resultado é o produto.</p>
-            <p className="text-foreground leading-relaxed my-2"><strong className="text-chart-3">Elemento Neutro:</strong> O número 1 é o elemento neutro da multiplicação. Qualquer número multiplicado por 1 é ele mesmo ({'$15 \cdot 1 = 15$'}).</p>
-            <p className="text-foreground leading-relaxed"><strong className="text-chart-3">Zero na Multiplicação:</strong> Qualquer número multiplicado por 0 é igual a 0.</p>
-          </div>
-        </AnimateOnScroll>
+          <CalcWrapper title="Calculadora — as 4 operações">
+            <div className="flex gap-1.5 mb-4 flex-wrap">
+              {(["+", "-", "×", "÷"] as const).map(o => (
+                <button key={o} onClick={() => setOp(o)}
+                  className={`w-10 h-10 rounded-lg font-mono font-bold text-lg transition-all ${op === o ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground hover:text-foreground"}`}>
+                  {o}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-end gap-4 mb-4">
+              <CalcInput label="Número A" value={va} onChange={setVa} min={0} max={9999} />
+              <span className="text-2xl font-mono font-bold text-muted-foreground pb-2">{op}</span>
+              <CalcInput label="Número B" value={vb} onChange={setVb} min={0} max={9999} />
+            </div>
 
-        <AnimateOnScroll delay={500}>
-          <div className="mt-6 rounded-xl bg-secondary/30 p-6">
-            <h3 className="text-lg font-bold text-primary mb-3">{'4. Divisão ($\div$ ou $ : $ )'}</h3>
-            <p className="text-foreground leading-relaxed mb-4">A divisão é utilizada para repartir uma quantidade em partes iguais ou para saber quantas vezes uma quantidade cabe em outra.</p>
-            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Termos da Divisão:</strong> Dividendo: O número que será dividido. Divisor: Em quantas partes vamos dividir. Quociente: O resultado da divisão. Resto: O que sobra da divisão.</p>
-            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Divisão Exata:</strong> Quando o resto é igual a zero.</p>
-            <p className="text-foreground leading-relaxed mb-2"><strong className="text-chart-3">Divisão Não Exata:</strong> Quando o resto é diferente de zero (mas sempre menor que o divisor).</p>
-            <p className="text-sm text-red-500 font-bold">🚨 Regra de Ouro: Nunca existe divisão por zero!</p>
-          </div>
+            {/* Termos da operação */}
+            <div className="mb-4 rounded-lg border border-border bg-card/60 p-3">
+              <p className={`text-xs font-bold uppercase tracking-wide mb-2 ${info.cor}`}>{info.titulo} — Termos</p>
+              <div className="grid sm:grid-cols-2 gap-1.5">
+                {info.termos.map(([t, d]) => (
+                  <div key={t} className="flex gap-2 text-xs">
+                    <strong className="text-foreground shrink-0">{t}:</strong>
+                    <span className="text-muted-foreground">{d}</span>
+                  </div>
+                ))}
+              </div>
+              {info.alerta && <p className="text-xs text-amber-500 mt-2">⚠ {info.alerta}</p>}
+            </div>
+
+            {valid && (
+              <CalcResult>
+                {erro ? (
+                  <p className="text-sm text-destructive font-semibold text-center">{erro}</p>
+                ) : resultado !== null ? (
+                  <>
+                    <p className="font-mono text-center text-xl font-bold text-accent">
+                      {a} {op} {b} = {resultado}
+                      {op === "÷" && resto !== null && resto > 0 && <span className="text-base text-muted-foreground"> (resto {resto})</span>}
+                    </p>
+                    {op === "÷" && resto === 0 && <p className="text-xs text-center text-primary">Divisão exata ✓ (resto = 0)</p>}
+                    {op === "÷" && resto !== null && resto > 0 && <p className="text-xs text-center text-muted-foreground">Divisão não exata — resto {resto} &lt; {b}</p>}
+                  </>
+                ) : null}
+              </CalcResult>
+            )}
+          </CalcWrapper>
         </AnimateOnScroll>
       </div>
     </section>
