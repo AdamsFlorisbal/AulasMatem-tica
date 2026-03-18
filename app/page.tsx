@@ -3,10 +3,10 @@ import { ArrowRight, GraduationCap } from "lucide-react"
 
 const ANOS = [
   {
-    slug: "ano5",
+    slug: "ano5-index",
     ano: "5º",
-    titulo: "Números Decimais",
-    descricao: "Leitura, comparação, adição, subtração, multiplicação e divisão de decimais",
+    titulo: "Múltiplas Aulas",
+    descricao: "Números decimais, figuras planas, polígonos, triângulos, círculo e circunferência",
     cor: "text-chart-4",
     corBorda: "hover:border-chart-4/50",
     corBg: "group-hover:bg-chart-4/5",

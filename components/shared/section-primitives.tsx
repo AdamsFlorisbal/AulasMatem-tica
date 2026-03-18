@@ -67,6 +67,7 @@ export function StepByStep({ steps }: { steps: { text: string; highlight?: boole
       {steps.map((step, i) => {
         const isLatex = step.text.startsWith("$") && step.text.endsWith("$")
         const formula = isLatex ? step.text.slice(1, -1) : null
+        const hasHtml = step.text.includes("<")
 
         return (
           <AnimateOnScroll key={i} animation="animate-slide-in-left" delay={i * 150}>
@@ -85,6 +86,14 @@ export function StepByStep({ steps }: { steps: { text: string; highlight?: boole
                 <div className="text-foreground">
                   <InlineMath math={formula} />
                 </div>
+              ) : hasHtml ? (
+                <div
+                  className={cn(
+                    "font-mono text-sm md:text-base",
+                    step.highlight ? "text-accent font-bold" : "text-foreground"
+                  )}
+                  dangerouslySetInnerHTML={{ __html: step.text }}
+                />
               ) : (
                 <code
                   className={cn(
@@ -117,11 +126,12 @@ export function DetailedExampleCard({
 }) {
   return (
     <div className="group rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/40 hover:bg-card/80">
-      <div className="font-mono text-lg font-bold text-primary mb-3">{title}</div>
+      <div className="font-mono text-lg font-bold text-primary mb-3" dangerouslySetInnerHTML={{ __html: title }} />
       <div className="flex flex-col gap-2 mb-3">
         {steps.map((step, i) => {
           const isLatex = step.startsWith("$") && step.endsWith("$")
           const formula = isLatex ? step.slice(1, -1) : null
+          const hasHtml = step.includes("<")
 
           return (
             <div key={i} className="flex items-start gap-2">
@@ -130,6 +140,8 @@ export function DetailedExampleCard({
                 <div className="text-foreground">
                   <InlineMath math={formula} />
                 </div>
+              ) : hasHtml ? (
+                <div className="font-mono text-sm text-foreground" dangerouslySetInnerHTML={{ __html: step }} />
               ) : (
                 <code className="font-mono text-sm text-foreground">{step}</code>
               )}
@@ -139,7 +151,7 @@ export function DetailedExampleCard({
       </div>
       {conclusion && (
         <div className="pt-3 border-t border-border">
-          <code className="font-mono text-sm font-bold text-accent">{conclusion}</code>
+          <div className="font-mono text-sm font-bold text-accent" dangerouslySetInnerHTML={{ __html: conclusion }} />
         </div>
       )}
     </div>
@@ -234,13 +246,19 @@ export function SectionHeader({
   title: string
   subtitle: string
 }) {
+  const hasHtml = subtitle.includes("<")
+
   return (
     <AnimateOnScroll>
       <div className="flex items-center gap-4 mb-6">
         <SectionBadge number={number} color={badgeColor} />
         <div>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground">{title}</h2>
-          <p className="text-muted-foreground text-sm mt-1">{subtitle}</p>
+          {hasHtml ? (
+            <p className="text-muted-foreground text-sm mt-1" dangerouslySetInnerHTML={{ __html: subtitle }} />
+          ) : (
+            <p className="text-muted-foreground text-sm mt-1">{subtitle}</p>
+          )}
         </div>
       </div>
     </AnimateOnScroll>

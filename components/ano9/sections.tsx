@@ -29,6 +29,35 @@ function simplifyRadical(n: number): { outside: number; inside: number } {
   return { outside, inside }
 }
 
+function primeFactorization(n: number): { factors: number[]; text: string } {
+  const factors: number[] = []
+  let temp = n
+  let divisor = 2
+  
+  while (divisor * divisor <= temp) {
+    while (temp % divisor === 0) {
+      factors.push(divisor)
+      temp /= divisor
+    }
+    divisor++
+  }
+  
+  if (temp > 1) {
+    factors.push(temp)
+  }
+  
+  const factorCount: Record<number, number> = {}
+  factors.forEach(f => {
+    factorCount[f] = (factorCount[f] || 0) + 1
+  })
+  
+  const text = Object.entries(factorCount)
+    .map(([prime, count]) => count > 1 ? `${prime}<sup>${count}</sup>` : prime)
+    .join(" × ")
+  
+  return { factors, text }
+}
+
 function NumInput({ label, value, onChange, placeholder, step }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; step?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -111,75 +140,7 @@ export function NumerosIrracionais() {
 }
 
 /* ================================================================
-   2. Reta Numérica
-   ================================================================ */
-export function RetaNumerica() {
-  const [n, setN] = useState("7")
-
-  const num = parseInt(n)
-  const root = !isNaN(num) && num > 0 ? Math.sqrt(num) : null
-  const floor = root !== null ? Math.floor(root) : null
-  const ceil = root !== null ? Math.ceil(root) : null
-
-  return (
-    <AnimateOnScroll>
-      <section id="retanumerica">
-        <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={2} badgeColor={B2} title="Reta Numérica" subtitle="Posicionando √n entre inteiros consecutivos" />
-
-          <FormulaBox highlight>
-            Se k² &lt; n &lt; (k+1)²,&nbsp; então&nbsp; k &lt; √n &lt; k+1
-          </FormulaBox>
-
-          <div>
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Posicionar √7 na reta</h3>
-            <StepByStep steps={[
-              { text: "2² = 4 e 3² = 9" },
-              { text: "4 < 7 < 9" },
-              { text: "Portanto: 2 < √7 < 3" },
-              { text: "√7 ≈ 2,646 (mais próximo de 3)", highlight: true },
-            ]} />
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <DetailedExampleCard
-              title="√20 na reta"
-              steps={["4² = 16 e 5² = 25", "16 < 20 < 25"]}
-              conclusion="4 < √20 < 5  (≈ 4,472)"
-            />
-            <DetailedExampleCard
-              title="√50 na reta"
-              steps={["7² = 49 e 8² = 64", "49 < 50 < 64"]}
-              conclusion="7 < √50 < 8  (≈ 7,071)"
-            />
-          </div>
-
-          <CalcWrapper title="Posicionador na reta numérica">
-            <NumInput label="n (posicionar √n)" value={n} onChange={setN} placeholder="7" />
-            <div className="mt-3">
-              {root !== null && floor !== null && ceil !== null && (
-                <CalcResult>
-                  {Number.isInteger(root) ? (
-                    <p className="font-mono text-sm">√{num} = <strong className="text-accent text-base">{root}</strong> (inteiro exato)</p>
-                  ) : (
-                    <>
-                      <p className="font-mono text-sm">{floor}² = {floor * floor}  e  {ceil}² = {ceil * ceil}</p>
-                      <p className="font-mono text-sm">{floor * floor} &lt; {num} &lt; {ceil * ceil}</p>
-                      <p className="font-mono text-sm font-bold text-accent">{floor} &lt; √{num} &lt; {ceil}  (≈ {parseFloat(root.toFixed(3))})</p>
-                    </>
-                  )}
-                </CalcResult>
-              )}
-            </div>
-          </CalcWrapper>
-        </div>
-      </section>
-    </AnimateOnScroll>
-  )
-}
-
-/* ================================================================
-   3. Conjuntos Numéricos
+   2. Conjuntos Numéricos
    ================================================================ */
 export function ConjuntosNumericos() {
   const [val, setVal] = useState("5")
@@ -204,7 +165,7 @@ export function ConjuntosNumericos() {
     <AnimateOnScroll>
       <section id="conjuntos">
         <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={3} badgeColor={B1} title="Conjuntos Numéricos" subtitle="ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ" />
+          <SectionHeader number={2} badgeColor={B1} title="Conjuntos Numéricos" subtitle="ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ" />
 
           <FormulaBox>
             <div className="text-left text-base space-y-1">
@@ -212,6 +173,39 @@ export function ConjuntosNumericos() {
               <p className="text-sm text-muted-foreground">ℕ: 0,1,2… | ℤ: …-1,0,1… | ℚ: frações | ℝ = ℚ ∪ Irracionais</p>
             </div>
           </FormulaBox>
+
+          <div className="flex justify-center">
+            <svg viewBox="0 0 500 320" className="w-full max-w-md h-auto" xmlns="http://www.w3.org/2000/svg">
+              {/* ℝ - Números Reais (retângulo maior) */}
+              <rect x="20" y="30" width="460" height="270" fill="rgba(59, 130, 246, 0.05)" stroke="rgb(59, 130, 246)" strokeWidth="2" />
+              <text x="460" y="55" fontSize="20" fontWeight="bold" fill="rgb(59, 130, 246)">ℝ</text>
+              
+              {/* Lado esquerdo: ℚ com ℤ e ℕ aninhados */}
+              {/* ℚ - Números Racionais (círculo esquerdo) */}
+              <circle cx="140" cy="150" r="110" fill="rgba(34, 197, 94, 0.1)" stroke="rgb(34, 197, 94)" strokeWidth="2" />
+              <text x="70" y="270" fontSize="18" fontWeight="bold" fill="rgb(34, 197, 94)">ℚ</text>
+              
+              {/* ℤ - Números Inteiros (círculo médio) */}
+              <circle cx="140" cy="150" r="85" fill="rgba(249, 115, 22, 0.1)" stroke="rgb(249, 115, 22)" strokeWidth="2" />
+              <text x="215" y="160" fontSize="18" fontWeight="bold" fill="rgb(249, 115, 22)" textAnchor="middle">ℤ</text>
+              
+              {/* ℕ - Números Naturais (círculo pequeno) */}
+              <circle cx="140" cy="150" r="55" fill="rgba(168, 85, 247, 0.1)" stroke="rgb(168, 85, 247)" strokeWidth="2" />
+              <text x="130" y="160" fontSize="18" fontWeight="bold" fill="rgb(168, 85, 247)" textAnchor="middle">ℕ</text>
+              
+              {/* Lado direito: Irracionais (separado de ℚ mas dentro de ℝ) */}
+              <circle cx="360" cy="150" r="90" fill="rgba(239, 68, 68, 0.1)" stroke="rgb(239, 68, 68)" strokeWidth="2" />
+              <text x="360" y="160" fontSize="16" fontWeight="bold" fill="rgb(239, 68, 68)" textAnchor="middle">Irracionais</text>
+              <text x="360" y="180" fontSize="10" fill="rgb(239, 68, 68)" textAnchor="middle">(√2, π, e)</text>
+            </svg>
+          </div>
+
+          <div className="space-y-2 text-sm">
+            <p className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{backgroundColor: "rgb(168, 85, 247)"}}></span> ℕ = Naturais: 0, 1, 2, 3, ...</p>
+            <p className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{backgroundColor: "rgb(249, 115, 22)"}}></span> ℤ = Inteiros: ..., -2, -1, 0, 1, 2, ...</p>
+            <p className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{backgroundColor: "rgb(34, 197, 94)"}}></span> ℚ = Racionais: frações p/q</p>
+            <p className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{backgroundColor: "rgb(59, 130, 246)"}}></span> ℝ = Reais: ℚ + Irracionais (√2, π, e, ...)</p>
+          </div>
 
           <div>
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Classificar −3/4</h3>
@@ -224,18 +218,11 @@ export function ConjuntosNumericos() {
             ]} />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <DetailedExampleCard
-              title="Diagrama dos conjuntos"
-              steps={["ℝ contém todos os outros", "ℚ ∪ Irracionais = ℝ", "ℤ ⊂ ℚ: todo inteiro é racional"]}
-              conclusion="ℕ ⊂ ℤ: todo natural é inteiro"
-            />
-            <DetailedExampleCard
-              title="Exemplos por conjunto"
-              steps={["ℕ: 0, 1, 5, 100", "ℤ \\ ℕ: -1, -7, -200", "ℚ \\ ℤ: 1/2, -3/4, 0,333…"]}
-              conclusion="ℝ \\ ℚ: √2, √3, π, e"
-            />
-          </div>
+          <DetailedExampleCard
+            title="Diagrama dos conjuntos"
+            steps={["ℝ contém todos os outros", "ℚ ∪ Irracionais = ℝ", "ℤ ⊂ ℚ: todo inteiro é racional"]}
+            conclusion="ℕ ⊂ ℤ: todo natural é inteiro"
+          />
 
           <CalcWrapper title="Classificador de número">
             <div className="flex flex-col gap-1.5 mb-3">
@@ -281,32 +268,35 @@ export function PotenciaRacional() {
     <AnimateOnScroll>
       <section id="potenciaracional">
         <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={4} badgeColor={B2} title="Potência Racional" subtitle="a^(m/n) = (ⁿ√a)ᵐ" />
+          <SectionHeader number={3} badgeColor={B2} title="Potência Racional" subtitle="a<sup>(m/n)</sup> = <sup>n</sup>√(a<sup>m</sup>) = (<sup>n</sup>√a)<sup>m</sup>" />
 
           <FormulaBox highlight>
-            a^(m/n) = (ⁿ√a)ᵐ = ⁿ√(aᵐ)
+            <div className="text-left text-base space-y-1">
+              <p>a<sup>(m/n)</sup> = <sup>n</sup>√(a<sup>m</sup>) = (<sup>n</sup>√a)<sup>m</sup></p>
+              <p className="text-sm text-muted-foreground">O denominador é o índice da raiz, o numerador é a potência</p>
+            </div>
           </FormulaBox>
 
           <div>
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Calcular 8^(2/3)</h3>
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Calcular 8<sup>(2/3)</sup></h3>
             <StepByStep steps={[
-              { text: "8^(2/3) = (³√8)²" },
-              { text: "³√8 = 2   (pois 2³ = 8)" },
-              { text: "2² = 4" },
-              { text: "8^(2/3) = 4", highlight: true },
+              { text: "Usar a fórmula 8<sup>(2/3)</sup> = (<sup>3</sup>√8)<sup>2</sup>" },
+              { text: "Calcular a raiz cúbica <sup>3</sup>√8 = 2 (porque 2 × 2 × 2 = 8)" },
+              { text: "Elevar ao quadrado 2² = 2 × 2 = 4" },
+              { text: "8<sup>(2/3)</sup> = 4", highlight: true },
             ]} />
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <DetailedExampleCard
-              title="27^(2/3)"
-              steps={["27^(2/3) = (³√27)²", "³√27 = 3", "3² = 9"]}
-              conclusion="27^(2/3) = 9"
+              title="27<sup>(2/3)</sup>"
+              steps={["Aplicar fórmula: (<sup>3</sup>√27)<sup>2</sup>", "Calcular raiz: <sup>3</sup>√27 = 3", "Elevar ao quadrado: 3² = 9"]}
+              conclusion="27<sup>(2/3)</sup> = 9"
             />
             <DetailedExampleCard
-              title="16^(3/4)"
-              steps={["16^(3/4) = (⁴√16)³", "⁴√16 = 2", "2³ = 8"]}
-              conclusion="16^(3/4) = 8"
+              title="16<sup>(3/4)</sup>"
+              steps={["Aplicar fórmula: (<sup>4</sup>√16)<sup>3</sup>", "Calcular raiz: <sup>4</sup>√16 = 2", "Elevar ao cubo: 2³ = 8"]}
+              conclusion="16<sup>(3/4)</sup> = 8"
             />
           </div>
 
@@ -321,8 +311,8 @@ export function PotenciaRacional() {
             </div>
             {result !== null && !isNaN(result) && (
               <CalcResult>
-                <p className="font-mono text-sm">{base}^({m}/{n}) = ({n}√{base})^{m}</p>
-                <p className="font-mono text-sm">{n}√{base} ≈ {parseFloat(Math.pow(a, 1 / n).toFixed(4))}</p>
+                <p className="font-mono text-sm">{base}<sup>({m}/{n})</sup> = (<sup>{n}</sup>√{base})<sup>{m}</sup></p>
+                <p className="font-mono text-sm"><sup>{n}</sup>√{base} ≈ {parseFloat(Math.pow(a, 1 / n).toFixed(4))}</p>
                 <p className="font-mono text-sm font-bold text-accent">= {parseFloat(result.toFixed(6))}</p>
               </CalcResult>
             )}
@@ -334,30 +324,32 @@ export function PotenciaRacional() {
 }
 
 /* ================================================================
-   5. Simplificação de Radicais
+   4. Simplificação de Radicais
    ================================================================ */
 export function SimplificacaoRadicais() {
   const [val, setVal] = useState("75")
 
   const n = parseInt(val)
   const { outside, inside } = !isNaN(n) && n > 0 ? simplifyRadical(n) : { outside: 1, inside: n }
+  const { text: factorText } = !isNaN(n) && n > 0 ? primeFactorization(n) : { text: "" }
   const isSimple = outside === 1
 
   return (
     <AnimateOnScroll>
       <section id="radicais">
         <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={5} badgeColor={B1} title="Simplificação de Radicais" subtitle="√12 = 2√3" />
+          <SectionHeader number={4} badgeColor={B1} title="Simplificação de Radicais" subtitle="√12 = 2√3" />
 
           <FormulaBox>
             √(k² × m) = k√m &nbsp;&nbsp; (m sem fatores quadrados)
           </FormulaBox>
 
           <div>
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Simplificar √75</h3>
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Simplificar √75 (por fatoração de primos)</h3>
             <StepByStep steps={[
-              { text: "75 = 25 × 3" },
-              { text: "√75 = √(25 × 3) = √25 × √3" },
+              { text: "75 = 3 × 5²  (fatoração em primos: 3 × 5²)" },
+              { text: "√75 = √(3 × 5²)" },
+              { text: "√75 = √(5²) × √3" },
               { text: "= 5√3", highlight: true },
             ]} />
           </div>
@@ -365,26 +357,30 @@ export function SimplificacaoRadicais() {
           <div className="grid md:grid-cols-2 gap-6">
             <DetailedExampleCard
               title="√200"
-              steps={["200 = 100 × 2", "√200 = √100 × √2"]}
-              conclusion="= 10√2"
+              steps={["200 = 2³ × 5² (fatoração: 2³ × 5²)", "√200 = 10√2"]}
+              conclusion="Extraia os pares"
             />
             <DetailedExampleCard
               title="√108"
-              steps={["108 = 36 × 3", "√108 = √36 × √3"]}
-              conclusion="= 6√3"
+              steps={["108 = 2² × 3³ (fatoração: 2² × 3³)", "√108 = 6√3"]}
+              conclusion="Extraia os quadrados"
             />
           </div>
 
-          <CalcWrapper title="Simplificador de radical">
+          <CalcWrapper title="Simplificador de radical (com fatoração)">
             <NumInput label="Radicando" value={val} onChange={setVal} placeholder="75" />
             <div className="mt-3">
               {!isNaN(n) && n > 0 && (
                 <CalcResult>
                   {isSimple ? (
-                    <p className="font-mono text-sm">√{n} já está na forma mais simples</p>
+                    <>
+                      <p className="font-mono text-sm">√{n} já está na forma mais simples</p>
+                      <p className="font-mono text-sm text-muted-foreground text-xs mt-2">Fatoração: {factorText}</p>
+                    </>
                   ) : (
                     <>
-                      <p className="font-mono text-sm">{n} = {outside * outside} × {inside}</p>
+                      <p className="font-mono text-sm text-muted-foreground mb-2">Fatoração: {factorText}</p>
+                      <p className="font-mono text-sm">{n} = {outside}² × {inside}</p>
                       <p className="font-mono text-sm">√{n} = <strong className="text-accent text-base">{outside}√{inside}</strong></p>
                     </>
                   )}
@@ -399,7 +395,7 @@ export function SimplificacaoRadicais() {
 }
 
 /* ================================================================
-   6. Operações com Radicais Semelhantes
+   5. Operações com Radicais Semelhantes
    ================================================================ */
 export function OperacoesRadicais() {
   const [c1, setC1] = useState("3")
@@ -419,7 +415,7 @@ export function OperacoesRadicais() {
     <AnimateOnScroll>
       <section id="operacoesradicais">
         <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={6} badgeColor={B2} title="Operações com Radicais" subtitle="Radicais semelhantes: mesmo radicando" />
+          <SectionHeader number={5} badgeColor={B2} title="Operações com Radicais" subtitle="Radicais semelhantes: mesmo radicando" />
 
           <FormulaBox>
             <div className="text-left text-base space-y-1">
@@ -494,7 +490,7 @@ export function TeoremaPitagoras() {
     <AnimateOnScroll>
       <section id="pitagoras">
         <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={7} badgeColor={B1} title="Teorema de Pitágoras" subtitle="c² = a² + b²" />
+          <SectionHeader number={6} badgeColor={B1} title="Teorema de Pitágoras" subtitle="c² = a² + b²" />
 
           <FormulaBox highlight>
             c² = a² + b² &nbsp;&nbsp; → &nbsp;&nbsp; c = √(a² + b²)

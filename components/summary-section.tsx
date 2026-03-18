@@ -8,6 +8,7 @@ export interface SummaryItem {
   formula: string
   rule: string
   color: string
+  visual?: React.ReactNode
 }
 
 interface SummarySectionProps {
@@ -50,12 +51,21 @@ export function SummarySection({
               <div
                 className={`rounded-xl border p-4 transition-all duration-300 hover:scale-[1.02] ${item.color}`}
               >
+                {item.visual && (
+                  <div className="flex justify-center mb-3">
+                    {item.visual}
+                  </div>
+                )}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="font-bold text-foreground text-sm">{item.name}</h3>
                     <p className="text-xs text-muted-foreground mt-1">{item.rule}</p>
                   </div>
-                  <code className="font-mono text-base shrink-0">{item.formula}</code>
+                  {item.formula.includes("<") ? (
+                    <code className="font-mono text-base shrink-0" dangerouslySetInnerHTML={{ __html: item.formula }} />
+                  ) : (
+                    <code className="font-mono text-base shrink-0">{item.formula}</code>
+                  )}
                 </div>
               </div>
             </AnimateOnScroll>
