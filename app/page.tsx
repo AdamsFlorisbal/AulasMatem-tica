@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ArrowRight, GraduationCap } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const ANOS = [
   {
@@ -57,6 +58,9 @@ const ANOS = [
 export default function HomePage() {
   return (
     <main className="relative min-h-screen bg-background flex flex-col">
+      <div className="absolute top-4 right-4 z-20">
+        <ThemeToggle />
+      </div>
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl" />
