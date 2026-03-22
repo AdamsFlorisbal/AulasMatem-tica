@@ -17,11 +17,11 @@ function simplifyRadical(n: number): { outside: number; inside: number } {
   return { outside, inside }
 }
 
-function toSci(n: number): string {
+function toSciNode(n: number): React.ReactNode {
   if (n === 0) return "0"
   const exp = Math.floor(Math.log10(Math.abs(n)))
   const coef = n / Math.pow(10, exp)
-  return `${parseFloat(coef.toPrecision(4))} × 10^${exp}`
+  return <>{parseFloat(coef.toPrecision(4))} × 10<sup>{exp}</sup></>
 }
 
 function rng(min: number, max: number) {
@@ -85,7 +85,7 @@ function renderQuestion(ex: Ano8Exercise): React.ReactNode {
       return (
         <div className="text-center">
           <p className="text-sm text-muted-foreground mb-1">Calcule</p>
-          <p className="text-4xl font-black text-foreground">({ex.base})^{ex.exp}</p>
+          <p className="text-4xl font-black text-foreground">({ex.base})<sup>{ex.exp}</sup></p>
         </div>
       )
     case "raizquad":
@@ -128,7 +128,7 @@ function renderAnswer(ex: Ano8Exercise): React.ReactNode {
         <div className="space-y-1 text-sm text-foreground">
           <p>Base: {ex.base}, Expoente: {ex.exp} ({ex.exp % 2 === 0 ? "par" : "ímpar"})</p>
           <p>Expoente {ex.exp % 2 === 0 ? "par → resultado positivo" : "ímpar → resultado negativo"}</p>
-          <p className="font-bold text-base text-accent">({ex.base})^{ex.exp} = {result}</p>
+          <p className="font-bold text-base text-accent">({ex.base})<sup>{ex.exp}</sup> = {result}</p>
         </div>
       )
     }
@@ -173,12 +173,12 @@ function renderAnswer(ex: Ano8Exercise): React.ReactNode {
       )
     }
     case "notacaoci": {
-      const sci = toSci(ex.n)
+      const sciNode = toSciNode(ex.n)
       const expVal = Math.floor(Math.log10(Math.abs(ex.n)))
       return (
         <div className="space-y-1 text-sm text-foreground">
           <p>Identifique o expoente de 10: {expVal > 0 ? `mova a vírgula ${expVal} casas para a esquerda` : `mova a vírgula ${Math.abs(expVal)} casas para a direita`}</p>
-          <p className="font-bold text-base text-accent">{sci}</p>
+          <p className="font-bold text-base text-accent">{sciNode}</p>
         </div>
       )
     }
@@ -188,7 +188,7 @@ function renderAnswer(ex: Ano8Exercise): React.ReactNode {
 function getHint(ex: Ano8Exercise): string {
   switch (ex.kind) {
     case "potenciacao":
-      return `Expoente ${ex.exp % 2 === 0 ? "par → resultado positivo" : "ímpar → resultado negativo"}. Calcule ${ex.base}^${ex.exp} e aplique o sinal.`
+      return `Expoente ${ex.exp % 2 === 0 ? "par → resultado positivo" : "ímpar → resultado negativo"}. Multiplique a base ${Math.abs(ex.base)} por ela mesma ${ex.exp} vezes e aplique o sinal.`
     case "raizquad":
       return `Verifique se ${ex.n} é quadrado perfeito (raiz exata). Caso contrário, decomponha: ${ex.n} = k² × m.`
     case "raizcub":
