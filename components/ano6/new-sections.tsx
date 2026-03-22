@@ -25,7 +25,7 @@ export function IdeiasMultiplicacaoDivisao({ idx }: { idx?: number }) {
         <SectionHeader number={3} badgeColor={B2} title="Ideias da Multiplicação e Divisão" subtitle="Diferentes formas de interpretar e resolver problemas" />
 
         <AnimateOnScroll delay={200}>
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="mt-8 flex flex-col gap-6">
             <div className="rounded-xl bg-accent/10 border border-accent/20 p-6 space-y-4">
               <div className="flex items-center gap-3">
                 <span className="w-8 h-8 rounded-lg bg-accent/20 text-accent font-bold flex items-center justify-center">×</span>
@@ -102,7 +102,7 @@ export function PropriedadesCalculadora() {
         <AnimateOnScroll delay={200}>
           <div className="mt-8 rounded-xl bg-secondary/50 p-6">
              <p className="text-foreground leading-relaxed mb-4">Investigar com uma calculadora nos permite ver rapidamente regras poderosas sobre multiplicação e divisão.</p>
-             <div className="grid md:grid-cols-3 gap-4">
+             <div className="grid gap-4 lg:grid-cols-3">
                <div className="bg-card border border-border rounded-lg p-4">
                  <h4 className="font-bold text-primary text-sm uppercase mb-1">Comutativa</h4>
                  <p className="text-xs text-muted-foreground mb-2">A ordem dos fatores não altera o produto.</p>
@@ -193,7 +193,7 @@ export function ExpressoesNumericas() {
         <AnimateOnScroll delay={200}>
           <div className="mt-8 rounded-xl bg-secondary/50 p-6 space-y-4">
              <p className="text-foreground leading-relaxed">Quando juntamos várias operações numa mesma conta, temos uma <strong className="text-primary">expressão numérica</strong>. Para não errar o resultado, existe uma ordem rigorosa a seguir!</p>
-             <div className="grid md:grid-cols-2 gap-6">
+             <div className="grid gap-6 lg:grid-cols-2">
                 <div className="border-l-4 border-accent pl-4">
                    <h3 className="font-bold text-accent text-sm uppercase mb-2">1ª Regra: O que resolver primeiro?</h3>
                    <ul className="text-sm space-y-2 text-muted-foreground">
