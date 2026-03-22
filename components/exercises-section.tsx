@@ -153,7 +153,9 @@ export function createExerciseSection<E>(config: ExerciseSectionConfig<E>) {
             </div>
           ) : (
             <div className="grid gap-5 md:grid-cols-2">
-              {(activeCategory === "Geral" ? exercises : exercises.filter(ex => config.getMeta(ex).label === activeCategory))
+              {(activeCategory === "Geral" 
+                  ? exercises.slice(0, 24) 
+                  : exercises.filter(ex => config.getMeta(ex).label === activeCategory))
                 .map((ex, i) => (
                   <ExerciseCard key={`${genKey}-${activeCategory}-${i}`} ex={ex} index={i} />
               ))}

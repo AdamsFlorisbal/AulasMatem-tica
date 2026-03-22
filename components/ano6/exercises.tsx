@@ -92,67 +92,55 @@ function isDivisible(n: number, d: number): boolean {
 function generate(): Ano6Exercise[] {
   const exercises: Ano6Exercise[] = []
 
-  // 2 sucessor/antecessor
-  exercises.push({ kind: "sucessor_antecessor", n: rng(100, 999), type: "sucessor" })
-  exercises.push({ kind: "sucessor_antecessor", n: rng(100, 999), type: "antecessor" })
+  for (let i = 0; i < 5; i++) {
+    // sucessor/antecessor
+    exercises.push({ kind: "sucessor_antecessor", n: rng(100, 999), type: i % 2 === 0 ? "sucessor" : "antecessor" })
 
-  // 2 comparacao
-  exercises.push({ kind: "comparacao", a: rng(10, 100), b: rng(10, 100) })
-  exercises.push({ kind: "comparacao", a: rng(100, 200), b: rng(100, 200) })
-  
-  // 2 operacoes
-  exercises.push({ kind: "operacoes", a: rng(10, 50), b: rng(10, 50), op: "+" })
-  exercises.push({ kind: "operacoes", a: rng(50, 100), b: rng(10, 50), op: "-" })
+    // comparacao
+    exercises.push({ kind: "comparacao", a: rng(10, 200), b: rng(10, 200) })
 
-  // 2 potenciacao
-  exercises.push({ kind: "potenciacao", base: rng(2, 10), expoente: rng(2, 5) })
-  exercises.push({ kind: "potenciacao", base: rng(2, 10), expoente: rng(2, 5) })
+    // operacoes
+    const opVal1 = rng(50, 200), opVal2 = rng(10, 100)
+    exercises.push({ kind: "operacoes", a: Math.max(opVal1, opVal2), b: Math.min(opVal1, opVal2), op: i % 2 === 0 ? "+" : "-" })
 
-  // 2 raiz quadrada (apenas quadrados perfeitos)
-  const perfectSquares = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-  for (let i = 0; i < 2; i++) {
-    const n = perfectSquares[rng(0, perfectSquares.length - 1)]
-    exercises.push({ kind: "raiz_quadrada", n })
-  }
+    // potenciacao
+    exercises.push({ kind: "potenciacao", base: rng(2, 10), expoente: rng(2, 5) })
 
-  // 2 divisibilidade
-  for (let i = 0; i < 2; i++) {
-    const n = rng(100, 999)
-    const divisor = DIVISORS[rng(0, DIVISORS.length - 1)]
-    exercises.push({ kind: "divisibilidade", n, divisor })
-  }
+    // raiz quadrada
+    const perfectSquares = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+    exercises.push({ kind: "raiz_quadrada", n: perfectSquares[rng(0, perfectSquares.length - 1)] })
 
-  // 2 primo
-  for (let i = 0; i < 2; i++) {
+    // divisibilidade
+    exercises.push({ kind: "divisibilidade", n: rng(100, 999), divisor: DIVISORS[rng(0, DIVISORS.length - 1)] })
+
+    // primo
     exercises.push({ kind: "primo", n: rng(2, 50) })
-  }
 
-  // 2 fatoracao
-  for (let i = 0; i < 2; i++) {
+    // fatoracao
     exercises.push({ kind: "fatoracao", n: rng(12, 100) })
+
+    // mdc
+    exercises.push({ kind: "mdc", a: rng(12, 60), b: rng(12, 60) })
+
+    // mmc
+    exercises.push({ kind: "mmc", a: rng(4, 20), b: rng(4, 20) })
+
+    // problemas mult/div
+    if (i % 2 === 0) {
+      exercises.push({ kind: "problema_mult_div", type: "mult", val1: rng(3, 12), val2: rng(4, 15), textIndex: rng(0, 1) })
+    } else {
+      const divB = rng(2, 6)
+      const divA = divB * rng(4, 15)
+      exercises.push({ kind: "problema_mult_div", type: "div", val1: divA, val2: divB, textIndex: rng(0, 1) })
+    }
+
+    // expressoes numericas
+    if (i % 2 === 0) {
+      exercises.push({ kind: "expressao_numerica", a: rng(10, 30), b: rng(2, 10) * 2, c: 2, op1: "+", op2: "÷", paren: 1 })
+    } else {
+      exercises.push({ kind: "expressao_numerica", a: rng(5, 15), b: rng(2, 5), c: rng(2, 5), op1: "×", op2: "+", paren: 0 })
+    }
   }
-
-  // 2 mdc
-  for (let i = 0; i < 2; i++) {
-    const a = rng(12, 60)
-    const b = rng(12, 60)
-    exercises.push({ kind: "mdc", a, b })
-  }
-
-  // 2 mmc
-  for (let i = 0; i < 2; i++) {
-    const a = rng(4, 20)
-    const b = rng(4, 20)
-    exercises.push({ kind: "mmc", a, b })
-  }
-
-  // 2 problemas mult/div
-  exercises.push({ kind: "problema_mult_div", type: "mult", val1: rng(3, 8), val2: rng(4, 12), textIndex: rng(0, 1) })
-  exercises.push({ kind: "problema_mult_div", type: "div", val1: rng(10, 50) * 2, val2: rng(2, 5), textIndex: rng(0, 1) })
-
-  // 2 expressoes numericas
-  exercises.push({ kind: "expressao_numerica", a: rng(10, 30), b: rng(2, 10) * 2, c: 2, op1: "+", op2: "÷", paren: 1 })
-  exercises.push({ kind: "expressao_numerica", a: rng(5, 15), b: rng(2, 5), c: rng(2, 5), op1: "×", op2: "+", paren: 0 })
 
   // shuffle
   return exercises.sort(() => Math.random() - 0.5)

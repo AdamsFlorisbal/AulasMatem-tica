@@ -35,53 +35,44 @@ function fmtDec(n: number): string { return n.toLocaleString("pt-BR", { minimumF
 function generate(): Exercise[] {
   const list: Exercise[] = []
   
-  // 1. Grandes Números (Ex: 154.320)
-  list.push({ type: "grandesNumeros", n: ri(100000, 999999) })
-  
-  // 2. Decomposição
-  list.push({ type: "decomposicao", n: ri(10000, 99999) })
-  
-  // 3. Comparação Grandes
-  const aLarge = ri(70000, 90000)
-  list.push({ type: "comparacaoGrandes", a: aLarge, b: aLarge + ri(-1000, 1000) })
-  
-  // 4. Leitura Decimais
-  list.push({ type: "leituraDecimais", n: Math.round(ri(1, 999) * 100 + ri(0, 99)) / 100 })
-  
-  // 5. Reta Decimal
-  const r_ans = Math.round(ri(1, 9)) / 10
-  const opts = [r_ans, Math.round((r_ans + 0.1)*10)/10, Math.round((r_ans - 0.1)*10)/10].sort(() => Math.random() - 0.5)
-  list.push({ type: "retaDecimal", n: r_ans, opt1: opts[0], opt2: opts[1], opt3: opts[2] })
-  
-  // 6. Ordem Decimal (Ex: qual algarismo está nos centésimos em 14,256?)
-  const numDec = Math.round(ri(10, 99) * 1000 + ri(100, 999)) / 1000 // ex: 34.567
-  const strDec = numDec.toFixed(3) // "34.567"
-  const ordens = [
-    { name: "décimos", digit: parseInt(strDec.split(".")[1][0]) },
-    { name: "centésimos", digit: parseInt(strDec.split(".")[1][1]) },
-    { name: "milésimos", digit: parseInt(strDec.split(".")[1][2]) }
-  ]
-  const chosenOrdem = ordens[ri(0, 2)]
-  list.push({ type: "ordemDecimal", n: numDec, algarismo: chosenOrdem.digit, ordem: chosenOrdem.name })
-  
-  // 7. Adição
-  const aa = Math.round(ri(1, 9) * 10 + ri(0, 9)) / 10
-  const bb = Math.round(ri(1, 9) * 10 + ri(0, 9)) / 10
-  list.push({ type: "adicao", a: aa, b: bb })
-  
-  // 8. Subtração
-  const big = Math.max(aa, bb), sml = Math.min(aa, bb)
-  list.push({ type: "subtracao", a: big, b: sml })
-  
-  // 9. Multiplicação
-  const fa = (ri(1, 9)) / 10, fb = ri(1, 9)
-  list.push({ type: "multiplicacao", a: fa, b: fb, casas: 1 })
-  
-  // 10. Divisao
-  const da = ri(2, 9) * ri(1, 5), db = ri(2, 5)
-  list.push({ type: "divisao", a: da, b: db })
+  for (let i = 0; i < 5; i++) {
+    list.push({ type: "grandesNumeros", n: ri(100000, 999999) })
+    list.push({ type: "decomposicao", n: ri(10000, 99999) })
+    
+    const aLarge = ri(70000, 90000)
+    list.push({ type: "comparacaoGrandes", a: aLarge, b: aLarge + ri(-1000, 1000) })
+    
+    list.push({ type: "leituraDecimais", n: Math.round(ri(1, 999) * 100 + ri(0, 99)) / 100 })
+    
+    const r_ans = Math.round(ri(1, 9)) / 10
+    const opts = [r_ans, Math.round((r_ans + 0.1)*10)/10, Math.round((r_ans - 0.1)*10)/10].sort(() => Math.random() - 0.5)
+    list.push({ type: "retaDecimal", n: r_ans, opt1: opts[0], opt2: opts[1], opt3: opts[2] })
+    
+    const numDec = Math.round(ri(10, 99) * 1000 + ri(100, 999)) / 1000 // ex: 34.567
+    const strDec = numDec.toFixed(3) // "34.567"
+    const ordens = [
+      { name: "décimos", digit: parseInt(strDec.split(".")[1][0]) },
+      { name: "centésimos", digit: parseInt(strDec.split(".")[1][1]) },
+      { name: "milésimos", digit: parseInt(strDec.split(".")[1][2]) }
+    ]
+    const chosenOrdem = ordens[ri(0, 2)]
+    list.push({ type: "ordemDecimal", n: numDec, algarismo: chosenOrdem.digit, ordem: chosenOrdem.name })
+    
+    const aa = Math.round(ri(1, 9) * 10 + ri(0, 9)) / 10
+    const bb = Math.round(ri(1, 9) * 10 + ri(0, 9)) / 10
+    list.push({ type: "adicao", a: aa, b: bb })
+    
+    const big = Math.max(aa, bb), sml = Math.min(aa, bb)
+    list.push({ type: "subtracao", a: big, b: sml })
+    
+    const fa = (ri(1, 9)) / 10, fb = ri(1, 9)
+    list.push({ type: "multiplicacao", a: fa, b: fb, casas: 1 })
+    
+    const da = ri(2, 9) * ri(1, 5), db = ri(2, 5)
+    list.push({ type: "divisao", a: da, b: db })
+  }
 
-  return list.sort(() => Math.random() - 0.5).slice(0, 6) // Return 6 random exercises per session
+  return list.sort(() => Math.random() - 0.5)
 }
 
 function renderQuestion(ex: Exercise): React.ReactNode {
