@@ -9,7 +9,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 
 export const metadata: Metadata = {
   title: 'Propriedades das Potencias',
-  description: 'Aulas de matemática para Ensino Fundamental',
+  description: 'Aulas de matemática para o Ensino Fundamental',
 }
 
 export const viewport: Viewport = {
