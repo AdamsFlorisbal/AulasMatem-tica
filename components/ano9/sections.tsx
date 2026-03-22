@@ -303,7 +303,7 @@ export function PotenciaRacional() {
           <CalcWrapper title="Calculadora de potência racional">
             <div className="flex flex-wrap items-end gap-3 mb-3">
               <NumInput label="Base (a)" value={base} onChange={setBase} placeholder="8" />
-              <span className="text-muted-foreground pb-2">^(</span>
+              <span className="text-muted-foreground pb-2"> elevado a (</span>
               <NumInput label="Num. (m)" value={num} onChange={setNum} placeholder="2" />
               <span className="text-muted-foreground pb-2">/</span>
               <NumInput label="Den. (n)" value={den} onChange={setDen} placeholder="3" />

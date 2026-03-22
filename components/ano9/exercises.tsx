@@ -100,7 +100,7 @@ function renderQuestion(ex: Ano9Exercise): React.ReactNode {
       return (
         <div className="text-center">
           <p className="text-sm text-muted-foreground mb-1">Calcule</p>
-          <p className="text-4xl font-black text-foreground">{ex.base}^({ex.m}/{ex.n})</p>
+          <p className="text-4xl font-black text-foreground">{ex.base}<sup>{ex.m}/{ex.n}</sup></p>
         </div>
       )
     case "simplrad":
@@ -166,9 +166,9 @@ function renderAnswer(ex: Ano9Exercise): React.ReactNode {
     case "potracional": {
       return (
         <div className="space-y-1 text-sm text-foreground">
-          <p>{ex.base}^({ex.m}/{ex.n}) = ({ex.n}√{ex.base})^{ex.m}</p>
+          <p>{ex.base}<sup>{ex.m}/{ex.n}</sup> = (<sup>{ex.n}</sup>√{ex.base})<sup>{ex.m}</sup></p>
           <p>{ex.n}√{ex.base} = {Math.round(Math.pow(ex.base, 1 / ex.n))}</p>
-          <p className="font-bold text-base text-accent">{ex.base}^({ex.m}/{ex.n}) = {ex.result}</p>
+          <p className="font-bold text-base text-accent">{ex.base}<sup>{ex.m}/{ex.n}</sup> = {ex.result}</p>
         </div>
       )
     }
@@ -207,7 +207,7 @@ function getHint(ex: Ano9Exercise): string {
     case "conjunto":
       return `Verifique: é não negativo? → ℕ. É inteiro? → ℤ. Pode ser escrito como fração? → ℚ. Qualquer número real → ℝ.`
     case "potracional":
-      return `${ex.base}^(${ex.m}/${ex.n}) = (${ex.n}√${ex.base})^${ex.m}. Calcule a raiz ${ex.n} de ${ex.base} primeiro.`
+      return `Na potência fracionária o denominador vira índice da raiz: calcule a raiz ${ex.n} de ${ex.base} primeiro, e eleve o resultado a ${ex.m}.`
     case "simplrad":
       return `Decomponha ${ex.n} em fatores quadrados: ${ex.n} = k² × m. Então √${ex.n} = k√m.`
     case "pitagoras":
