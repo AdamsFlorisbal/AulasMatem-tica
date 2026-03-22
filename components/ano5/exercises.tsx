@@ -96,9 +96,9 @@ function renderQuestion(ex: Exercise): React.ReactNode {
         <div className="relative h-8 w-64 mt-2">
           <div className="absolute top-1/2 left-0 right-0 h-1 bg-border -translate-y-1/2 rounded-full"></div>
           {Array.from({length: 11}).map((_, i) => (
-            <div key={i} className="absolute top-1/2 w-1 h-3 bg-muted-foreground -translate-y-1/2" style={{ left: \`\${i * 10}%\` }}></div>
+            <div key={i} className="absolute top-1/2 w-1 h-3 bg-muted-foreground -translate-y-1/2" style={{ left: `${i * 10}%` }}></div>
           ))}
-          <div className="absolute top-1/2 text-primary font-bold -translate-y-1/2 -translate-x-1/2" style={{ left: \`\${ex.n * 100}%\` }}>X</div>
+          <div className="absolute top-1/2 text-primary font-bold -translate-y-1/2 -translate-x-1/2" style={{ left: `${ex.n * 100}%` }}>X</div>
         </div>
       </div>
     )

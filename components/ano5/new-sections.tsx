@@ -241,11 +241,11 @@ export function DecimaisRetaNumerica({ number }: { number: number }) {
                 <div className="relative h-12 w-full mt-4">
                   <div className="absolute top-1/2 left-0 right-0 h-1 bg-border -translate-y-1/2 rounded-full"></div>
                   {Array.from({length: 11}).map((_, i) => (
-                    <div key={i} className="absolute top-1/2 w-1 h-3 bg-muted-foreground -translate-y-1/2" style={{ left: \`\${i * 10}%\` }}>
+                    <div key={i} className="absolute top-1/2 w-1 h-3 bg-muted-foreground -translate-y-1/2" style={{ left: `${i * 10}%` }}>
                        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[10px] text-muted-foreground">0,{i}</div>
                     </div>
                   ))}
-                  <div className="absolute top-1/2 w-4 h-4 bg-primary rounded-full -translate-y-1/2 -translate-x-1/2 transition-all duration-300 shadow-[0_0_10px_rgba(var(--primary),0.5)] z-10" style={{ left: \`\${n * 100}%\` }}></div>
+                  <div className="absolute top-1/2 w-4 h-4 bg-primary rounded-full -translate-y-1/2 -translate-x-1/2 transition-all duration-300 shadow-[0_0_10px_rgba(var(--primary),0.5)] z-10" style={{ left: `${n * 100}%` }}></div>
                 </div>
               </CalcResult>
             )}
