@@ -17,11 +17,11 @@ const B2 = "bg-primary/20 text-primary"
 /* ================================================================
    Helpers
    ================================================================ */
-function toSci(n: number): string {
+function toSciNode(n: number): React.ReactNode {
   if (n === 0) return "0"
   const exp = Math.floor(Math.log10(Math.abs(n)))
   const coef = n / Math.pow(10, exp)
-  return `${parseFloat(coef.toPrecision(4))} × 10^${exp}`
+  return <>{parseFloat(coef.toPrecision(4))} × 10<sup>{exp}</sup></>
 }
 
 function NumInput({ label, value, onChange, placeholder, step }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; step?: string }) {
@@ -95,7 +95,7 @@ export function PotenciacaoBaseNegativa() {
             </div>
             {result !== null && (
               <CalcResult>
-                <p className="font-mono text-sm">({base})^{e} = <strong className="text-accent text-base">{result}</strong></p>
+                <p className="font-mono text-sm">({base})<sup>{e}</sup> = <strong className="text-accent text-base">{result}</strong></p>
                 <p className="text-sm text-muted-foreground">Expoente {isEven ? "par" : "ímpar"} → resultado {result > 0 ? "positivo" : result < 0 ? "negativo" : "zero"}</p>
               </CalcResult>
             )}
@@ -220,7 +220,7 @@ export function NotacaoCientifica() {
   const [exp10, setExp10] = useState("6")
 
   const n = parseFloat(val)
-  const sciResult = !isNaN(n) && n !== 0 ? toSci(n) : null
+  const sciResult = !isNaN(n) && n !== 0 ? toSciNode(n) : null
 
   const c = parseFloat(coef)
   const e = parseInt(exp10)
@@ -293,7 +293,7 @@ export function NotacaoCientifica() {
                     <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Coef. (a)</label>
                     <input type="number" value={coef} onChange={ev => setCoef(ev.target.value)} placeholder="6.4" step="0.1" className="w-24 rounded-lg border border-border bg-background px-2 py-2 text-center font-mono text-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
                   </div>
-                  <span className="text-muted-foreground pb-2">× 10^</span>
+                  <span className="text-muted-foreground pb-2">× 10 elevado a</span>
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Exp. (n)</label>
                     <input type="number" value={exp10} onChange={ev => setExp10(ev.target.value)} placeholder="6" className="w-20 rounded-lg border border-border bg-background px-2 py-2 text-center font-mono text-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
@@ -301,7 +301,7 @@ export function NotacaoCientifica() {
                 </div>
                 {fromSciResult !== null && (
                   <CalcResult>
-                    <p className="font-mono text-sm">{coef} × 10^{e} = <strong className="text-accent text-base">{fmtLarge(fromSciResult)}</strong></p>
+                    <p className="font-mono text-sm">{coef} × 10<sup>{e}</sup> = <strong className="text-accent text-base">{fmtLarge(fromSciResult)}</strong></p>
                   </CalcResult>
                 )}
               </>
@@ -329,12 +329,12 @@ export function OperacoesNC() {
   const exp2 = parseInt(e2)
 
   const valid = [coef1, exp1, coef2, exp2].every((v) => !isNaN(v))
-  let result = ""
+  let result: React.ReactNode = null
   if (valid) {
     if (op === "mult") {
-      result = toSci(coef1 * coef2 * Math.pow(10, exp1 + exp2))
+      result = toSciNode(coef1 * coef2 * Math.pow(10, exp1 + exp2))
     } else if (coef2 !== 0) {
-      result = toSci((coef1 / coef2) * Math.pow(10, exp1 - exp2))
+      result = toSciNode((coef1 / coef2) * Math.pow(10, exp1 - exp2))
     }
   }
 
@@ -380,11 +380,11 @@ export function OperacoesNC() {
             </div>
             <div className="flex flex-wrap items-end gap-3 mb-3">
               <NumInput label="a₁" value={a1} onChange={setA1} placeholder="3.2" step="0.1" />
-              <span className="text-muted-foreground pb-2 text-sm">× 10^</span>
+              <span className="text-muted-foreground pb-2 text-sm">× 10 elevado a</span>
               <NumInput label="n₁" value={e1} onChange={setE1} placeholder="5" />
               <span className="text-muted-foreground pb-2 text-lg font-bold">{op === "mult" ? "×" : "÷"}</span>
               <NumInput label="a₂" value={a2} onChange={setA2} placeholder="2.0" step="0.1" />
-              <span className="text-muted-foreground pb-2 text-sm">× 10^</span>
+              <span className="text-muted-foreground pb-2 text-sm">× 10 elevado a</span>
               <NumInput label="n₂" value={e2} onChange={setE2} placeholder="3" />
             </div>
             {valid && result && (
