@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 interface AnimateOnScrollProps {
   children: ReactNode
   className?: string
-  animation?: string
   delay?: number
   threshold?: number
 }
@@ -14,7 +13,6 @@ interface AnimateOnScrollProps {
 export function AnimateOnScroll({
   children,
   className,
-  animation = "animate-fade-in-up",
   delay = 0,
   threshold = 0.15,
 }: AnimateOnScrollProps) {
@@ -43,11 +41,11 @@ export function AnimateOnScroll({
     <div
       ref={ref}
       className={cn(
-        "opacity-0",
-        isVisible && animation,
+        "transition-all duration-700 ease-out",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
         className
       )}
-      style={{ animationDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
     </div>
