@@ -4,10 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* FUNDO: Branco Puro para máximo brilho no projetor */
+  /* MODO CLARO (Otimizado para Projetor - Ultra Contraste) */
   --background: oklch(1 0 0);
-  
-  /* TEXTO PRINCIPAL: Preto Absoluto para leitura perfeita */
   --foreground: oklch(0 0 0); 
   
   --card: oklch(1 0 0);
@@ -16,27 +14,21 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0 0 0);
   
-  /* PRIMÁRIO: Azul Marinho Profundo (Excelente para Títulos e Destaques) */
-  --primary: oklch(0.25 0.12 260);
+  --primary: oklch(0.25 0.12 260); /* Azul Marinho Profundo */
   --primary-foreground: oklch(1 0 0);
   
-  /* SECUNDÁRIO: Roxo Imperial (Usado em botões secundários ou áreas de foco) */
-  --secondary: oklch(0.95 0.02 300); /* Fundo levemente arroxeado */
-  --secondary-foreground: oklch(0.25 0.15 300); /* Texto Roxo Escuro */
+  --secondary: oklch(0.95 0.02 300);
+  --secondary-foreground: oklch(0.25 0.15 300); /* Roxo Escuro */
   
-  /* MUTED: Em vez de cinza, usaremos um Verde Floresta bem escuro para textos complementares */
   --muted: oklch(0.95 0.05 150);
-  --muted-foreground: oklch(0.2 0.1 150);
+  --muted-foreground: oklch(0.2 0.1 150); /* Verde Floresta Escuro */
   
-  /* ACCENT: Azul Turquesa Escuro para chamar atenção sem perder contraste */
-  --accent: oklch(0.3 0.12 190);
+  --accent: oklch(0.3 0.12 190); /* Turquesa Escuro */
   --accent-foreground: oklch(1 0 0);
   
-  /* DESTRUCTIVE: Vermelho Sangue (Contraste crítico) */
   --destructive: oklch(0.4 0.25 25);
   --destructive-foreground: oklch(1 0 0);
   
-  /* BORDAS E INPUTS: Usaremos um tom escuro para que as caixas de texto sejam visíveis */
   --border: oklch(0.3 0.05 260);
   --input: oklch(0.3 0.05 260);
   --ring: oklch(0.25 0.12 260);
@@ -54,29 +46,37 @@
 }
 
 .dark {
+  /* MODO ESCURO (Original Colorido e Vibrante) */
   --background: oklch(0.13 0.02 260);
   --foreground: oklch(0.96 0.01 260);
   --card: oklch(0.18 0.025 260);
   --card-foreground: oklch(0.96 0.01 260);
   --popover: oklch(0.18 0.025 260);
   --popover-foreground: oklch(0.96 0.01 260);
-  --primary: oklch(0.65 0.25 250);
-  --primary-foreground: oklch(0.1 0.05 260);
+  
+  --primary: oklch(0.65 0.25 250); /* Azul Vibrante */
+  --primary-foreground: oklch(0.98 0 0);
+  
   --secondary: oklch(0.22 0.03 260);
   --secondary-foreground: oklch(0.9 0.01 260);
+  
   --muted: oklch(0.22 0.02 260);
   --muted-foreground: oklch(0.65 0.02 260);
-  --accent: oklch(0.75 0.18 165);
+  
+  --accent: oklch(0.75 0.18 165); /* Ciano/Verde Neon */
   --accent-foreground: oklch(0.13 0.02 260);
+  
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
+  
   --border: oklch(0.28 0.03 260);
   --input: oklch(0.28 0.03 260);
   --ring: oklch(0.65 0.25 250);
+  
   --sidebar: oklch(0.16 0.025 260);
   --sidebar-foreground: oklch(0.96 0.01 260);
   --sidebar-primary: oklch(0.65 0.25 250);
-  --sidebar-primary-foreground: oklch(0.1 0.05 260);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.22 0.03 260);
   --sidebar-accent-foreground: oklch(0.9 0.01 260);
   --sidebar-border: oklch(0.28 0.03 260);
