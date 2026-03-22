@@ -49,37 +49,28 @@ const PERFECT_CUBES = [8, 27, 64, 125, 216]
 function generate(): Ano8Exercise[] {
   const exercises: Ano8Exercise[] = []
 
-  // 2 potenciacao base negativa
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 5; i++) {
+    // potenciacao base negativa
     exercises.push({ kind: "potenciacao", base: -rng(2, 5), exp: rng(2, 5) })
-  }
 
-  // 2 raiz quadrada
-  for (let i = 0; i < 2; i++) {
+    // raiz quadrada
     const isExact = Math.random() > 0.4
-    const n = isExact ? pick(PERFECT_SQUARES) : rng(2, 80)
-    exercises.push({ kind: "raizquad", n })
-  }
+    const nQuad = isExact ? pick(PERFECT_SQUARES) : rng(2, 80)
+    exercises.push({ kind: "raizquad", n: nQuad })
 
-  // 2 raiz cubica
-  for (let i = 0; i < 2; i++) {
+    // raiz cubica
     const sign: 1 | -1 = Math.random() > 0.5 ? 1 : -1
     exercises.push({ kind: "raizcub", n: pick(PERFECT_CUBES), sign })
-  }
 
-  // 2 simplificacao de radical
-  for (let i = 0; i < 2; i++) {
-    // generate numbers with non-trivial simplification: n = k^2 * m where m > 1
+    // simplificacao de radical
     const k = rng(2, 5)
     const m = pick([2, 3, 5, 6, 7])
     exercises.push({ kind: "simplrad", n: k * k * m })
-  }
 
-  // 2 notacao cientifica
-  for (let i = 0; i < 2; i++) {
+    // notacao cientifica
     const isLarge = Math.random() > 0.4
-    const n = isLarge ? rng(100000, 9999999) : rng(1, 999) / 100000
-    exercises.push({ kind: "notacaoci", n })
+    const nSci = isLarge ? rng(100000, 9999999) : rng(1, 999) / 100000
+    exercises.push({ kind: "notacaoci", n: nSci })
   }
 
   return exercises.sort(() => Math.random() - 0.5)

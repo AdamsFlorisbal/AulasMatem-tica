@@ -42,41 +42,27 @@ const PYTHAGOREAN = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [6, 8, 10
 function generate(): Ano9Exercise[] {
   const exercises: Ano9Exercise[] = []
 
-  // 2 irracional
-  for (let i = 0; i < 2; i++) {
-    exercises.push({ kind: "irracional", n: rng(2, 30) })
-  }
-
-  // 2 reta numerica
-  for (let i = 0; i < 2; i++) {
-    exercises.push({ kind: "reta", n: rng(2, 50) })
-  }
-
-  // 2 conjuntos
   const numOptions = [
     { n: rng(1, 20), isInteger: true, isNatural: true },
     { n: -rng(1, 20), isInteger: true, isNatural: false },
+    { n: rng(10, 50), isInteger: true, isNatural: true },
+    { n: -rng(10, 50), isInteger: true, isNatural: false },
+    { n: rng(50, 99), isInteger: true, isNatural: true },
   ]
-  for (const opt of numOptions) {
-    exercises.push({ kind: "conjunto", ...opt })
-  }
-
-  // 2 potencia racional
   const powBases = [[4, 1, 2, 2], [8, 1, 3, 2], [27, 2, 3, 9], [16, 3, 4, 8]]
-  for (let i = 0; i < 2; i++) {
+
+  for (let i = 0; i < 5; i++) {
+    exercises.push({ kind: "irracional", n: rng(2, 30) })
+    exercises.push({ kind: "reta", n: rng(2, 50) })
+    exercises.push({ kind: "conjunto", ...numOptions[i] })
+
     const [base, m, n, result] = pick(powBases)
     exercises.push({ kind: "potracional", base, m, n, result })
-  }
 
-  // 2 simplificacao
-  for (let i = 0; i < 2; i++) {
     const k = rng(2, 6)
-    const m = pick([2, 3, 5, 6, 7])
-    exercises.push({ kind: "simplrad", n: k * k * m })
-  }
+    const mRad = pick([2, 3, 5, 6, 7])
+    exercises.push({ kind: "simplrad", n: k * k * mRad })
 
-  // 2 pitagoras
-  for (let i = 0; i < 2; i++) {
     const triple = pick(PYTHAGOREAN)
     exercises.push({ kind: "pitagoras", a: triple[0], b: triple[1] })
   }
