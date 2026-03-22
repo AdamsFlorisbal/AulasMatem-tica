@@ -342,7 +342,7 @@ export function OperacoesNC() {
     <AnimateOnScroll>
       <section id="operacoesnc">
         <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10 space-y-8">
-          <SectionHeader number={6} badgeColor={B2} title="Operações com NC" subtitle="Multiplicação e divisão em notação científica" />
+          <SectionHeader number={6} badgeColor={B2} title="Operações em Notação Científica" subtitle="Multiplicação e divisão com potências de 10" />
 
           <FormulaBox>
             <div className="text-left text-base space-y-1">
@@ -355,7 +355,7 @@ export function OperacoesNC() {
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">(4 × 10³) × (2 × 10²)</h3>
             <StepByStep steps={[
               { text: "Multiplicar coeficientes: 4 × 2 = 8" },
-              { text: "Somar expoentes: 10^(3+2) = 10⁵" },
+              { text: "Somar expoentes: 10⁽³⁺²⁾ = 10⁵" },
               { text: "Resultado: 8 × 10⁵ = 800.000", highlight: true },
             ]} />
           </div>
@@ -363,7 +363,7 @@ export function OperacoesNC() {
           <div className="grid md:grid-cols-2 gap-6">
             <DetailedExampleCard
               title="Divisão em NC"
-              steps={["(9 × 10⁶) ÷ (3 × 10²)", "= (9÷3) × 10^(6-2)"]}
+              steps={["(9 × 10⁶) ÷ (3 × 10²)", "= (9÷3) × 10⁽⁶⁻²⁾"]}
               conclusion="= 3 × 10⁴ = 30.000"
             />
             <DetailedExampleCard
