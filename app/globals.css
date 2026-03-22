@@ -4,49 +4,53 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Fundo branco puro para máximo contraste */
+  /* FUNDO: Branco Puro para máximo brilho no projetor */
   --background: oklch(1 0 0);
-  /* Texto principal: Preto profundo (quase preto, mas com um toque de azul para não ser "morto") */
-  --foreground: oklch(0.15 0.05 260); 
+  
+  /* TEXTO PRINCIPAL: Preto Absoluto para leitura perfeita */
+  --foreground: oklch(0 0 0); 
   
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.05 260);
+  --card-foreground: oklch(0 0 0);
   
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.05 260);
+  --popover-foreground: oklch(0 0 0);
   
-  /* Primário: Azul Marinho forte e vibrante (Ótimo para projetores) */
-  --primary: oklch(0.35 0.18 255);
+  /* PRIMÁRIO: Azul Marinho Profundo (Excelente para Títulos e Destaques) */
+  --primary: oklch(0.25 0.12 260);
   --primary-foreground: oklch(1 0 0);
   
-  --secondary: oklch(0.95 0.02 255);
-  --secondary-foreground: oklch(0.2 0.1 260);
+  /* SECUNDÁRIO: Roxo Imperial (Usado em botões secundários ou áreas de foco) */
+  --secondary: oklch(0.95 0.02 300); /* Fundo levemente arroxeado */
+  --secondary-foreground: oklch(0.25 0.15 300); /* Texto Roxo Escuro */
   
-  /* Texto Muted: Agora um cinza bem escuro, legível em projeção */
-  --muted: oklch(0.92 0.02 255);
-  --muted-foreground: oklch(0.35 0.05 260);
+  /* MUTED: Em vez de cinza, usaremos um Verde Floresta bem escuro para textos complementares */
+  --muted: oklch(0.95 0.05 150);
+  --muted-foreground: oklch(0.2 0.1 150);
   
-  /* Accent: Um verde ou azul turquesa forte para chamar atenção */
-  --accent: oklch(0.45 0.2 180);
+  /* ACCENT: Azul Turquesa Escuro para chamar atenção sem perder contraste */
+  --accent: oklch(0.3 0.12 190);
   --accent-foreground: oklch(1 0 0);
   
-  --destructive: oklch(0.5 0.25 25);
+  /* DESTRUCTIVE: Vermelho Sangue (Contraste crítico) */
+  --destructive: oklch(0.4 0.25 25);
   --destructive-foreground: oklch(1 0 0);
   
-  --border: oklch(0.8 0.03 260);
-  --input: oklch(0.8 0.03 260);
-  --ring: oklch(0.35 0.18 255);
+  /* BORDAS E INPUTS: Usaremos um tom escuro para que as caixas de texto sejam visíveis */
+  --border: oklch(0.3 0.05 260);
+  --input: oklch(0.3 0.05 260);
+  --ring: oklch(0.25 0.12 260);
   
   --radius: 0.75rem;
   
-  --sidebar: oklch(0.98 0.01 260);
-  --sidebar-foreground: oklch(0.15 0.05 260);
-  --sidebar-primary: oklch(0.35 0.18 255);
+  --sidebar: oklch(0.98 0 0);
+  --sidebar-foreground: oklch(0 0 0);
+  --sidebar-primary: oklch(0.25 0.12 260);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.9 0.03 260);
-  --sidebar-accent-foreground: oklch(0.35 0.18 255);
-  --sidebar-border: oklch(0.85 0.03 260);
-  --sidebar-ring: oklch(0.35 0.18 255);
+  --sidebar-accent: oklch(0.9 0.05 260);
+  --sidebar-accent-foreground: oklch(0.25 0.12 260);
+  --sidebar-border: oklch(0.3 0.05 260);
+  --sidebar-ring: oklch(0.25 0.12 260);
 }
 
 .dark {
@@ -124,7 +128,7 @@
   }
 }
 
-/* Animações mantidas... */
+/* Mantendo as animações */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
