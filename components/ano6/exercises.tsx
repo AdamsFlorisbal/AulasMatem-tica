@@ -63,6 +63,11 @@ type Ano6Exercise =
   | FatoracaoEx
   | MdcEx
   | MmcEx
+  | ProblemaMultDivEx
+  | ExpressaoNumericaEx
+
+type ProblemaMultDivEx = { kind: "problema_mult_div"; type: "mult" | "div"; val1: number; val2: number; textIndex: number }
+type ExpressaoNumericaEx = { kind: "expressao_numerica"; a: number; b: number; c: number; op1: string; op2: string; paren?: number }
 
 const DIVISORS = [2, 3, 4, 5, 6, 9, 10]
 
@@ -140,6 +145,14 @@ function generate(): Ano6Exercise[] {
     const b = rng(4, 20)
     exercises.push({ kind: "mmc", a, b })
   }
+
+  // 2 problemas mult/div
+  exercises.push({ kind: "problema_mult_div", type: "mult", val1: rng(3, 8), val2: rng(4, 12), textIndex: rng(0, 1) })
+  exercises.push({ kind: "problema_mult_div", type: "div", val1: rng(10, 50) * 2, val2: rng(2, 5), textIndex: rng(0, 1) })
+
+  // 2 expressoes numericas
+  exercises.push({ kind: "expressao_numerica", a: rng(10, 30), b: rng(2, 10) * 2, c: 2, op1: "+", op2: "÷", paren: 1 })
+  exercises.push({ kind: "expressao_numerica", a: rng(5, 15), b: rng(2, 5), c: rng(2, 5), op1: "×", op2: "+", paren: 0 })
 
   // shuffle
   return exercises.sort(() => Math.random() - 0.5)
@@ -230,6 +243,21 @@ function renderQuestion(ex: Ano6Exercise): React.ReactNode {
           </p>
         </div>
       )
+    case "problema_mult_div": {
+      const texts = ex.type === "mult" 
+        ? [`Comprei ${ex.val1} caixas com ${ex.val2} bombons cada. Quantos bombons tenho?`, `Um teatro com ${ex.val1} fileiras de ${ex.val2} cadeiras. Qual o total?`]
+        : [`Repartir ${ex.val1} balas igualmente entre ${ex.val2} amigos. Quanto cada um recebe?`, `Uma fita de ${ex.val1} metros será cortada em pedaços de ${ex.val2} metros. Quantos darão?`]
+      return <div className="text-center"><p className="text-lg font-bold text-foreground">{texts[ex.textIndex]}</p></div>
+    }
+    case "expressao_numerica": {
+      const exprStr = ex.paren === 1 ? `(${ex.a} ${ex.op1} ${ex.b}) ${ex.op2} ${ex.c}` : `${ex.a} ${ex.op1} ${ex.b} ${ex.op2} ${ex.c}`
+      return (
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-1">Resolva a expressão:</p>
+          <p className="text-4xl font-black font-mono text-foreground">{exprStr}</p>
+        </div>
+      )
+    }
   }
 }
 
@@ -373,6 +401,15 @@ function renderAnswer(ex: Ano6Exercise): React.ReactNode {
         </div>
       )
     }
+    case "problema_mult_div": {
+      const result = ex.type === "mult" ? ex.val1 * ex.val2 : ex.val1 / ex.val2
+      return <p className="text-base text-foreground">Resultado: {ex.val1} {ex.type === "mult" ? "×" : "÷"} {ex.val2} = <strong className="text-accent">{result}</strong></p>
+    }
+    case "expressao_numerica": {
+      const exprStr = ex.paren === 1 ? `(${ex.a} ${ex.op1.replace('×','*').replace('÷','/')} ${ex.b}) ${ex.op2.replace('×','*').replace('÷','/')} ${ex.c}` : `${ex.a} ${ex.op1.replace('×','*').replace('÷','/')} ${ex.b} ${ex.op2.replace('×','*').replace('÷','/')} ${ex.c}`
+      const result = new Function("return " + exprStr)()
+      return <p className="text-base text-foreground">Resultado = <strong className="text-accent">{result}</strong></p>
+    }
   }
 }
 
@@ -398,6 +435,10 @@ function getHint(ex: Ano6Exercise): string {
       return `Use o algoritmo de Euclides: mdc(${ex.a}, ${ex.b}) = mdc(${ex.b}, ${ex.a % ex.b})`
     case "mmc":
       return `MMC(a, b) = (a × b) ÷ MDC(a, b). Calcule primeiro o MDC(${ex.a}, ${ex.b}).`
+    case "problema_mult_div":
+      return ex.type === "mult" ? "Multiplique os valores para encontrar o total." : "Divida os valores para encontrar as partes."
+    case "expressao_numerica":
+      return "Resolva primeiro parênteses (se houver), depois × e ÷, e por fim + e −."
   }
 }
 
@@ -412,6 +453,8 @@ const META_MAP = {
   fatoracao:      { label: "Fatoração",       color: "text-accent",   bg: "bg-accent/10",   border: "border-accent/20" },
   mdc:            { label: "MDC",             color: "text-chart-4",  bg: "bg-chart-4/10",  border: "border-chart-4/20" },
   mmc:            { label: "MMC",             color: "text-chart-5",  bg: "bg-chart-5/10",  border: "border-chart-5/20" },
+  problema_mult_div: { label: "Prob. Prático",color: "text-primary",  bg: "bg-primary/10",  border: "border-primary/20" },
+  expressao_numerica:{ label: "Expressões",   color: "text-accent",   bg: "bg-accent/10",   border: "border-accent/20" },
 }
 
 export const Ano6ExercisesSection = createExerciseSection<Ano6Exercise>({

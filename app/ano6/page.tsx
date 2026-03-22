@@ -11,6 +11,11 @@ import {
   NaturaisMMC,
   NaturaisAplicacoes,
 } from "@/components/ano6/sections"
+import {
+  IdeiasMultiplicacaoDivisao,
+  PropriedadesCalculadora,
+  ExpressoesNumericas,
+} from "@/components/ano6/new-sections"
 import { Ano6ExercisesSection } from "@/components/ano6/exercises"
 import type { Metadata } from "next"
 
@@ -29,6 +34,9 @@ const NAV_SECTIONS = [
   { id: "mdc",            label: "MDC",              number: 7 },
   { id: "mmc",            label: "MMC",              number: 8 },
   { id: "aplicacoes",     label: "Aplicações",       number: 9 },
+  { id: "ideias-mult-div",label: "Ideias +, -, *, /",number: 10 },
+  { id: "propriedades-calculadora", label: "Propriedades", number: 11 },
+  { id: "expressoes",     label: "Expressões",       number: 12 },
 ]
 
 const SUMMARY_ITEMS: SummaryItem[] = [
@@ -45,7 +53,7 @@ const HERO = {
   titleLine1: "Números",
   titleLine2: "Naturais",
   titleLine2Color: "text-chart-3",
-  description: "Aprenda potenciação, potências de base 10 e raiz quadrada. Depois, explore divisibilidade, primos, MDC e MMC com facilidade!",
+  description: "Aprenda potenciação, expressões matemáticas, potências de base 10 e raiz quadrada. Depois, explore divisibilidade, primos, MDC e MMC com facilidade!",
   previews: [
     { label: "Potenciação",   formulaNode: <span>2⁴ = 16</span> },
     { label: "Raiz Quadrada", formulaNode: <span>√25 = 5</span> },
@@ -62,6 +70,9 @@ export default function Ano6Page() {
         <>
           <ConjuntoNaturais />
           <OperacoesNaturais />
+          <IdeiasMultiplicacaoDivisao />
+          <PropriedadesCalculadora />
+          <ExpressoesNumericas />
           <NaturaisPotenciacaoRaiz />
           <NaturaisDivisibilidade />
           <NaturaisFatoracao />

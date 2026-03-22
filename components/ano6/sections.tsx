@@ -433,7 +433,7 @@ export function NaturaisPotenciacaoRaiz() {
             </div>
             <p className="text-sm text-muted-foreground mt-4 text-center">Apenas números que são "quadrados perfeitos" (resultado de um número multiplicado por ele mesmo) têm raiz quadrada exata.</p>
             <div className="mt-4 flex justify-center">
-              <DetailedExampleCard title="Quadrados Perfeitos" steps={formulasQuadradosPerfeitos} />
+              <DetailedExampleCard title="Quadrados Perfeitos" steps={formulasQuadradosPerfeitos} conclusion="Números com raiz exata" />
             </div>
           </div>
         </AnimateOnScroll>
