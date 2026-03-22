@@ -22,7 +22,7 @@ export function IdeiasMultiplicacaoDivisao({ idx }: { idx?: number }) {
   return (
     <section id="ideias-mult-div" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={10} badgeColor={B2} title="Ideias da Multiplicação e Divisão" subtitle="Diferentes formas de interpretar e resolver problemas" />
+        <SectionHeader number={3} badgeColor={B2} title="Ideias da Multiplicação e Divisão" subtitle="Diferentes formas de interpretar e resolver problemas" />
 
         <AnimateOnScroll delay={200}>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -97,7 +97,7 @@ export function PropriedadesCalculadora() {
   return (
     <section id="propriedades-calculadora" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={11} badgeColor={B1} title="Propriedades e Uso da Calculadora" subtitle="Compreendendo como as operações se comportam" />
+        <SectionHeader number={4} badgeColor={B1} title="Propriedades e Uso da Calculadora" subtitle="Compreendendo como as operações se comportam" />
 
         <AnimateOnScroll delay={200}>
           <div className="mt-8 rounded-xl bg-secondary/50 p-6">
@@ -188,7 +188,7 @@ export function ExpressoesNumericas() {
   return (
     <section id="expressoes" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={12} badgeColor={B2} title="Expressões Numéricas" subtitle="As regras de prioridade das operações" />
+        <SectionHeader number={5} badgeColor={B2} title="Expressões Numéricas" subtitle="As regras de prioridade das operações" />
 
         <AnimateOnScroll delay={200}>
           <div className="mt-8 rounded-xl bg-secondary/50 p-6 space-y-4">

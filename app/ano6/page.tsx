@@ -27,16 +27,16 @@ export const metadata: Metadata = {
 const NAV_SECTIONS = [
   { id: "conjunto",       label: "Conjunto ℕ",      number: 1 },
   { id: "operacoes",      label: "Operações",        number: 2 },
-  { id: "potenciacao",    label: "Potenciação",      number: 3 },
-  { id: "divisibilidade", label: "Divisibilidade",   number: 4 },
-  { id: "fatoracao",      label: "Fatoração",        number: 5 },
-  { id: "primos",         label: "Nº Primos",        number: 6 },
-  { id: "mdc",            label: "MDC",              number: 7 },
-  { id: "mmc",            label: "MMC",              number: 8 },
-  { id: "aplicacoes",     label: "Aplicações",       number: 9 },
-  { id: "ideias-mult-div",label: "Ideias +, -, *, /",number: 10 },
-  { id: "propriedades-calculadora", label: "Propriedades", number: 11 },
-  { id: "expressoes",     label: "Expressões",       number: 12 },
+  { id: "ideias-mult-div",label: "Ideias +, -, *, /",number: 3 },
+  { id: "propriedades-calculadora", label: "Propriedades", number: 4 },
+  { id: "expressoes",     label: "Expressões",       number: 5 },
+  { id: "potenciacao",    label: "Potenciação",      number: 6 },
+  { id: "divisibilidade", label: "Divisibilidade",   number: 7 },
+  { id: "fatoracao",      label: "Fatoração",        number: 8 },
+  { id: "primos",         label: "Nº Primos",        number: 9 },
+  { id: "mdc",            label: "MDC",              number: 10 },
+  { id: "mmc",            label: "MMC",              number: 11 },
+  { id: "aplicacoes",     label: "Aplicações",       number: 12 },
 ]
 
 const SUMMARY_ITEMS: SummaryItem[] = [

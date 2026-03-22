@@ -370,7 +370,7 @@ export function NaturaisPotenciacaoRaiz() {
   return (
     <section id="potenciacao" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={3} badgeColor={B1} title="Potenciação e Raiz Quadrada" subtitle="Entenda como a potenciação simplifica multiplicações e a raiz quadrada desfaz essa operação." />
+        <SectionHeader number={6} badgeColor={B1} title="Potenciação e Raiz Quadrada" subtitle="Entenda como a potenciação simplifica multiplicações e a raiz quadrada desfaz essa operação." />
 
         <AnimateOnScroll delay={200}>
           <div className="mt-8 rounded-xl bg-secondary/50 p-6">
@@ -570,7 +570,7 @@ export function NaturaisDivisibilidade() {
   return (
     <section id="divisibilidade" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={4} badgeColor={B1} title="Critérios de Divisibilidade" subtitle="Descubra os divisores sem fazer a divisão" />
+        <SectionHeader number={7} badgeColor={B1} title="Critérios de Divisibilidade" subtitle="Descubra os divisores sem fazer a divisão" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>{'n é divisível por d ↔ n ÷ d tem resto 0'}</FormulaBox>
@@ -652,7 +652,7 @@ export function NaturaisFatoracao() {
   return (
     <section id="fatoracao" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={5} badgeColor={B2} title="Fatoração em Primos" subtitle="Todo número natural é produto de fatores primos" />
+        <SectionHeader number={8} badgeColor={B2} title="Fatoração em Primos" subtitle="Todo número natural é produto de fatores primos" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>{'60 = 2 × 2 × 3 × 5 = 2² × 3 × 5'}</FormulaBox>
@@ -716,7 +716,7 @@ export function NaturaisPrimos() {
   return (
     <section id="primos" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={6} badgeColor={B1} title="Números Primos" subtitle="Divisíveis apenas por 1 e por si mesmos" />
+        <SectionHeader number={9} badgeColor={B1} title="Números Primos" subtitle="Divisíveis apenas por 1 e por si mesmos" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>{'p é primo ↔ p > 1 e seus únicos divisores são 1 e p'}</FormulaBox>
@@ -784,7 +784,7 @@ export function NaturaisMDC() {
   return (
     <section id="mdc" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={7} badgeColor={B2} title="MDC — Máximo Divisor Comum" subtitle="O maior número que divide dois números ao mesmo tempo" />
+        <SectionHeader number={10} badgeColor={B2} title="MDC — Máximo Divisor Comum" subtitle="O maior número que divide dois números ao mesmo tempo" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>MDC(12, 8) = 4</FormulaBox>
@@ -851,7 +851,7 @@ export function NaturaisMMC() {
   return (
     <section id="mmc" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={8} badgeColor={B1} title="MMC — Mínimo Múltiplo Comum" subtitle="O menor número que é múltiplo dos dois ao mesmo tempo" />
+        <SectionHeader number={11} badgeColor={B1} title="MMC — Mínimo Múltiplo Comum" subtitle="O menor número que é múltiplo dos dois ao mesmo tempo" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>MMC(4, 6) = 12</FormulaBox>
@@ -916,7 +916,7 @@ export function NaturaisAplicacoes() {
   return (
     <section id="aplicacoes" className="scroll-mt-20">
       <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 md:p-10">
-        <SectionHeader number={9} badgeColor={B2} title="Aplicações" subtitle="MDC e MMC em problemas do dia a dia" />
+        <SectionHeader number={12} badgeColor={B2} title="Aplicações" subtitle="MDC e MMC em problemas do dia a dia" />
 
         <AnimateOnScroll delay={200}>
           <FormulaBox highlight>{'MDC → maior divisor comum · MMC → menor múltiplo comum'}</FormulaBox>
