@@ -8,7 +8,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-sans'
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
 export const metadata: Metadata = {
-  title: 'Propriedades das Potencias',
+  title: 'Matemática com a Prof. Vanessa',
   description: 'Aulas de matemática para o Ensino Fundamental',
 }
 
