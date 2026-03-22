@@ -95,6 +95,7 @@ export function createExerciseSection<E>(config: ExerciseSectionConfig<E>) {
     const [exercises, setExercises] = useState<E[]>([])
     const [genKey, setGenKey] = useState(0)
     const [spinning, setSpinning] = useState(false)
+    const [activeCategory, setActiveCategory] = useState<string>("Geral")
 
     useEffect(() => {
       setExercises(config.generate())
@@ -128,6 +129,23 @@ export function createExerciseSection<E>(config: ExerciseSectionConfig<E>) {
             </button>
           </div>
 
+          <div className="flex flex-wrap gap-2 mb-8">
+            {["Geral", ...Array.from(new Set(exercises.map(ex => config.getMeta(ex).label)))].map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={cn(
+                  "px-4 py-2 text-sm rounded-lg font-medium transition-colors border",
+                  activeCategory === cat
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                    : "bg-secondary text-muted-foreground hover:bg-secondary/80 border-border"
+                )}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
           {exercises.length === 0 ? (
             <div className="flex items-center justify-center py-16 text-muted-foreground">
               <RefreshCw className="w-5 h-5 animate-spin mr-2" />
@@ -135,8 +153,9 @@ export function createExerciseSection<E>(config: ExerciseSectionConfig<E>) {
             </div>
           ) : (
             <div className="grid gap-5 md:grid-cols-2">
-              {exercises.map((ex, i) => (
-                <ExerciseCard key={`${genKey}-${i}`} ex={ex} index={i} />
+              {(activeCategory === "Geral" ? exercises : exercises.filter(ex => config.getMeta(ex).label === activeCategory))
+                .map((ex, i) => (
+                  <ExerciseCard key={`${genKey}-${activeCategory}-${i}`} ex={ex} index={i} />
               ))}
             </div>
           )}
