@@ -15,6 +15,18 @@ const B3 = "bg-accent/20 text-accent"
 const B4 = "bg-primary/20 text-primary"
 const B5 = "bg-chart-5/20 text-chart-5"
 
+function Frac({ num, den, className }: { num: React.ReactNode; den: React.ReactNode; className?: string }) {
+  return (
+    <span className={`inline-flex flex-col items-center align-middle mx-1 ${className ?? ""}`}>
+      <span className="border-b-2 border-current px-1.5 leading-tight text-center">{num}</span>
+      <span className="px-1.5 leading-tight text-center">{den}</span>
+    </span>
+  )
+}
+
+const fracHtml = (num: string, den: string) =>
+  `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px"><span style="border-bottom:2px solid currentColor;padding:0 5px;line-height:1.3;text-align:center">${num}</span><span style="padding:0 5px;line-height:1.3;text-align:center">${den}</span></span>`
+
 function NumInput({ label, value, onChange, placeholder, step }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; step?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -369,7 +381,7 @@ export function EquacoesBhaskara() {
             number={9}
             badgeColor={B5}
             title="Fórmula de Bhaskara"
-            subtitle="x = (−b ± √Δ) / (2a) — Encontrando as raízes"
+            subtitle={`x = ${fracHtml("−b ± √Δ", "2a")} — Encontrando as raízes`}
           />
 
           <div className="space-y-4 text-sm leading-relaxed">
@@ -385,10 +397,16 @@ export function EquacoesBhaskara() {
 
           <FormulaBox highlight>
             <div className="text-left text-base space-y-2">
-              <p className="text-xl font-bold">x = (−b ± √Δ) / (2a)</p>
-              <div className="text-sm text-muted-foreground space-y-1 mt-2">
-                <p>x₁ = (−b <strong>+</strong> √Δ) / (2a) &nbsp;&nbsp;← com o sinal de <strong>mais</strong></p>
-                <p>x₂ = (−b <strong>−</strong> √Δ) / (2a) &nbsp;&nbsp;← com o sinal de <strong>menos</strong></p>
+              <p className="text-xl font-bold flex items-center flex-wrap">
+                x = <Frac num="−b ± √Δ" den="2a" />
+              </p>
+              <div className="text-sm text-muted-foreground space-y-2 mt-2">
+                <p className="flex items-center flex-wrap">
+                  x₁ = <Frac num={<>−b <strong>+</strong> √Δ</>} den="2a" /> &nbsp;&nbsp;← com o sinal de <strong>mais</strong>
+                </p>
+                <p className="flex items-center flex-wrap">
+                  x₂ = <Frac num={<>−b <strong>−</strong> √Δ</>} den="2a" /> &nbsp;&nbsp;← com o sinal de <strong>menos</strong>
+                </p>
               </div>
             </div>
           </FormulaBox>
@@ -399,9 +417,9 @@ export function EquacoesBhaskara() {
               { text: "<strong>Passo 1:</strong> Identificar coeficientes → a = 1, b = −5, c = 6" },
               { text: "<strong>Passo 2:</strong> Calcular Δ = b² − 4ac = (−5)² − 4·1·6 = 25 − 24 = <strong>1</strong>" },
               { text: "<strong>Passo 3:</strong> Calcular √Δ = √1 = <strong>1</strong>" },
-              { text: "<strong>Passo 4:</strong> Aplicar na fórmula → x = (−(−5) ± 1) / (2·1) = (5 ± 1) / 2" },
-              { text: "<strong>Passo 5:</strong> Calcular x₁ → x₁ = (5 + 1) / 2 = 6 / 2 = <strong>3</strong>" },
-              { text: "<strong>Passo 6:</strong> Calcular x₂ → x₂ = (5 − 1) / 2 = 4 / 2 = <strong>2</strong>", highlight: true },
+              { text: `<strong>Passo 4:</strong> Aplicar na fórmula → x = ${fracHtml("−(−5) ± 1", "2·1")} = ${fracHtml("5 ± 1", "2")}` },
+              { text: `<strong>Passo 5:</strong> Calcular x₁ → x₁ = ${fracHtml("5 + 1", "2")} = ${fracHtml("6", "2")} = <strong>3</strong>` },
+              { text: `<strong>Passo 6:</strong> Calcular x₂ → x₂ = ${fracHtml("5 − 1", "2")} = ${fracHtml("4", "2")} = <strong>2</strong>`, highlight: true },
               { text: "✅ Solução: x = 2 ou x = 3" },
             ]} />
           </div>
@@ -413,9 +431,9 @@ export function EquacoesBhaskara() {
                 "a = 1, b = −7, c = 12",
                 "Δ = (−7)² − 4·1·12 = 49 − 48 = 1",
                 "√Δ = √1 = 1",
-                "x = (−(−7) ± 1) / (2·1) = (7 ± 1) / 2",
-                "x₁ = (7 + 1) / 2 = 8 / 2 = 4",
-                "x₂ = (7 − 1) / 2 = 6 / 2 = 3",
+                `x = ${fracHtml("−(−7) ± 1", "2·1")} = ${fracHtml("7 ± 1", "2")}`,
+                `x₁ = ${fracHtml("7 + 1", "2")} = ${fracHtml("8", "2")} = 4`,
+                `x₂ = ${fracHtml("7 − 1", "2")} = ${fracHtml("6", "2")} = 3`,
               ]}
               conclusion="x = 3 ou x = 4"
             />
@@ -425,9 +443,9 @@ export function EquacoesBhaskara() {
                 "a = 1, b = −3, c = −10",
                 "Δ = (−3)² − 4·1·(−10) = 9 + 40 = 49",
                 "√Δ = √49 = 7",
-                "x = (3 ± 7) / 2",
-                "x₁ = (3 + 7) / 2 = 10 / 2 = 5",
-                "x₂ = (3 − 7) / 2 = −4 / 2 = −2",
+                `x = ${fracHtml("3 ± 7", "2")}`,
+                `x₁ = ${fracHtml("3 + 7", "2")} = ${fracHtml("10", "2")} = 5`,
+                `x₂ = ${fracHtml("3 − 7", "2")} = ${fracHtml("−4", "2")} = −2`,
               ]}
               conclusion="x = 5 ou x = −2"
             />
@@ -440,9 +458,9 @@ export function EquacoesBhaskara() {
                 "a = 2, b = −8, c = 6",
                 "Δ = (−8)² − 4·2·6 = 64 − 48 = 16",
                 "√Δ = √16 = 4",
-                "x = (8 ± 4) / (2·2) = (8 ± 4) / 4",
-                "x₁ = (8 + 4) / 4 = 12 / 4 = 3",
-                "x₂ = (8 − 4) / 4 = 4 / 4 = 1",
+                `x = ${fracHtml("8 ± 4", "2·2")} = ${fracHtml("8 ± 4", "4")}`,
+                `x₁ = ${fracHtml("8 + 4", "4")} = ${fracHtml("12", "4")} = 3`,
+                `x₂ = ${fracHtml("8 − 4", "4")} = ${fracHtml("4", "4")} = 1`,
               ]}
               conclusion="x = 1 ou x = 3"
             />
@@ -452,7 +470,7 @@ export function EquacoesBhaskara() {
                 "a = 1, b = −4, c = 4",
                 "Δ = (−4)² − 4·1·4 = 16 − 16 = 0",
                 "√Δ = √0 = 0",
-                "x = (4 ± 0) / 2 = 4 / 2 = 2",
+                `x = ${fracHtml("4 ± 0", "2")} = ${fracHtml("4", "2")} = 2`,
                 "x₁ = x₂ = 2 (raiz dupla!)",
               ]}
               conclusion="x = 2 (raiz dupla)"
@@ -466,9 +484,9 @@ export function EquacoesBhaskara() {
                 "a = 1, b = 1, c = −6",
                 "Δ = (1)² − 4·1·(−6) = 1 + 24 = 25",
                 "√Δ = √25 = 5",
-                "x = (−1 ± 5) / 2",
-                "x₁ = (−1 + 5) / 2 = 4 / 2 = 2",
-                "x₂ = (−1 − 5) / 2 = −6 / 2 = −3",
+                `x = ${fracHtml("−1 ± 5", "2")}`,
+                `x₁ = ${fracHtml("−1 + 5", "2")} = ${fracHtml("4", "2")} = 2`,
+                `x₂ = ${fracHtml("−1 − 5", "2")} = ${fracHtml("−6", "2")} = −3`,
               ]}
               conclusion="x = 2 ou x = −3"
             />
@@ -478,11 +496,11 @@ export function EquacoesBhaskara() {
                 "a = 3, b = 2, c = −1",
                 "Δ = (2)² − 4·3·(−1) = 4 + 12 = 16",
                 "√Δ = √16 = 4",
-                "x = (−2 ± 4) / (2·3) = (−2 ± 4) / 6",
-                "x₁ = (−2 + 4) / 6 = 2 / 6 = 1/3",
-                "x₂ = (−2 − 4) / 6 = −6 / 6 = −1",
+                `x = ${fracHtml("−2 ± 4", "2·3")} = ${fracHtml("−2 ± 4", "6")}`,
+                `x₁ = ${fracHtml("−2 + 4", "6")} = ${fracHtml("2", "6")} = ${fracHtml("1", "3")}`,
+                `x₂ = ${fracHtml("−2 − 4", "6")} = ${fracHtml("−6", "6")} = −1`,
               ]}
-              conclusion="x = 1/3 ou x = −1"
+              conclusion={`x = ${fracHtml("1", "3")} ou x = −1`}
             />
           </div>
 
@@ -503,11 +521,16 @@ export function EquacoesBhaskara() {
                   {delta >= 0 && sqrtDelta !== null ? (
                     <>
                       <p className="font-mono text-xs text-muted-foreground">3️⃣ √Δ = √{delta} = {parseFloat(sqrtDelta.toFixed(4))}</p>
-                      <p className="font-mono text-xs text-muted-foreground">4️⃣ x = (−({bv}) ± {parseFloat(sqrtDelta.toFixed(4))}) / (2·{av})</p>
-                      <p className="font-mono text-xs text-muted-foreground">&nbsp;&nbsp;&nbsp;x = ({-bv} ± {parseFloat(sqrtDelta.toFixed(4))}) / {2 * av}</p>
-                      <div className="border-t border-border pt-2 mt-2">
-                        <p className="font-mono text-sm">x₁ = ({-bv} + {parseFloat(sqrtDelta.toFixed(4))}) / {2 * av} = <strong className="text-accent">{parseFloat(x1!.toFixed(4))}</strong></p>
-                        <p className="font-mono text-sm">x₂ = ({-bv} − {parseFloat(sqrtDelta.toFixed(4))}) / {2 * av} = <strong className="text-accent">{parseFloat(x2!.toFixed(4))}</strong></p>
+                      <p className="font-mono text-xs text-muted-foreground flex items-center flex-wrap">
+                        4️⃣ x = <Frac num={<>{-bv} ± {parseFloat(sqrtDelta.toFixed(4))}</>} den={2 * av} />
+                      </p>
+                      <div className="border-t border-border pt-2 mt-2 space-y-2">
+                        <p className="font-mono text-sm flex items-center flex-wrap">
+                          x₁ = <Frac num={<>{-bv} + {parseFloat(sqrtDelta.toFixed(4))}</>} den={2 * av} /> = <Frac num={parseFloat((-bv + sqrtDelta).toFixed(4))} den={2 * av} /> = <strong className="text-accent">{parseFloat(x1!.toFixed(4))}</strong>
+                        </p>
+                        <p className="font-mono text-sm flex items-center flex-wrap">
+                          x₂ = <Frac num={<>{-bv} − {parseFloat(sqrtDelta.toFixed(4))}</>} den={2 * av} /> = <Frac num={parseFloat((-bv - sqrtDelta).toFixed(4))} den={2 * av} /> = <strong className="text-accent">{parseFloat(x2!.toFixed(4))}</strong>
+                        </p>
                       </div>
                       <p className={`text-sm font-semibold mt-1 ${delta > 0 ? "text-green-500" : "text-yellow-500"}`}>
                         {delta > 0 ? "Duas raízes reais diferentes" : "Raiz dupla (x₁ = x₂)"}

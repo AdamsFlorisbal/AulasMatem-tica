@@ -13,6 +13,18 @@ import {
 
 const B5 = "bg-chart-5/20 text-chart-5"
 
+function Frac({ num, den, className }: { num: React.ReactNode; den: React.ReactNode; className?: string }) {
+  return (
+    <span className={`inline-flex flex-col items-center align-middle mx-1 ${className ?? ""}`}>
+      <span className="border-b-2 border-current px-1.5 leading-tight text-center">{num}</span>
+      <span className="px-1.5 leading-tight text-center">{den}</span>
+    </span>
+  )
+}
+
+const fracHtml = (num: string, den: string) =>
+  `<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px"><span style="border-bottom:2px solid currentColor;padding:0 5px;line-height:1.3;text-align:center">${num}</span><span style="padding:0 5px;line-height:1.3;text-align:center">${den}</span></span>`
+
 function NumInput({ label, value, onChange, placeholder, step }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; step?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -75,24 +87,36 @@ export function EquacoesAx2B() {
           <FormulaBox highlight>
             <div className="text-left text-base space-y-2">
               <p className="text-xl font-bold">ax² = b</p>
-              <p className="text-sm text-muted-foreground">Passo 1: x² = b/a &nbsp;&nbsp;(divida os dois lados por a)</p>
-              <p className="text-sm text-muted-foreground">Passo 2: x = ±√(b/a) &nbsp;&nbsp;(tire a raiz quadrada)</p>
+              <p className="text-sm text-muted-foreground flex items-center flex-wrap">
+                Passo 1: x² = <Frac num="b" den="a" /> &nbsp;&nbsp;(divida os dois lados por a)
+              </p>
+              <p className="text-sm text-muted-foreground flex items-center flex-wrap">
+                Passo 2: x = ±√<span className="inline-flex items-center">(</span><Frac num="b" den="a" /><span className="inline-flex items-center">)</span> &nbsp;&nbsp;(tire a raiz quadrada)
+              </p>
             </div>
           </FormulaBox>
 
           <div className="grid md:grid-cols-3 gap-4">
             <div className="rounded-xl border border-green-500/30 bg-green-500/5 p-4 text-center">
-              <p className="text-sm font-bold text-green-500 mb-1">b/a &gt; 0</p>
+              <p className="text-sm font-bold text-green-500 mb-1 flex items-center justify-center">
+                <Frac num="b" den="a" /> &gt; 0
+              </p>
               <p className="text-xs text-muted-foreground">Resultado positivo</p>
-              <p className="text-xs font-bold text-green-500 mt-2">2 soluções: x = ±√(b/a)</p>
+              <p className="text-xs font-bold text-green-500 mt-2 flex items-center justify-center flex-wrap">
+                2 soluções: x = ±√(<Frac num="b" den="a" />)
+              </p>
             </div>
             <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-4 text-center">
-              <p className="text-sm font-bold text-yellow-500 mb-1">b/a = 0</p>
+              <p className="text-sm font-bold text-yellow-500 mb-1 flex items-center justify-center">
+                <Frac num="b" den="a" /> = 0
+              </p>
               <p className="text-xs text-muted-foreground">Resultado igual a zero</p>
               <p className="text-xs font-bold text-yellow-500 mt-2">1 solução: x = 0</p>
             </div>
             <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-4 text-center">
-              <p className="text-sm font-bold text-red-500 mb-1">b/a &lt; 0</p>
+              <p className="text-sm font-bold text-red-500 mb-1 flex items-center justify-center">
+                <Frac num="b" den="a" /> &lt; 0
+              </p>
               <p className="text-xs text-muted-foreground">Resultado negativo</p>
               <p className="text-xs font-bold text-red-500 mt-2">Sem solução real</p>
             </div>
@@ -102,7 +126,7 @@ export function EquacoesAx2B() {
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Resolver 2x² = 18 — Passo a passo</h3>
             <StepByStep steps={[
               { text: "<strong>Passo 1:</strong> Isolar x² → dividir os dois lados por 2" },
-              { text: "2x² = 18 → x² = 18 ÷ 2 → x² = 9" },
+              { text: `2x² = 18 → x² = ${fracHtml("18", "2")} → x² = 9` },
               { text: "<strong>Passo 2:</strong> Tirar a raiz quadrada dos dois lados" },
               { text: "x = ±√9" },
               { text: "x = ±3", highlight: true },
@@ -123,7 +147,7 @@ export function EquacoesAx2B() {
             <DetailedExampleCard
               title="Exemplo 2: 3x² = 48"
               steps={[
-                "Isolar x²: x² = 48 ÷ 3 = 16",
+                `Isolar x²: x² = ${fracHtml("48", "3")} = 16`,
                 "x = ±√16",
                 "x = ±4",
               ]}
@@ -135,7 +159,7 @@ export function EquacoesAx2B() {
             <DetailedExampleCard
               title="Exemplo 3: 5x² = 125"
               steps={[
-                "Isolar x²: x² = 125 ÷ 5 = 25",
+                `Isolar x²: x² = ${fracHtml("125", "5")} = 25`,
                 "x = ±√25",
                 "x = ±5",
               ]}
@@ -157,7 +181,7 @@ export function EquacoesAx2B() {
               title="Exemplo 5: 4x² − 100 = 0"
               steps={[
                 "Passar 100: 4x² = 100",
-                "Isolar x²: x² = 100 ÷ 4 = 25",
+                `Isolar x²: x² = ${fracHtml("100", "4")} = 25`,
                 "x = ±√25",
                 "x = ±5",
               ]}
@@ -178,14 +202,14 @@ export function EquacoesAx2B() {
             <DetailedExampleCard
               title="Exemplo 7: 2x² = 50"
               steps={[
-                "x² = 50 ÷ 2 = 25",
+                `x² = ${fracHtml("50", "2")} = 25`,
                 "x = ±√25",
                 "x = ±5",
               ]}
               conclusion="x = 5 ou x = −5"
             />
             <DetailedExampleCard
-              title="Exemplo 8: x²/3 = 12"
+              title={`Exemplo 8: ${fracHtml("x²", "3")} = 12`}
               steps={[
                 "Multiplicar os dois lados por 3: x² = 36",
                 "x = ±√36",
@@ -204,7 +228,9 @@ export function EquacoesAx2B() {
             {!isNaN(av) && !isNaN(bv) && av !== 0 && (
               <CalcResult>
                 <p className="font-mono text-sm text-muted-foreground">{av}x² = {bv}</p>
-                <p className="font-mono text-sm text-muted-foreground">x² = {bv} ÷ {av} = {bv / av}</p>
+                <p className="font-mono text-sm text-muted-foreground flex items-center flex-wrap">
+                  x² = <Frac num={bv} den={av} /> = {bv / av}
+                </p>
                 {hasNoSolution ? (
                   <p className="font-mono text-sm text-red-500 font-bold">x² = {bv / av} → Sem solução real (não existe √ de negativo)</p>
                 ) : bv / av === 0 ? (

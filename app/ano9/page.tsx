@@ -38,7 +38,7 @@ const SUMMARY_ITEMS: SummaryItem[] = [
   { name: "Pitágoras",           formula: "c = √(a<sup>2</sup> + b<sup>2</sup>)",      rule: "Hipotenusa = raiz da soma dos catetos²",  color: "bg-primary/10 border-primary/30 text-primary" },
   { name: "Coeficientes",         formula: "ax² + bx + c = 0",    rule: "Identifique a, b e c na equação",              color: "bg-accent/10 border-accent/30 text-accent" },
   { name: "Delta (Δ)",            formula: "Δ = b² − 4ac",        rule: "Δ>0: 2 raízes | Δ=0: 1 raiz | Δ<0: sem raiz", color: "bg-primary/10 border-primary/30 text-primary" },
-  { name: "Bhaskara",             formula: "x = (−b ± √Δ) / 2a", rule: "Calcule x₁ com + e x₂ com −",                  color: "bg-chart-5/10 border-chart-5/30 text-chart-5" },
+  { name: "Bhaskara",             formula: `x = <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px"><span style="border-bottom:2px solid currentColor;padding:0 5px;line-height:1.3">−b ± √Δ</span><span style="padding:0 5px;line-height:1.3">2a</span></span>`, rule: "Calcule x₁ com + e x₂ com −",                  color: "bg-chart-5/10 border-chart-5/30 text-chart-5" },
 ]
 
 const HERO = {
