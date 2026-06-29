@@ -7,20 +7,25 @@ import {
   NotacaoCientifica,
   OperacoesNC,
 } from "@/components/ano8/sections"
+import { MonomiosOperacoes, ValorNumerico } from "@/components/ano8/monomios"
+import { EquacoesAx2B } from "@/components/ano8/equacoes-ax2-b"
 import { Ano8ExercisesSection } from "@/components/ano8/exercises"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "8º Ano — Potenciação, Radiciação e Notação Científica",
-  description: "Aula interativa sobre potenciação com base negativa, raízes e notação científica para alunos de 8º ano.",
+  title: "8º Ano — Potenciação, Radiciação, Monômios e Equações",
+  description: "Aula interativa sobre potenciação, raízes, notação científica, monômios, valor numérico e equações ax²=b para alunos de 8º ano.",
 }
 
 const NAV_SECTIONS = [
-  { id: "potenciacao",      label: "Potenciação",  number: 1 },
-  { id: "raizquadrada",     label: "Raiz ²",       number: 2 },
-  { id: "raizcubica",       label: "Raiz ³",       number: 3 },
-  { id: "notacaocientifica",label: "NC",           number: 4 },
-  { id: "operacoesnc",      label: "Operações em NC", number: 5 },
+  { id: "potenciacao",      label: "Potenciação",   number: 1 },
+  { id: "raizquadrada",     label: "Raiz ²",        number: 2 },
+  { id: "raizcubica",       label: "Raiz ³",        number: 3 },
+  { id: "notacaocientifica",label: "NC",             number: 4 },
+  { id: "operacoesnc",      label: "Op. NC",         number: 5 },
+  { id: "monomios",         label: "Monômios",       number: 6 },
+  { id: "valornumerico",    label: "Valor Num.",      number: 7 },
+  { id: "equacoesax2b",     label: "ax² = b",        number: 8 },
 ]
 
 const SUMMARY_ITEMS: SummaryItem[] = [
@@ -29,18 +34,21 @@ const SUMMARY_ITEMS: SummaryItem[] = [
   { name: "Raiz Cúbica",         formula: "∛(-8) = -2",          rule: "Existe para negativos também",          color: "bg-chart-4/10 border-chart-4/30 text-chart-4" },
   { name: "Notação Científica",  formula: "6,4 × 10⁶",           rule: "1 ≤ |a| < 10; n conta as casas",        color: "bg-chart-5/10 border-chart-5/30 text-chart-5" },
   { name: "Op. em Notação Científica",    formula: "(a×10ᵐ)(b×10ⁿ)=ab×10ᵐ⁺ⁿ", rule: "Multiplique coef. e some expoentes", color: "bg-accent/10 border-accent/30 text-accent" },
+  { name: "Monômios",            formula: "3x + 5x = 8x",        rule: "Some coeficientes de monômios semelhantes", color: "bg-chart-4/10 border-chart-4/30 text-chart-4" },
+  { name: "Valor Numérico",      formula: "2x²+3x (x=2) → 14",  rule: "Substitua a variável e calcule",        color: "bg-chart-3/10 border-chart-3/30 text-chart-3" },
+  { name: "Equação ax² = b",     formula: "x² = 9 → x = ±3",    rule: "Isole x² e tire a raiz quadrada",       color: "bg-chart-5/10 border-chart-5/30 text-chart-5" },
 ]
 
 const HERO = {
   badge: "Aula 4 – Matemática · 8º Ano",
-  titleLine1: "Potenciação e",
-  titleLine2: "Radiciação",
+  titleLine1: "Álgebra e",
+  titleLine2: "Equações",
   titleLine2Color: "text-accent",
-  description: "Domine potências com base negativa, raízes quadrada e cúbica, e aprenda a escrever qualquer número em notação científica!",
+  description: "Domine potências, raízes, notação científica, operações com monômios, valor numérico e equações incompletas do 2º grau!",
   previews: [
     { label: "Base negativa",    formulaNode: <span>(-2)³ = -8</span> },
-    { label: "Raiz Quadrada",    formulaNode: <span>√81 = 9</span> },
-    { label: "Notação Cient.",   formulaNode: <span>6,4 × 10⁶</span> },
+    { label: "Monômios",         formulaNode: <span>3x + 5x = 8x</span> },
+    { label: "ax² = b",          formulaNode: <span>x² = 9 → x = ±3</span> },
   ],
 }
 
@@ -56,18 +64,21 @@ export default function Ano8Page() {
           <RadiciacaoRaizCubica />
           <NotacaoCientifica />
           <OperacoesNC />
+          <MonomiosOperacoes />
+          <ValorNumerico />
+          <EquacoesAx2B />
         </>
       }
       summaryNode={
         <SummarySection
           items={SUMMARY_ITEMS}
-          title="Resumo — Potenciação e Radiciação"
-          subtitle="Os 5 tópicos do 8º ano"
-          closingText="Notação científica é usada em astronomia, química e física para representar números muito grandes ou muito pequenos!"
+          title="Resumo — Álgebra e Equações"
+          subtitle="Os 8 tópicos do 8º ano"
+          closingText="Monômios e equações são a base da álgebra — você vai usar isso em física, química e no Ensino Médio inteiro!"
         />
       }
       exercisesNode={<Ano8ExercisesSection />}
-      yearLabel="8º Ano — Potenciação, Radiciação e NC"
+      yearLabel="8º Ano — Álgebra e Equações"
     />
   )
 }
